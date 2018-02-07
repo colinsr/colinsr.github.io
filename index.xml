@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Mon, 29 Jan 2018 10:43:42 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 03 Feb 2018 10:03:12 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Javascript Reverse String</title>
+      <link>http://colin.detwiller.me/post/javascript-reverse-string/</link>
+      <pubDate>Sat, 03 Feb 2018 10:03:12 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/javascript-reverse-string/</guid>
+      <description>In an effort to learn the in&amp;rsquo;s and out&amp;rsquo;s of ES2017 I&amp;rsquo;m going to be working through some exercises.
+The first exercise I&amp;rsquo;d like to work through is a pretty simple one, reversing a string with javascript.
+Basically, given string &#39;foobar&#39; I&amp;rsquo;d like to return &#39;raboof&#39; - again, this is pretty simple and I think would be a great place to start.
+To start with let&amp;rsquo;s go ahead and create a new directory with our terminal with</description>
+    </item>
     
     <item>
       <title>Azure Application Gatway - Part 2</title>
