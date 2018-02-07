@@ -56,18 +56,18 @@
 
 <p>The first exercise I&rsquo;d like to work through is a pretty simple one, reversing a string with javascript.</p>
 
-<p>Basically, given string <code>'foobar'</code> I&rsquo;d like to return <code>'raboof'</code> - again, this is pretty simple and I think would be a great place to start.</p>
+<p>Basically, given string <code>'foobar'</code> I&rsquo;d like to return <code>'raboof'</code> - again, this is pretty simple and I think it would be a great place to start.</p>
 
-<p>To start with let&rsquo;s go ahead and create a new directory with our terminal with</p>
+<p>To start with, let&rsquo;s go ahead and create a new directory in our terminal with:</p>
 
 <pre><code class="language-bash">cd ~/
 mkdir exercises
 cd exercises/
-mkdir reversestring
-cd reversestring/
+mkdir reverseString
+cd reverseString/
 </code></pre>
 
-<p>Now we&rsquo;d like to create two files in this new <code>reversestring</code> directory, one for our code and one for our tests.  Yes&hellip; tests are required if you consider yourself a professional developer so go ahead and get over it.</p>
+<p>Now we&rsquo;d like to create two files in this new <code>reverseString</code> directory, one for our code and one for our tests.  Yes&hellip; tests are required if you consider yourself a professional developer so go ahead and get over it.</p>
 
 <p>Next we&rsquo;re going to create an <code>index.js</code> file as well as a <code>test.js</code> file.
 And we&rsquo;re going to use the Jest test framework.  We&rsquo;ll get it installed globally by running:</p>
@@ -107,7 +107,8 @@ test('Reverse function exists', () =&gt; {
 
 <p>Back in our terminal we can execute the tests by running <code>jest test.js</code>, and we&rsquo;ll see that our initial test passes.</p>
 
-<p>Now we can go about tackling the implementation of our test script.  We&rsquo;ll be making a few passes at this implementation starting with a simple approach, then cranking up the complexity and finally wrapping up with a more advanced approach that embraces some of the built in functions of javascript arrays.</p>
+<p>Now we can go about tackling the implementation of our test script.  We&rsquo;ll be exploring a few implementation options - starting with a simple solution, cranking it up a bit, and, finally, ending on a more advanced approach.
+Our final solution will embrace and demonstrate some of the built in functions of javascript arrays.</p>
 
 <p>We can start the implementation by writing a couple tests to ensure our code actually works.
 Appending our <code>test.js</code> file with the following two tests should do the trick:</p>
@@ -121,7 +122,7 @@ test('Reverse reverses a string with spaces', () =&gt; {
 });
 </code></pre>
 
-<p>It always makes sense to next run our new tests and see them fail before we proceed to make them pass, we can run the tests once by executing <code>jest test.js</code> at our terminal.
+<p>It always makes sense to next run our new tests and see them fail before we proceed to make them pass. We can run the tests once by executing <code>jest test.js</code> at our terminal.
 If everything is configured correctly we should see 2 failed tests and 1 passing test.</p>
 
 <p>Finally we can get down to business.
@@ -143,8 +144,8 @@ Since we already know javascript, we know that there is an Array.prototype.rever
 <p>Our first order of business will be getting the string converted to a javascript array.
 We can get this sorted out by calling <code>string.split('')</code>.
 After we&rsquo;ve got our string stored in a variable as an array, we can simply call the reverse method, <code>stringArray.reverse()</code>.
-Then we need to convert the reversed char array to a string - <code>reversedStrArray.join('');
-And finally return the reversed string,</code>return reversed`.</p>
+Then we need to convert the reversed char array to a string - <code>reversedStrArray.join('');</code>.
+And finally return the reversed string, <code>return reversed</code>.</p>
 
 <pre><code class="language-javascript">function reverse(string){
   //convert string to array
@@ -177,7 +178,7 @@ We&rsquo;ll go ahead and just chain these functions together to accomplish the s
 
 <p>With that out of the way we can implement this without using a built in function.
 Here, we&rsquo;re going to be iterating over the chars in the string and prepending each char to the existing reversed string.
-We&rsquo;ll start with an empty string for our reversed string, and loop through each letter in the string prepending it to our reversed string one leter at a time.
+We&rsquo;ll start with an empty string for our reversed string, and loop through each letter in the string prepending it to our reversed string one letetr at a time.
 We could use our go to <code>for(var i = 0;i &lt; string.length; i++){ }</code> syntax as our loop construct, but if we did we&rsquo;d be missing out on some of the newer ES2015 features available to use in the <code>for...of</code> loop.
 I like the syntax of this looping construct better, it exposes us to less typos/errors in our loop construction.
 What if we were to use a greater than instead of a less than?  Or if we used the wrong variable to grab the length?
@@ -218,7 +219,7 @@ Reduce is one of the cornerstones of functional programming and can be used in a
 Given the following array <code>const transactions = [1,2,3,4,5,6,7,8,9,10]</code> what is the simplest way to sum them up?
 A loop?  Hells no.  We are looking at reduce right here.
 How does one use reduce to return the sum of these values, you may be asking.
-Like so,</p>
+Like so:</p>
 
 <pre><code class="language-javascript">const total = transactions.reduce((total, current) =&gt; total + current);
 </code></pre>
