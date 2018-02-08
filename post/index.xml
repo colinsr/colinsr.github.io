@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Sat, 03 Feb 2018 10:03:12 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 07 Feb 2018 08:58:34 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Javascript More String Exercises</title>
+      <link>http://colin.detwiller.me/post/javascript-more-string-exercises/</link>
+      <pubDate>Wed, 07 Feb 2018 08:58:34 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/javascript-more-string-exercises/</guid>
+      <description>Next up on our list of exercises is going to be two more simple functions.
+First we&amp;rsquo;ll walk through how to implement a palindrome checker, and then we&amp;rsquo;ll cover reversing integers.
+For the palindrome function, we&amp;rsquo;ll want to return true/false depending on whether or not a given string is a palindrome. For those of you who are not familiar with the term here is the definition:
+a word, phrase, or sequence that reads the same backward as forward</description>
+    </item>
     
     <item>
       <title>Javascript Reverse String</title>

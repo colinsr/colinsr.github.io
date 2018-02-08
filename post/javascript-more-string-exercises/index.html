@@ -1,0 +1,368 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Colin Detwiller&#39;s blog</title>
+        <meta name="author">
+        <meta name="description" content="Colin Detwiller&#39;s Tech blog">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.34" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="alternate" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="feed" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/styles.css">
+        <link rel="icon" href="http://colin.detwiller.me/favicon.ico">
+        <link rel="apple-touch-icon" href="http://colin.detwiller.me/apple-touch-icon.png" />
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/highlightjs/monokai.css">
+        <script src="http://colin.detwiller.me/js/vendor/modernizr-2.8.0.min.js"></script>
+        
+        <style>
+        .site-header h2 .logo {
+        background: url(http://colin.detwiller.me/img/cloud.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(http://colin.detwiller.me/img/cloud.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(http://colin.detwiller.me/img/cloud.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2></h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="http://colin.detwiller.me/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="http://colin.detwiller.me/post/javascript-more-string-exercises/" title="Javascript More String Exercises">Javascript More String Exercises</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2018.02.07">2018.02.07</time>
+
+</span>
+</footer>
+
+            <p>Next up on our list of exercises is going to be two more simple functions.</p>
+
+<p>First we&rsquo;ll walk through how to implement a palindrome checker, and then we&rsquo;ll cover reversing integers.</p>
+
+<p>For the palindrome function, we&rsquo;ll want to return true/false depending on whether or not a given string is a palindrome.  For those of you who are not familiar with the term here is the definition:</p>
+
+<p><code>a word, phrase, or sequence that reads the same backward as forward</code></p>
+
+<p>We&rsquo;re going to want to return true when we pass in the string &ldquo;abba&rdquo;, and false when we pass in &ldquo;javascript&rdquo;.</p>
+
+<p>Again, this is pretty straight forward.
+First we&rsquo;ll walk through the process of getting this thing wired up with some tests.</p>
+
+<p>Similar to our last setup, we&rsquo;ll create a new directory inside our exercises directory with <code>mkdir palindrome &amp;&amp; cd palindrome</code>.
+Then we can create two files, <code>touch index.js test.js</code>.</p>
+
+<p>Let&rsquo;s use the terminal to stub out our <code>test.js</code>.  We&rsquo;ll use a Here Document to push our sanity check into our file:</p>
+
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;&gt; test.js
+const palindrome = require('./index');
+
+test('palindrome function exists', () =&gt; {
+    expect(typeof palindrome).toEqual('function');
+});
+EOF
+</code></pre>
+
+<p>And we&rsquo;ll follow suit to wire up our palindrome function:</p>
+
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;&gt; index.js
+function palindrome(str) {
+  //TODO: implementation here
+}
+
+module.exports = palindrome;
+EOF
+</code></pre>
+
+<p>Checking the contents of our files is easy with the cat command:
+<code>cat index.js</code> and <code>cat test.js</code>.</p>
+
+<p>Now last time when we setup jest, we did so at the level of our <code>reversestring/</code> directory, I don&rsquo;t really feel like configuring this inside of each subdirectory of our <code>exercises/</code> directory so we&rsquo;ll add a global jest configuration inside <code>exercises/package.json</code>.
+From inside our palindrome directory we can do this with the following command:</p>
+
+<pre><code class="language-bash">cat &lt;&lt;EOF&gt;&gt; ../package.json
+{
+  &quot;name&quot;: &quot;exercises&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+EOF
+</code></pre>
+
+<p>Then we&rsquo;ll verify that our tests are running as expected with the command <code>jest test.js</code> from inside our palindrome directory.
+At this point we should see that 1 test passed, and with that we&rsquo;re ready to start getting this function doing some work.</p>
+
+<p>We know we need to add some more tests before we get down to business.
+This time around, let&rsquo;s tell jest to watch for changes to our file.
+We can do that by running <code>jest test.js --watch</code>.</p>
+
+<p>After running that command our tests will auto run anytime we update our files.  We currently have only the test to ensure our function is defined, so next up we&rsquo;ll add a few tests to verify our function is doing what it is supposed to do.</p>
+
+<p>We can either add the additional tests via vim, your favorite text editor or just right here from the terminal:</p>
+
+<pre><code class="language-bash">echo &quot;test('&quot;mom&quot; is a palindrome', () =&gt; {
+    expect(palindrome('bba')).toBeFalsy();
+&gt;     expect(palindrome('mom')).toBeTruthy();
+&gt; });
+&gt;
+&gt; test('&quot;racecar&quot; is a palindrome', () =&gt; {
+&gt;     expect(palindrome('racecar')).toBeTruthy();
+&gt; });
+&gt;
+&gt; test('&quot;bba&quot; is not a palindrome', () =&gt; {
+&gt;     expect(palindrome('bba')).toBeFalsy();
+&gt; });
+&gt;
+&gt; test('&quot; dad&quot; is not a palindrome', () =&gt; {
+&gt;     expect(palindrome(' dad')).toBeFalsy();
+&gt; });
+&gt; &quot; &gt;&gt; test.js
+</code></pre>
+
+<p>This command will append our new tests to our <code>test.js</code> file.  Upon updating the test file, we should see some activity in the terminal where we ran the jest suite with the watch flag set.</p>
+
+<p>3 passing and 2 failing tests.  Well, wait a minute.  How could I have 3 passing tests before I even write any code in my palindrome function?
+Jest is checking the output of our function for &ldquo;truthiness&rdquo;, if we get undefined back from our function jest is handling that as if it was a &ldquo;falsy&rdquo; response and therefore considering the tests to be green.</p>
+
+<p>That being said, we can finally now start on our solution.
+This is again a very simple exercise, so let&rsquo;s talk about what we need to do to get this thing fleshed out.</p>
+
+<p>We have a string, &ldquo;beer&rdquo; and we&rsquo;d like to see if the string is the same forwards as it is backwards.  With our &ldquo;beer&rdquo; example, our check would be to see if:
+<code>&quot;beer&quot; === &quot;reeb&quot; //returns false in this case</code></p>
+
+<p>Now if we were talking about teen music sensations and screwed up the spelling, <code>&quot;beeb&quot; === &quot;beeb&quot; //returns true - is it too late to say I'm sorry now?</code> - 10 points if you&rsquo;re with me there.</p>
+
+<p>Back to work now, we are talking about reversing a string and checking whether or not the two strings are the same.  We&rsquo;ll use our previous experience reverse strings and fly right through this one.
+Adding the following to our <code>index.js</code> will get us where we need to be:</p>
+
+<pre><code class="language-javascript">function palindrome(str) {
+    const reverse = str.split('').reduce((reverse, char) =&gt; char + reverse);
+    return (str == reverse) ? true: false;
+}
+</code></pre>
+
+<p>The jury is still out on how to handle upper/lower case characters, but it&rsquo;s as easy as calling <code>.toLowerCase()</code> on each of our strings inside our ternary operator to perform a case invariant check.  (If you <em>do</em> want to add this case to your function, be sure to add an additional test case to cover it)</p>
+
+<p>With that out of the way we can get started with our reverse int exercise.  From our current <code>exercises/palindrome/</code> directory we need to go up one level, then create a new directory called <code>reverseint/</code>.</p>
+
+<p>We&rsquo;ve got our jest tests configured at the exercises directory now so we&rsquo;re good to just add our <code>index.js</code> and <code>test.js</code> files inside our new <code>reverseint/</code> directory.</p>
+
+<p>What we&rsquo;re looking for here is basically when given a number, 42 we reverse it and return 24, when given 80 return 8, and when given -15 return -51.</p>
+
+<p>First we&rsquo;ll wire up our test file with the content:</p>
+
+<pre><code class="language-javascript">const reverseInt = require('./index');
+
+test('ReverseInt function exists', () =&gt; {
+  expect(reverseInt).toBeDefined();
+});
+</code></pre>
+
+<p>And our index:</p>
+
+<pre><code class="language-javascript">function reverseInt(n) {
+    //TODO: reverse the number
+}
+
+module.exports = reverseInt;
+</code></pre>
+
+<p>This exercise falls back into the easy bucket.  In order to reverse the number we need to turn it into a string, we can do that with the <code>.toString()</code> function.  Then we implement our reduce function to reverse it and we&rsquo;ll be good to go.</p>
+
+<p>Or will we?</p>
+
+<p>We&rsquo;ll add some tests to find out.</p>
+
+<pre><code class="language-javascript">test('ReverseInt handles 0 as an input', () =&gt; {
+  expect(reverseInt(0)).toEqual(0);
+});
+
+test('ReverseInt flips a positive number', () =&gt; {
+  expect(reverseInt(7)).toEqual(7);
+  expect(reverseInt(17)).toEqual(71);
+  expect(reverseInt(70)).toEqual(7);
+  expect(reverseInt(1783)).toEqual(3871);
+});
+
+test('ReverseInt flips a negative number', () =&gt; {
+  expect(reverseInt(-7)).toEqual(-7);
+  expect(reverseInt(-17)).toEqual(-71);
+  expect(reverseInt(-70)).toEqual(-7);
+  expect(reverseInt(-1783)).toEqual(-3871);
+});
+</code></pre>
+
+<p>And with our tests defined we can run jest in watch mode <code>jest test.js --watch</code> from inside of our <code>reverseint/</code> directory which will give us 3 failing tests.</p>
+
+<p>Next up is our implementation.</p>
+
+<pre><code class="language-javascript">function reverseInt(n) {
+    //convert n to string
+    const numberAsString = n.toString();
+    //reverse the string
+    const reversed = numberAsString
+      .split('')
+      .reduce((rvs, char) =&gt;  char + rvs);
+    //compare n to the reversed string
+    return reversed;
+}
+</code></pre>
+
+<p>Well, that didn&rsquo;t go quite according to plan.  We&rsquo;ve got failing tests like crazy.  You&rsquo;ll notice from your test output that we are still returning the <code>reversed</code> as a string but we&rsquo;re expecting a number.</p>
+
+<p>To handle this, javascript has a built in function called <code>parseInt()</code> - let&rsquo;s get that function into our code.</p>
+
+<p>Instead of returning <code>reversed</code> we&rsquo;ll return <code>parseInt(reversed)</code>.  And&hellip; improvement, but not yet done.  We&rsquo;re passing on the positive and zero tests, but the negative case is still failing.</p>
+
+<p>There are a few different ways to handle this, but the option I chose is pretty simple.</p>
+
+<pre><code class="language-javascript">function reverseInt(n) {
+    const numberAsString = n.toString();
+    const reversed = numberAsString
+      .split('')
+      .reduce((rvs, char) =&gt;  char + rvs);
+    const reversedInt = parseInt(reversed);
+    return (n &gt;= 0) ? reversedInt : -Math.abs(reversedInt);
+}
+</code></pre>
+
+<p>Viola, we are passing on all cylinders.
+Now we can circle back and cleanup some of this code.</p>
+
+<pre><code class="language-javascript">const reverse = parseInt(n.toString()
+    .split('')
+    .reduce((rvs, char) =&gt;  char + rvs));
+return (n &gt;= 0) ? reverse : -Math.abs(reverse);
+</code></pre>
+
+<p>After verifying that our tests all still pass we can call this a wrap - 👍</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fcolin.detwiller.me%2fpost%2fjavascript-more-string-exercises%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Javascript%20More%20String%20Exercises&amp;url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fjavascript-more-string-exercises%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fjavascript-more-string-exercises%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fjavascript-more-string-exercises%2f&title=Javascript%20More%20String%20Exercises" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "colin-detwiller-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="http://colin.detwiller.me/img/profile-image.png" alt="" />
+  <p class="name">Colin Detwiller 
+  <strong></strong></p>
+  <p class="address">Cleveland, OH</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/colinsr1187" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/colinsr" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="http://colin.detwiller.me/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="http://colin.detwiller.me/post/index.xml" title="RSS"></a>
+        <p>&copy; 2018 &middot; Powered by <a href="http://gohugo.io">Hugo</a>.</p>
+  </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="http:\/\/colin.detwiller.me\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="http://colin.detwiller.me/js/plugins.js"></script>
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-70072280-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://colin.detwiller.me/post/javascript-more-string-exercises/</loc>
+    <lastmod>2018-02-07T08:58:34-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://colin.detwiller.me/post/javascript-reverse-string/</loc>
     <lastmod>2018-02-03T10:03:12-05:00</lastmod>
   </url>
@@ -29,13 +34,13 @@
   
   <url>
     <loc>http://colin.detwiller.me/</loc>
-    <lastmod>2018-02-03T10:03:12-05:00</lastmod>
+    <lastmod>2018-02-07T08:58:34-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/post/</loc>
-    <lastmod>2018-02-03T10:03:12-05:00</lastmod>
+    <lastmod>2018-02-07T08:58:34-05:00</lastmod>
     <priority>0</priority>
   </url>
   
