@@ -124,21 +124,20 @@ We can do that by running <code>jest test.js --watch</code>.</p>
 
 <pre><code class="language-bash">echo &quot;test('&quot;mom&quot; is a palindrome', () =&gt; {
     expect(palindrome('bba')).toBeFalsy();
-&gt;     expect(palindrome('mom')).toBeTruthy();
-&gt; });
-&gt;
-&gt; test('&quot;racecar&quot; is a palindrome', () =&gt; {
-&gt;     expect(palindrome('racecar')).toBeTruthy();
-&gt; });
-&gt;
-&gt; test('&quot;bba&quot; is not a palindrome', () =&gt; {
-&gt;     expect(palindrome('bba')).toBeFalsy();
-&gt; });
-&gt;
-&gt; test('&quot; dad&quot; is not a palindrome', () =&gt; {
-&gt;     expect(palindrome(' dad')).toBeFalsy();
-&gt; });
-&gt; &quot; &gt;&gt; test.js
+    expect(palindrome('mom')).toBeTruthy();
+});
+
+test('&quot;racecar&quot; is a palindrome', () =&gt; {
+    expect(palindrome('racecar')).toBeTruthy();
+});
+
+test('&quot;bba&quot; is not a palindrome', () =&gt; {
+    expect(palindrome('bba')).toBeFalsy();
+});
+
+test('&quot; dad&quot; is not a palindrome', () =&gt; {
+    expect(palindrome(' dad')).toBeFalsy();
+});&quot; &gt;&gt; test.js
 </code></pre>
 
 <p>This command will append our new tests to our <code>test.js</code> file.  Upon updating the test file, we should see some activity in the terminal where we ran the jest suite with the watch flag set.</p>
