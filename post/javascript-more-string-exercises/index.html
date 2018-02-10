@@ -93,23 +93,8 @@ EOF
 <p>Checking the contents of our files is easy with the cat command:
 <code>cat index.js</code> and <code>cat test.js</code>.</p>
 
-<p>Now last time when we setup jest, we did so at the level of our <code>reversestring/</code> directory, I don&rsquo;t really feel like configuring this inside of each subdirectory of our <code>exercises/</code> directory so we&rsquo;ll add a global jest configuration inside <code>exercises/package.json</code>.
-From inside our palindrome directory we can do this with the following command:</p>
-
-<pre><code class="language-bash">cat &lt;&lt;EOF&gt;&gt; ../package.json
-{
-  &quot;name&quot;: &quot;exercises&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
-  &quot;description&quot;: &quot;&quot;,
-  &quot;main&quot;: &quot;index.js&quot;,
-  &quot;scripts&quot;: {
-    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
-  },
-  &quot;author&quot;: &quot;&quot;,
-  &quot;license&quot;: &quot;ISC&quot;
-}
-EOF
-</code></pre>
+<p>Now last time when we setup jest, we did so at the level of our <code>reversestring/</code> directory, I don&rsquo;t really feel like configuring this inside of each subdirectory of our <code>exercises/</code> directory so we&rsquo;ll create a package.json file inside <code>exercises/package.json</code>.
+We can accomplish this by running <code>npm init</code> and accepting all the defaults.</p>
 
 <p>Then we&rsquo;ll verify that our tests are running as expected with the command <code>jest test.js</code> from inside our palindrome directory.
 At this point we should see that 1 test passed, and with that we&rsquo;re ready to start getting this function doing some work.</p>
