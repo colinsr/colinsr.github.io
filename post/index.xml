@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Wed, 07 Feb 2018 08:58:34 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 10 Feb 2018 07:33:48 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Return Max Char</title>
+      <link>http://colin.detwiller.me/post/return-max-char/</link>
+      <pubDate>Sat, 10 Feb 2018 07:33:48 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/return-max-char/</guid>
+      <description>Today we&amp;rsquo;re going to be writing a function that will return the most frequent character that appears in a string. Given the string: &amp;ldquo;abcdd&amp;rdquo; we would get back &amp;ldquo;d&amp;rdquo; because that character appears twice whereas the other characters only appear once.
+This function would work the same when working with numbers, which will be coming in as a string anyways.
+We can create our new directory inside of our exercises directory as well as our two files, index.</description>
+    </item>
     
     <item>
       <title>Javascript More String Exercises</title>
