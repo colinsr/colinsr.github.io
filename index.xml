@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Sat, 10 Feb 2018 07:33:48 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 12 Feb 2018 08:47:19 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fizzbuzz</title>
+      <link>http://colin.detwiller.me/post/fizzbuzz/</link>
+      <pubDate>Mon, 12 Feb 2018 08:47:19 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/fizzbuzz/</guid>
+      <description>Our next exercise is going to be Fizzbuzz. This is a pretty common exercise that&amp;rsquo;s pretty simple. Let&amp;rsquo;s get started!
+Same like we always do, we&amp;rsquo;ll create a new directory from inside our exercises directory to hold our tests/code and create a couple files - index.js test.js.
+mkdir fizzbuzz &amp;amp;&amp;amp; cd fizzbuzz/ touch index.js test.js  Using your mechanism of choice we&amp;rsquo;ll get the following content into your test.js file:</description>
+    </item>
     
     <item>
       <title>Return Max Char</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://colin.detwiller.me/post/fizzbuzz/</loc>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://colin.detwiller.me/post/return-max-char/</loc>
     <lastmod>2018-02-10T07:33:48-05:00</lastmod>
   </url>
@@ -33,24 +38,68 @@
   </url>
   
   <url>
+    <loc>http://colin.detwiller.me/categories/azure/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/tags/azure/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://colin.detwiller.me/categories/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/categories/cloud/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/</loc>
-    <lastmod>2018-02-10T07:33:48-05:00</lastmod>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/tags/exercises/</loc>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/categories/javascript/</loc>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/tags/javascript/</loc>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/tags/load-balancing/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/post/</loc>
-    <lastmod>2018-02-10T07:33:48-05:00</lastmod>
+    <lastmod>2018-02-12T08:47:19-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/tags/</loc>
+    <lastmod>2018-01-29T10:43:42-05:00</lastmod>
     <priority>0</priority>
   </url>
   
