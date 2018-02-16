@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Mon, 12 Feb 2018 08:47:19 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 15 Feb 2018 08:47:31 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Array Chunk</title>
+      <link>http://colin.detwiller.me/post/array-chunk/</link>
+      <pubDate>Thu, 15 Feb 2018 08:47:31 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/array-chunk/</guid>
+      <description>Today we&amp;rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.
+Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It&amp;rsquo;ll probably be easier to understand based on this example:
+chunk([1,2,3,4,5], 2) =&amp;gt; [ [1,2], [3,4], [5]]  This problem should be easier to reason about now that we&amp;rsquo;ve seen a example.</description>
+    </item>
     
     <item>
       <title>Fizzbuzz</title>
