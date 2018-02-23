@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Thu, 15 Feb 2018 08:47:31 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2018 19:41:08 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Anagram Check</title>
+      <link>http://colin.detwiller.me/post/anagram-check/</link>
+      <pubDate>Tue, 20 Feb 2018 19:41:08 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/anagram-check/</guid>
+      <description>It&amp;rsquo;s time to work through another (easy) exercise in javascript. This time we&amp;rsquo;ll be working through an anagram checker function.
+Just so that we&amp;rsquo;re all on the same page I&amp;rsquo;ve taken the liberty of pulling up an official definition of &amp;ldquo;anagram&amp;rdquo;: &amp;gt; a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.
+Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.</description>
+    </item>
     
     <item>
       <title>Array Chunk</title>
