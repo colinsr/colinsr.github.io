@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Tue, 20 Feb 2018 19:41:08 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 23 Feb 2018 07:29:30 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/categories/javascript/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Capitalizer</title>
+      <link>http://colin.detwiller.me/post/capitalizer/</link>
+      <pubDate>Fri, 23 Feb 2018 07:29:30 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/capitalizer/</guid>
+      <description>This particular exercise should be a breeze after some of the exercises that we&amp;rsquo;ve already gone through.
+Given a string, capitalize the first letter of each word in that string.
+Once again, we have some setup to take care of - creating our directory and files.
+mkdir capitalizer &amp;amp;&amp;amp; cd capitalizer/ &amp;amp;&amp;amp; touch index.js test.js
+Then get some tests into our test.js file:
+const capitalize = require(&#39;./index&#39;); test(&#39;Capitalize exists&#39;, () =&amp;gt; { expect(typeof capitalize).</description>
+    </item>
     
     <item>
       <title>Anagram Check</title>
