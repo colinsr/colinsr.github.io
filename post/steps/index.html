@@ -1,0 +1,341 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Colin Detwiller&#39;s blog</title>
+        <meta name="author">
+        <meta name="description" content="Colin Detwiller&#39;s Tech blog">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.34" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="alternate" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="feed" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/styles.css">
+        <link rel="icon" href="http://colin.detwiller.me/favicon.ico">
+        <link rel="apple-touch-icon" href="http://colin.detwiller.me/apple-touch-icon.png" />
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/highlightjs/monokai.css">
+        <script src="http://colin.detwiller.me/js/vendor/modernizr-2.8.0.min.js"></script>
+        
+        <style>
+        .site-header h2 .logo {
+        background: url(http://colin.detwiller.me/img/cloud.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(http://colin.detwiller.me/img/cloud.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(http://colin.detwiller.me/img/cloud.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2></h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="http://colin.detwiller.me/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="http://colin.detwiller.me/post/steps/" title="Steps">Steps</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2018.02.25">2018.02.25</time>
+
+    &middot; Tagged in
+        
+        <a href="http://colin.detwiller.me/tags/javascript">javascript</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/exercises">exercises</a>
+        
+    
+
+</span>
+</footer>
+
+            <p>Ok, next up on our list of exercises is going to be to create a <code>steps(n)</code> function.</p>
+
+<p>This function will print out to the console a number of log statements like so:</p>
+
+<pre><code class="language-javascript">steps(3) =&gt; 
+'#  '
+'## '
+'###'
+</code></pre>
+
+<p>Meaning the base will print N &ldquo;#&rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.</p>
+
+<p>Following the same approach, we&rsquo;ll navigate to our <code>exercises/</code> directory and create a new directory called <code>steps/</code>, then we&rsquo;ll jump into the directory and create our <code>index.js</code> and our <code>test.js</code> files.</p>
+
+<p>After that we can get our tests running in watch mode, here is the test suite we&rsquo;ll be working with:</p>
+
+<pre><code class="language-javascript">const steps = require('./index');
+
+beforeEach(() =&gt; {
+  jest.spyOn(console, 'log');
+});
+
+afterEach(() =&gt; {
+  console.log.mockRestore();
+});
+
+test('steps function exists', () =&gt; {
+  expect(typeof steps).toEqual('function');
+});
+
+test('steps called with n = 1', () =&gt; {
+  steps(1);
+  expect(console.log.mock.calls[0][0]).toEqual('#');
+  expect(console.log.mock.calls.length).toEqual(1);
+});
+
+test('steps called with n = 2', () =&gt; {
+  steps(2);
+  expect(console.log.mock.calls[0][0]).toEqual('# ');
+  expect(console.log.mock.calls[1][0]).toEqual('##');
+  expect(console.log.mock.calls.length).toEqual(2);
+});
+
+test('steps called with n = 5', () =&gt; {
+  steps(4);
+  expect(console.log.mock.calls[0][0]).toEqual('#    ');
+  expect(console.log.mock.calls[1][0]).toEqual('##   ');
+  expect(console.log.mock.calls[2][0]).toEqual('###  ');
+  expect(console.log.mock.calls[3][0]).toEqual('#### ');
+  expect(console.log.mock.calls[4][0]).toEqual('#####');
+  expect(console.log.mock.calls.length).toEqual(5);
+});
+</code></pre>
+
+<p>Making sure to execute <code>jest test.js --watch</code> to get the tests rolling.</p>
+
+<p>Then we can add our function declaration to our <code>index.js</code> and export it to get our first green test.</p>
+
+<pre><code class="language-javascript">const steps = n =&gt; {
+
+}
+
+module.exports = steps;
+</code></pre>
+
+<p>I know that most people will look at this function and think about the return values as a sort of matrix.
+In this view each line that gets logged out to the console would be N char long, and we would have N rows to print out.
+What I came up with were two alternatives to that approach - a map function and a recursive function.</p>
+
+<p>I&rsquo;ll cover the map version first since the recursive function takes a bit more effort to explain clearly.</p>
+
+<p>We have this number, N, that&rsquo;s getting passed into our <code>steps(n)</code> function.  The way I wanted to solve this exercise was to build up an array from 1 to N, and then call map on the array - printing out to the console during each execution within the map.</p>
+
+<pre><code class="language-javascript">const steps = n =&gt; {
+  //build array from 1..N
+  //map through the array and print out to the console, doing some math to calculate # vs spaces
+}
+</code></pre>
+
+<p>Sounds pretty easy and straightforward in my opinion, so let&rsquo;s get started.</p>
+
+<p>We&rsquo;ve already gone through a couple handy ways to create arrays from a number.</p>
+
+<pre><code class="language-javascript">[...Array(n).keys()]  // return array from 0 to N-1
+//and
+Array.from(Array(n).keys(), x =&gt; x+1)  // return an array from 1 to N
+</code></pre>
+
+<p>I&rsquo;m going to go with option B. here as I&rsquo;d rather be working with the actual number instead of having to add one to each element of the array before calculating my &lsquo;#&rsquo; and spaces.</p>
+
+<p>That&rsquo;s brings our <code>index.js</code> to look roughly like:</p>
+
+<pre><code class="language-javascript">const steps = n =&gt; {
+  //build array from 1..N
+  Array.from(Array(n).keys(), x =&gt; x + 1)  // we have an array of 1..N
+  //use map to print out to the console, doing some math to calculate # vs spaces
+}
+</code></pre>
+
+<p>Now we just need to come up with the logic of how many hashtags/spaces to print out in each <code>console.log()</code> statement.
+The way I came up with this is that if we wanted to print 10 steps, our top step would consist of 1 hashtag followed by 9 spaces.
+Second step would be 2 hashtags and 8 spaces.  The math starts staring you in the face if you work through a few of these steps before just hacking away.</p>
+
+<pre><code class="language-javascript">const steps = n =&gt; {
+  
+  Array.from(Array(n).keys(), x =&gt; x + 1)  // we have an array of 1..N
+    //execute this console.log on each element of the array, doing some math to calculate #'s vs spaces
+    .map(num =&gt; console.log(`${'#'.repeat(num)}${' '.repeat(n - num)}`));
+}
+</code></pre>
+
+<p>Bam, check our jest output and we get&hellip; WTH.. we still have a test failing.  See if you can track down the issue.</p>
+
+<p>Once you&rsquo;ve had a chance to correct the issue with my bad test we can move on to the recursive approach.</p>
+
+<p>With a recursive function the first thing we should do is identify the &ldquo;done&rdquo; condition.  In this case we want to complete the function when we&rsquo;ve printed N lines, so first we&rsquo;ll add our escape hatch.  In order to know when it&rsquo;s safe to bail out we&rsquo;ll need to keep track of how many lines we&rsquo;ve printed out already, so we&rsquo;ll add a second parameter to our function definition with a default of 0.  Here is what that&rsquo;ll look like:</p>
+
+<pre><code class="language-javascript">const steps = (n, linesPrinted = 0) =&gt; {
+  if (linesPrinted === n) return; // this will fire off once we've printed N lines
+} 
+</code></pre>
+
+<p>Alright, so now we&rsquo;re ready to start actually implementing this recursive function.
+In order to do so we&rsquo;re going to need a way to pass the state from one call to the next - this is known as an accumulator.
+To get this working we&rsquo;re going to have to add <em>another</em> parameter to our function&hellip;</p>
+
+<pre><code class="language-javascript">const steps = (n, linesPrinted = 0, currentLine = &quot;&quot;) =&gt; {
+  if (linesPrinted === n) return; // this will fire off once we've printed N lines
+} 
+</code></pre>
+
+<p>We&rsquo;ll initialize <code>currentLine</code> to an empty string and then we&rsquo;ll use that to build up our output for the current iteration.
+We can also use the length of the <code>currentLine</code> variable to see when it&rsquo;s time for us to log out to the console and jump to our next iteration.</p>
+
+<pre><code class="language-javascript">const steps = (n, linesPrinted = 0, currentLine = &quot;&quot;) =&gt; {
+  if (linesPrinted === n) return; // this will fire off once we've printed N lines
+
+  if (currentLine.length === n) { // we've added our N characters to the currentLine
+    console.log(currentLine);     // take care of business here
+    return steps(n, linesPrinted + 1);   // increment linesPrinted and call steps() again!
+  }
+} 
+</code></pre>
+
+<p>Score, we now have a way to print out the content of <code>currentLine</code>, all that&rsquo;s left to do is populate it.
+We are basically adding one char per execution of our function, so we&rsquo;ll use <code>linesPrinted</code> along with the length of <code>currentLine</code> to figure out which character to add to <code>currentLine</code>.</p>
+
+<pre><code class="language-javascript">const steps = (n, linesPrinted = 0, currentLine = &quot;&quot;) =&gt; {
+  if (linesPrinted === n) return; // this will fire off once we've printed N lines
+
+  if (currentLine.length === n) { // we've added our N characters to the currentLine
+    console.log(currentLine);     // take care of business here
+    return steps(n, linesPrinted + 1);   // increment linesPrinted and call steps() again!
+  }
+  const currentChar = currentLine.length &lt;= linesPrinted ? '#' : ' ';
+  // if currentLine.length is 3 and we've printed 4 lines use a '#'
+  // if currentLine.length is 3 and we've printed 2 lines use a ' ' 
+  return steps(n, linesPrinted, currentLine += currentChar);
+  // make our recursive call, passing in the original N value
+  // the same number of lines printed - we didn't do a console.log if we made it here
+  // and add the current character to our currentLine before passing it through
+} 
+</code></pre>
+
+<p>You may want to step through this with the debugger if it doesn&rsquo;t make sense.  Recursion is hard.
+Getting in the recursive mindset is hard.</p>
+
+<p>I think in this particular case, I choose option A.  The array.map function once again proves to be easier to read in my opinion.</p>
+
+<p>Anyhow, if you made it through all the way - great job!  Keep it up!!
+👍</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fcolin.detwiller.me%2fpost%2fsteps%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Steps&amp;url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fsteps%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fsteps%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fsteps%2f&title=Steps" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "colin-detwiller-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="http://colin.detwiller.me/img/profile-image.png" alt="" />
+  <p class="name">Colin Detwiller 
+  <strong></strong></p>
+  <p class="address">Cleveland, OH</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/colinsr1187" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/colinsr" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="http://colin.detwiller.me/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="http://colin.detwiller.me/post/index.xml" title="RSS"></a>
+        <p>&copy; 2018 &middot; Powered by <a href="http://gohugo.io">Hugo</a>.</p>
+  </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="http:\/\/colin.detwiller.me\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="http://colin.detwiller.me/js/plugins.js"></script>
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-70072280-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+
