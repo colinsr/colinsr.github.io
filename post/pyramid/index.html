@@ -1,0 +1,396 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Colin Detwiller&#39;s blog</title>
+        <meta name="author">
+        <meta name="description" content="Colin Detwiller&#39;s Tech blog">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.34" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="alternate" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="feed" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/styles.css">
+        <link rel="icon" href="http://colin.detwiller.me/favicon.ico">
+        <link rel="apple-touch-icon" href="http://colin.detwiller.me/apple-touch-icon.png" />
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/highlightjs/monokai.css">
+        <script src="http://colin.detwiller.me/js/vendor/modernizr-2.8.0.min.js"></script>
+        
+        <style>
+        .site-header h2 .logo {
+        background: url(http://colin.detwiller.me/img/cloud.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(http://colin.detwiller.me/img/cloud.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(http://colin.detwiller.me/img/cloud.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2></h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="http://colin.detwiller.me/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="http://colin.detwiller.me/post/pyramid/" title="Pyramid">Pyramid</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2018.02.28">2018.02.28</time>
+
+    &middot; Tagged in
+        
+        <a href="http://colin.detwiller.me/tags/javascript">javascript</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/exercises">exercises</a>
+        
+    
+
+</span>
+</footer>
+
+            <p>Building on our last exercise this time we&rsquo;re going to be building a pyramid.
+Given a positive number print that number of lines printing out a pyramid shape:</p>
+
+<pre><code class="language-javascript">pyramid(3) =&gt; 
+'  #  '
+' ### '
+'#####'
+</code></pre>
+
+<p>You should be able to see the similarities in the output - but the program will have to do a little more work to figure out if it needs to print a space or hashtag.
+First things first, we&rsquo;ll get our structure in place, navigate to the <code>exercises/</code> directory and <code>mkdir pyramid &amp;&amp; cd pyramid &amp;&amp; touch index.js test.js</code>.</p>
+
+<p>Then we can get our tests up and running by adding the following to the <code>test.js</code> file:</p>
+
+<pre><code class="language-javascript">const pyramid = require('./index');
+
+beforeEach(() =&gt; {
+  jest.spyOn(console, 'log');
+});
+
+afterEach(() =&gt; {
+  console.log.mockRestore();
+});
+
+test('pyramid function exists', () =&gt; {
+  expect(typeof pyramid).toEqual('function');
+});
+
+test('prints a pryamid for n = 2', () =&gt; {
+  pyramid(2);
+  expect(console.log.mock.calls[0][0]).toEqual(' # ');
+  expect(console.log.mock.calls[1][0]).toEqual('###');
+  expect(console.log.mock.calls.length).toEqual(2);
+});
+
+test('prints a pryamid for n = 3', () =&gt; {
+  pyramid(3);
+  expect(console.log.mock.calls[0][0]).toEqual('  #  ');
+  expect(console.log.mock.calls[1][0]).toEqual(' ### ');
+  expect(console.log.mock.calls[2][0]).toEqual('#####');
+  expect(console.log.mock.calls.length).toEqual(3);
+});
+
+test('prints a pryamid for n = 4', () =&gt; {
+  pyramid(4);
+  expect(console.log.mock.calls[0][0]).toEqual('   #   ');
+  expect(console.log.mock.calls[1][0]).toEqual('  ###  ');
+  expect(console.log.mock.calls[2][0]).toEqual(' ##### ');
+  expect(console.log.mock.calls[3][0]).toEqual('#######');
+  expect(console.log.mock.calls.length).toEqual(4);
+});
+</code></pre>
+
+<p>Start up our tests by running <code>jest test.js --watch</code>, which will tell us we&rsquo;re failing everything right now.
+Quick fix to get one of our tests is to wire up our <code>index.js</code> file:</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+
+}
+
+module.exports = pyramid;
+</code></pre>
+
+<p>Great, that gets a quarter of our tests green.  Now to work on the implementation of our algorithm.
+I suppose on the first pass we&rsquo;ll take the iterative approach using a couple of for loops.</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+  //for loop 1 to n level of pyramid
+    //let currentLine = ''
+    //for loop to print 1 to how many chars we need per level
+      //figure out which char to append to currentLine =&gt; '#' or ' '
+    //print to console
+}
+</code></pre>
+
+<p>The first todo is pretty easy:</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+  //for loop 1 to n level of pyramid
+  for (let curLine = 0; curLine &lt; n; curLine++) {
+    let currentLine = '';
+    //for loop to print 1 to how many chars we need per level
+      //figure out which char to append to currentLine =&gt; '#' or ' '
+    //print to console
+  }
+}
+</code></pre>
+
+<p>Now we have a problem. We don&rsquo;t know exactly how many characters we need to print in each line.
+In the steps exercise it was <code>n</code> rows of <code>n</code> characters, but here we&rsquo;ll need to calculate how many characters we need for a given number n.  Time to look at some examples and coax out the answer.</p>
+
+<pre><code class="language-javascript">pyramid(2) =&gt; 
+' # '
+'###'
+pyramid(3) =&gt; 
+'  #  '
+' ### '
+'#####'
+pyramid(4) =&gt; 
+'   #   '
+'  ###  '
+' ##### '
+'#######'
+</code></pre>
+
+<p>We have <code>n</code> lines and in order to get that pyramid shape we&rsquo;re looking for an odd number &ndash; every time.
+The number of chars appears to be <code>2n-1</code>, meaning 2 =&gt; 3, 3 =&gt; 5, 4 =&gt; 7, which should be enough to get rolling on this next part.</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+  const charsPerLine = (2*n)-1;
+  //for loop 1 to n level of pyramid
+  for (let curLine = 0; curLine &lt; n; curLine++) {
+    let currentLine = '';
+    //for loop to print 1 to how many chars we need per level
+    for (let curChar = 0; curChar &lt; charsPerLine; curChar++) {}
+      //figure out which char to append to currentLine =&gt; '#' or ' '
+    }
+    //print to console
+  }
+}
+</code></pre>
+
+<p>When we go to append the <code>currentLine</code> string with the character we&rsquo;re going to need to check two things.
+But first things first, let&rsquo;s calculate the middle character for each line/layer in the pyramid.
+Using our previous examples of <code>n = 2</code>, <code>n = 3</code>, <code>n = 4</code>, we learned that we double and subtract one to get the number of characters per line.  That leaves us with <code>3</code>, <code>5</code>, and <code>7</code> characters respectively.
+To get the middle characters index then we simply need to divide by 2, and round up to the nearest whole number.</p>
+
+<pre><code class="language-javascript">const dividedByTwo = 3/2; //1.5
+const middleIndex  = Math.floor(dividedByTwo); // 1 (remember arrays start at 0)
+</code></pre>
+
+<p>Alright, now we can start working on when to print a space versus a hashtag.</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+  const charsPerLine = (2*n)-1,
+        midIndex = Math.floor(charsPerLine / 2);
+
+  //for loop 1 to n level of pyramid
+  for (let curLine = 0; curLine &lt; n; curLine++) {
+    let currentLine = '';
+    //for loop to print 1 to how many chars we need per level
+    for (let curChar = 0; curChar &lt; charsPerLine; curChar++) {
+      //figure out which char to append to currentLine =&gt; '#' or ' '
+      currentLine += (midIndex - curLine &lt;= curChar // handles left of the middle
+                  &amp;&amp;  midIndex + curLine &gt;= curChar) // handles right of the middle
+                  ? '#' : ' ';
+    }
+    console.log(currentLine);
+  }
+}
+</code></pre>
+
+<p>So there you have a working solution&hellip; I cannot stand that logic around which character to print.
+Let&rsquo;s come up with a different way of solving this.  We&rsquo;ll skip the recursive solution with this one, it&rsquo;ll end up being pretty close to the previous recursive solution we did to steps.</p>
+
+<p>Let&rsquo;s take a stab at using a similar approach to our map solution.</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+    Array.from(Array(n).keys(), x =&gt; x + 1)
+        .map(x =&gt; console.log(x));
+}
+</code></pre>
+
+<p>That will get us the array we need to work with (1 to <code>n</code>).  Now to handle the printing logic.
+For starters, we&rsquo;ll stash our characters in some <code>const</code> variables.</p>
+
+<pre><code class="language-javascript">const hash  = '#',
+      space = ' ';
+</code></pre>
+
+<p>We know that our middle character will always be a &lsquo;#&rsquo; so we can just hard code that into our <code>console.log()</code>.</p>
+
+<pre><code class="language-javascript">const pyramid = n =&gt; {
+    Array.from(Array(n).keys(), x =&gt; x + 1)
+        .map(x =&gt; console.log(`${TODO}#${TODO}`));
+}
+</code></pre>
+
+<p>I&rsquo;m thinking we create two helper functions.  One to handle printing for left of center, and one to handle right of center.
+Let&rsquo;s come up with an example of how to handle the left of center.  We have <code>n = 3</code>, so we are working with 3 lines, and 5 characters per line.
+We already have the middle character done, so we&rsquo;re essentially looking at what character to print for elements 0 and 1.</p>
+
+<p>I&rsquo;m swapping out spaces for underscores so that we have a better way to visualize this, as well as adding in a space between the characters:</p>
+
+<pre><code class="language-javascript">_ _ # _ _
+_ # # # _
+# # # # #
+</code></pre>
+
+<p>The numbers we have at our disposal are the number of lines to print and the current line number.
+Our first round will be 3 lines, currently on line 1.</p>
+
+<p>We&rsquo;d like to print 2 spaces and 0 hashtags.</p>
+
+<p>For our second pass we&rsquo;ll have 3 lines total, and we&rsquo;ll be on line 2.
+We&rsquo;d like to print 1 space and 1 hashtag.</p>
+
+<p>For our final pass, 3 lines total, on line 3.</p>
+
+<p>We want to print 2 hashtags and 0 spaces.</p>
+
+<p>It&rsquo;s just the inverse for the trailing characters.</p>
+
+<p>Okay, we can start coaxing out the printing logic now.</p>
+
+<pre><code class="language-javascript">const getLeadingChars  = (lines, lineNumber) =&gt; `${space.repeat(lines - lineNum)}${hash.repeat(lineNum - 1)}`;
+const getTrailingChars = (lines, lineNumber) =&gt; `${hash.repeat(lineNum - 1)}${space.repeat(lines - lineNum)}`;
+</code></pre>
+
+<p>Plug these helpers into our map and let&rsquo;s check the results.</p>
+
+<pre><code class="language-javascript">const hash  = '#',
+      space = ' ';
+
+const getLeadingChars = (lineNum, lines) =&gt; `${space.repeat(lines - lineNum)}${hash.repeat(lineNum - 1)}`;
+const getTrailingChars = (lineNum, lines) =&gt; `${hash.repeat(lineNum - 1)}${space.repeat(lines - lineNum)}`;
+
+const pyramid = n =&gt; {
+    Array.from(Array(n).keys(), x =&gt; x + 1)
+        .map(x =&gt; console.log(`${getLeadingChars(x,n)}#${getTrailingChars(x,n)}`));
+}
+</code></pre>
+
+<p>Nice!  Passing tests, and readable code.  I much prefer this option.</p>
+
+<p>👍</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fcolin.detwiller.me%2fpost%2fpyramid%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=Pyramid&amp;url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fpyramid%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fpyramid%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fcolin.detwiller.me%2fpost%2fpyramid%2f&title=Pyramid" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "colin-detwiller-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="http://colin.detwiller.me/img/profile-image.png" alt="" />
+  <p class="name">Colin Detwiller 
+  <strong></strong></p>
+  <p class="address">Cleveland, OH</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/colinsr1187" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/colinsr" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="http://colin.detwiller.me/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="http://colin.detwiller.me/post/index.xml" title="RSS"></a>
+        <p>&copy; 2018 &middot; Powered by <a href="http://gohugo.io">Hugo</a>.</p>
+  </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="http:\/\/colin.detwiller.me\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="http://colin.detwiller.me/js/plugins.js"></script>
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-70072280-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+
