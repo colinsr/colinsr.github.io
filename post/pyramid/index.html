@@ -187,11 +187,36 @@ But first things first, let&rsquo;s calculate the middle character for each line
 Using our previous examples of <code>n = 2</code>, <code>n = 3</code>, <code>n = 4</code>, we learned that we double and subtract one to get the number of characters per line.  That leaves us with <code>3</code>, <code>5</code>, and <code>7</code> characters respectively.
 To get the middle characters index then we simply need to divide by 2, and round down to the nearest whole number.</p>
 
-<pre><code class="language-javascript">const dividedByTwo = 3/2; //1.5
-const middleIndex  = Math.floor(dividedByTwo); // 1 (remember arrays start at 0)
+<pre><code class="language-javascript">const dividedByTwo = 5/2; //2.5
+const middleIndex  = Math.floor(dividedByTwo); // 2 (remember arrays start at 0)
 </code></pre>
 
 <p>Alright, now we can start working on when to print a space versus a hashtag.</p>
+
+<p>Walking through a 3 line scenario, we&rsquo;ll be looping through the chars to print inside of a single line.</p>
+
+<p>Line 1, <code>curLine</code> will be 0.  We step into our inner loop, and <code>curChar</code> will be 0.
+We know in line 1, we only want the middle character (of 5) to be a hashtag.  We&rsquo;re looking to limit printing a hashtag to index 2 (third char).<br/>
+If the <code>midIndex - curLine &lt;= curChar</code> =&gt; <code>2 - 0 &lt;= 0</code> that will get us a false because 2 is not less than or equal to 0.<br/>
+If the <code>midIndex + curLine &gt;= curChar</code> =&gt; <code>2 + 0 &gt;= 0</code> this is true, but we want to apply both of these rules to keep the &lsquo;#&rsquo; printing inside a range of indexes.<br/>
+Moving on to <code>curChar = 1</code>, will get us <code>if (2 - 0 &lt;= 1) &amp;&amp; (2 + 0 &gt;= 1)</code> false so we print a space.<br/>
+When <code>curChar = 2</code>, will get us <code>if (2 - 0 &lt;= 2) &amp;&amp; (2 + 0 &gt;= 2)</code> which gets us to true and we print a hashtag.<br/>
+Next is <code>curChar = 3</code>, will get us <code>if (2 - 0 &lt;= 3) &amp;&amp; (2 + 0 &gt;= 3)</code> back to false and we print a space.<br/>
+The final character in our first line is <code>curChar = 4</code>, will get us <code>if (2 - 0 &lt;= 4) &amp;&amp; (2 + 0 &gt;= 4)</code> false again print another space.</p>
+
+<p>Line 2, <code>curLine</code> will be 1 and we&rsquo;re looking to print a leading and trailing space, with 3 hashtags sandwiched in the middle.<br/>
+<code>curChar = 0</code> =&gt; <code>if (2 - 1 &lt;= 0 &amp;&amp; 2 + 1 &gt;= 0) //false</code><br/>
+<code>curChar = 1</code> =&gt; <code>if (2 - 1 &lt;= 1 &amp;&amp; 2 + 1 &gt;= 1) //true</code><br/>
+<code>curChar = 2</code> =&gt; <code>if (2 - 1 &lt;= 2 &amp;&amp; 2 + 1 &gt;= 2) //true</code><br/>
+<code>curChar = 3</code> =&gt; <code>if (2 - 1 &lt;= 3 &amp;&amp; 2 + 1 &gt;= 3) //true</code><br/>
+<code>curChar = 4</code> =&gt; <code>if (2 - 1 &lt;= 4 &amp;&amp; 2 + 1 &gt;= 4) //false</code><br/></p>
+
+<p>Line 3, <code>curLine</code> is now 2 and we want to print all hashtags.<br/>
+<code>curChar = 0</code> =&gt; <code>if (2 - 2 &lt;= 0 &amp;&amp; 2 + 2 &gt;= 0) //true</code><br/>
+<code>curChar = 1</code> =&gt; <code>if (2 - 2 &lt;= 1 &amp;&amp; 2 + 2 &gt;= 1) //true</code><br/>
+<code>curChar = 2</code> =&gt; <code>if (2 - 2 &lt;= 2 &amp;&amp; 2 + 2 &gt;= 2) //true</code><br/>
+<code>curChar = 3</code> =&gt; <code>if (2 - 2 &lt;= 3 &amp;&amp; 2 + 2 &gt;= 3) //true</code><br/>
+<code>curChar = 4</code> =&gt; <code>if (2 - 2 &lt;= 4 &amp;&amp; 2 + 2 &gt;= 4) //true</code></p>
 
 <pre><code class="language-javascript">const pyramid = n =&gt; {
   const charsPerLine = (2*n)-1,
@@ -203,8 +228,8 @@ const middleIndex  = Math.floor(dividedByTwo); // 1 (remember arrays start at 0)
     //for loop to print 1 to how many chars we need per level
     for (let curChar = 0; curChar &lt; charsPerLine; curChar++) {
       //figure out which char to append to currentLine =&gt; '#' or ' '
-      currentLine += (midIndex - curLine &lt;= curChar // handles left of the middle
-                  &amp;&amp;  midIndex + curLine &gt;= curChar) // handles right of the middle
+      currentLine += (midIndex - curLine &lt;= curChar 
+                  &amp;&amp;  midIndex + curLine &gt;= curChar)
                   ? '#' : ' ';
     }
     console.log(currentLine);
