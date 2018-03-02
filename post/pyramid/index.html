@@ -185,7 +185,7 @@ The number of chars appears to be <code>2n-1</code>, meaning 2 =&gt; 3, 3 =&gt; 
 <p>When we go to append the <code>currentLine</code> string with the character we&rsquo;re going to need to check two things.
 But first things first, let&rsquo;s calculate the middle character for each line/layer in the pyramid.
 Using our previous examples of <code>n = 2</code>, <code>n = 3</code>, <code>n = 4</code>, we learned that we double and subtract one to get the number of characters per line.  That leaves us with <code>3</code>, <code>5</code>, and <code>7</code> characters respectively.
-To get the middle characters index then we simply need to divide by 2, and round up to the nearest whole number.</p>
+To get the middle characters index then we simply need to divide by 2, and round down to the nearest whole number.</p>
 
 <pre><code class="language-javascript">const dividedByTwo = 3/2; //1.5
 const middleIndex  = Math.floor(dividedByTwo); // 1 (remember arrays start at 0)
