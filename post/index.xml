@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Wed, 28 Feb 2018 08:21:12 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 02 Mar 2018 16:53:52 -0500</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vowels</title>
+      <link>http://colin.detwiller.me/post/vowels/</link>
+      <pubDate>Fri, 02 Mar 2018 16:53:52 -0500</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/vowels/</guid>
+      <description>This exercise will be a walk in the park. We need to do a case insensitive count of vowel characters in a given string.
+In this exercise we&amp;rsquo;ll try to use map(), filter(), and reduce().
+This is going to be a fun one. Starting like we always do, go to our exercises/ directory and create our new directory, vowels/ and create two files index.js and test.js.
+We&amp;rsquo;ll add some prebaked tests into the test.</description>
+    </item>
     
     <item>
       <title>Pyramid</title>
