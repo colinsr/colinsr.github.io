@@ -1,0 +1,335 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Colin Detwiller&#39;s blog</title>
+        <meta name="author">
+        <meta name="description" content="Colin Detwiller&#39;s Tech blog">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.34" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="alternate" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="feed" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/styles.css">
+        <link rel="icon" href="http://colin.detwiller.me/favicon.ico">
+        <link rel="apple-touch-icon" href="http://colin.detwiller.me/apple-touch-icon.png" />
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/highlightjs/monokai.css">
+        <script src="http://colin.detwiller.me/js/vendor/modernizr-2.8.0.min.js"></script>
+        
+        <style>
+        .site-header h2 .logo {
+        background: url(http://colin.detwiller.me/img/cloud.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(http://colin.detwiller.me/img/cloud.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(http://colin.detwiller.me/img/cloud.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2></h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="http://colin.detwiller.me/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="http://colin.detwiller.me/post/aws_iam/" title="AWS Identity &amp; Access Management">AWS Identity &amp; Access Management</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2018.03.17">2018.03.17</time>
+
+    &middot; Tagged in
+        
+        <a href="http://colin.detwiller.me/tags/aws">aws</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/amazon-web-services">amazon web services</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/iam">iam</a>
+        
+    
+
+</span>
+</footer>
+
+            
+
+<h1 id="what-is-iam">What is IAM?</h1>
+
+<ul>
+<li>IAM is AWS&rsquo; way of tracking permissions across all the resources assiciated with a given AWS cloud subscription.</li>
+<li>IAM controls access at the user, group or role level - and also handles federation to give temporary permission to external users.</li>
+<li>Inside IAM you are able to customize the login URL for the specific AWS account.</li>
+<li>You can configure console password policies, enforce MFA across all accounts.</li>
+<li>You&rsquo;re able to manage users, groups and roles as well as their associated permissions.</li>
+</ul>
+
+<p>Here is what you&rsquo;ll be looking at if you are viewing IAM in the AWS Console:</p>
+
+<p><img src="/img/IAMdashboard.png" alt="IAM Dashboard" /></p>
+
+<h2 id="iam-policies">IAM Policies</h2>
+
+<p>JSON definition which define what permissions a user/group/role have.<br />
+  Can be very loosely defined giving access to all actions applied to all resources in the account, or could be extremely fine grained allowing a very specific set of actions on a single AWS resource.</p>
+
+<p>Here are a few examples of AWS IAM Policies:</p>
+
+<pre><code>  {
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: &quot;&lt;SERVICE-NAME&gt;:&lt;ACTION-NAME&gt;&quot;,    
+      &quot;Resource&quot;: &quot;*&quot;
+    }
+  }
+</code></pre>
+
+<p>If you were to throw a <code>*</code> into the above policy for the Action property, you would be granting God mode to all AWS services to whatever resource (user/group/role) you apply this policy to.</p>
+
+<p>Some of the rules around IAM policies can be a little confusing.  For example, if you had a user who was part of a group that gave administrator access to all S3 buckets inside an AWS account, but you wanted to lock down one specific bucket you can apply a second policy with an explicit Deny policy which will override the Allow <code>*</code> policy.</p>
+
+<pre><code>  {
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
+      // All actions allowed on all S3 buckets
+      {
+        &quot;Effect&quot;: &quot;Allow&quot;,
+        &quot;Action&quot;: &quot;s3:*&quot;,
+        &quot;Resource&quot;: &quot;*&quot;
+      },
+      // Lock down top secret bucket - no actions allowed
+      {
+        &quot;Effect&quot;: &quot;Deny&quot;,
+        &quot;NotAction&quot;: &quot;s3:*&quot;,
+        &quot;NotResource&quot;: [
+          &quot;arn:aws:s3:::top-secret-bucket&quot;,
+          &quot;arn:aws:s3:::top-secret-bucket/*&quot;
+        ]
+      }
+    ]
+  }
+</code></pre>
+
+<p>Once you understand the basics Policies aren&rsquo;t too bad to work with - but be aware in the absence of an explicit allow, there is an implicit deny.<br>
+  If you were to add a new user he would have no access to any services until he/she gets added to a group or has a policy directly applied to his user account.</p>
+
+<h2 id="iam-users">IAM Users</h2>
+
+<p>A &ldquo;user&rdquo; is similar to a local login account on an operating system.<br>
+  You may have users who are system admins, endusers, or even service accounts that are used by different applications to access your machine.<br>
+  IAM users accomplish the same goal, giving things access to resources and controlling access levels.<br>
+  Each account has a root user, which can perform <code>*</code> Actions on <code>*</code> Resources - hence it&rsquo;s a best practice to restrict usage of the root account in order to minimize exposure of the root user&rsquo;s credentials.<br>
+  The root account should be used to set up MFA (multi factor authentication) for the root user and create an Admin user which would be used on an ongoing basis in lieu of the root account.<br>
+  Users can have either API keys, which would be used for programmatic access to that AWS account, and/or console access using a username/password/MFA combination.<br>
+  If you were to add a user in IAM here is what you&rsquo;d be looking at:
+  <img src="/img/IAMadduser.png" alt="IAM Dashboard" />
+  On the next page you can grant permission by assigning policies directly to the user account or add the user to a group - if you skip this step you&rsquo;ll get a warning from the kind folks at AWS:</p>
+
+<blockquote>
+<p><code>This user has no permissions</code><br>
+<code>You haven't given this user any permissions.</code><br>
+<code>This means that the user has no access to any AWS service or resource.</code><br>
+<code>Consider returning to the previous step and adding some type of permissions.</code></p>
+</blockquote>
+
+<p>Keep in mind - you must either download the csv or store the API credentials, Access Key ID and Secret Access Key, upon creating the user or you will have to go through the process of generating a new set of credentials at a later point.</p>
+
+<h2 id="iam-groups">IAM Groups</h2>
+
+<p>Groups can be used to apply a set of permissions across a group of users. Go figure.<br>
+  How this works is that you go in and either create a specific policy or policies and/or use one or a combination of canned AWS policies.<br>
+  Once you&rsquo;ve defined the permissions you&rsquo;d like to grant access to a given group, you simply assign a user to that group and viola - you&rsquo;re ready to rock.<br>
+  If we wanted to add our user <code>SilkyJohnson</code> to the <code>administrators</code> group from the console, we&rsquo;d either navigate to the Groups section and select the appropriate group or go to the User directly and select <code>Add users to group</code>.</p>
+
+<h2 id="iam-roles">IAM Roles</h2>
+
+<p>Roles are used to grant permissions to AWS resources like EC2 (Elastic Compute Cloud), Lambda function, etc, or even external users after being authenticated, via Active Directory or Single Sign on, needing temporary permissions inside your AWS footprint.<br>
+  Roles should always be used instead of actual credentials on an EC2 instance.
+  In the past roles <em>had</em> to be assigned at EC2 instance launch time, but now you are able to add or change the role assigned to a given EC2 instance via AWS CLI or even in the AWS Console.
+  An IAM User from a different AWS account can even assume a role and get access to your AWS services.<br>
+  IAM Policies are attached to a role, and they work in a similar fashion to groups.<br>
+  i.e. Grant a set of permissions to a specific set of resources, assume the role, and now you&rsquo;re in business.
+  AWS has some canned role permissions - Service Roles, or you can roll your own.</p>
+
+<p>Depending on what AWS services you are using, you&rsquo;ll need to get pretty comfortable with these roles and how they work.<br>
+  For example, when you set up a lambda function that needs access to S3, you&rsquo;ll need to make sure to grant the permissions, via a role, for that interaction to take place.</p>
+
+<h2 id="iam-sts-security-token-service">IAM STS (Security Token Service)</h2>
+
+<p>STS provides short term temporary credentials used to grant access to AWS services in your account.<br>
+  It can be used to grant non-AWS account holders or AWS accounts from a separate account permissions within your account.
+  Credentials are returned from an STS API call and include the following:</p>
+
+<pre><code>  {
+    &quot;sessionId&quot;:&quot;temporary access key ID&quot;,
+    &quot;sessionKey&quot;:&quot;temporary secret access key&quot;,
+    &quot;sessionToken&quot;:&quot;security token&quot;
+  }
+</code></pre>
+
+<p>STS takes a lot of the headache away from having to manage temporary credentials.<br>
+  Use cases of STS:</p>
+
+<ul>
+<li>Identity Federation, using SAML or web identity federation</li>
+<li>Roles for Cross-Account access</li>
+<li>Roles for EC2 and other AWS services</li>
+</ul>
+
+<p>STS API Actions:</p>
+
+<ul>
+<li><p>AssumeRole:<br>
+Returns a set of temporary security credentials (consisting of an access key ID, a secret access key, and a security token) that you can use to access AWS resources that you might not normally have access to.</p></li>
+
+<li><p>AssumeRoleWithSAML:<br>
+Returns a set of temporary security credentials for users who have been authenticated via a SAML authentication response.</p></li>
+
+<li><p>AssumeRoleWithWebIdentity:<br>
+Returns a set of temporary security credentials for users who have been authenticated in a mobile or web application with a web identity provider, such as Amazon Cognito, Login with Amazon, Facebook, Google, or any OpenID Connect-compatible identity provider.</p></li>
+
+<li><p>DecodeAuthorizationMessage:<br>
+Decodes additional information about the authorization status of a request from an encoded message returned in response to an AWS request.</p></li>
+
+<li><p>GetCallerIdentity:<br>
+Returns details about the IAM identity whose credentials are used to call the API.</p></li>
+
+<li><p>GetFederationToken:<br>
+Returns a set of temporary security credentials (consisting of an access key ID, a secret access key, and a security token) for a federated user.</p></li>
+
+<li><p>GetSessionToken:<br>
+Returns a set of temporary credentials for an AWS account or IAM user.
+The credentials consist of an access key ID, a secret access key, and a security token.</p></li>
+</ul>
+
+<p>The process is a bit complicated and we can do a deep dive on this later on to see how all the pieces fit together.</p>
+
+<h2 id="iam-api-keys">IAM API Keys</h2>
+
+<p>These are used for programmatic access to AWS resources.<br>
+  If you&rsquo;re planning to interact with the console only, you can skip over this, but if you plan to use the AWS CLI, powershell tools, any of the supported AWS SDKs or direct interaction using HTTP calls using the APIs for the different services you&rsquo;ll need to make sure to set these up.<br>
+  Remember that the keys are only available one time, upon creation.<br>
+  Should you misplace your keys, you&rsquo;ll have to go through the regeneration process.<br>
+  Do not combine Roles and API keys, use Roles whenever possible!</p>
+
+<p>There you have a quick summary of AWS IAM, feel free to post any questions, comment, concerns in the comments section below.<br>
+👍</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_iam%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=AWS%20Identity%20%26%20Access%20Management&amp;url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_iam%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_iam%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_iam%2f&title=AWS%20Identity%20%26%20Access%20Management" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "colin-detwiller-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="http://colin.detwiller.me/img/profile-image.png" alt="" />
+  <p class="name">Colin Detwiller 
+  <strong></strong></p>
+  <p class="address">Cleveland, OH</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/colinsr1187" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/colinsr" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="http://colin.detwiller.me/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="http://colin.detwiller.me/post/index.xml" title="RSS"></a>
+        <p>&copy; 2018 &middot; Powered by <a href="http://gohugo.io">Hugo</a>.</p>
+  </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="http:\/\/colin.detwiller.me\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="http://colin.detwiller.me/js/plugins.js"></script>
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-70072280-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+
