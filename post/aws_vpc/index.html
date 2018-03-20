@@ -1,0 +1,364 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Colin Detwiller&#39;s blog</title>
+        <meta name="author">
+        <meta name="description" content="Colin Detwiller&#39;s Tech blog">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="generator" content="Hugo 0.34" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="alternate" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href="http://colin.detwiller.me/post/index.xml" rel="feed" type="application/rss+xml" title="Colin Detwiller&#39;s blog" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,300,700|Noto+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/styles.css">
+        <link rel="icon" href="http://colin.detwiller.me/favicon.ico">
+        <link rel="apple-touch-icon" href="http://colin.detwiller.me/apple-touch-icon.png" />
+        <link rel="stylesheet" href="http://colin.detwiller.me/css/highlightjs/monokai.css">
+        <script src="http://colin.detwiller.me/js/vendor/modernizr-2.8.0.min.js"></script>
+        
+        <style>
+        .site-header h2 .logo {
+        background: url(http://colin.detwiller.me/img/cloud.jpg) no-repeat 0 0;
+        }
+        @media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+          .site-header h2 .logo {
+            background-image: url(http://colin.detwiller.me/img/cloud.jpg);
+        }}
+       .site-header {
+         background: #2a373d url(http://colin.detwiller.me/img/cloud.jpg) no-repeat center center;
+         z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        
+        <header class="site-header">
+          <div class="transparent-layer">
+              <h2></h2>
+          </div>
+        </header>
+
+
+<div class="container clearfix">
+    <main role="main" class="content">
+        <article class="post">
+            <a class="btn home" href="http://colin.detwiller.me/" title="Back to home">&laquo; Back to home</a>
+            
+<h1><a href="http://colin.detwiller.me/post/aws_vpc/" title="AWS VPC">AWS VPC</a></h1>
+
+<footer class="post-info">Posted on <span class="post-meta"><time datetime="2018.03.19">2018.03.19</time>
+
+    &middot; Tagged in
+        
+        <a href="http://colin.detwiller.me/tags/aws">aws</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/amazon-web-services">amazon web services</a>, 
+        
+        <a href="http://colin.detwiller.me/tags/vpc">vpc</a>
+        
+    
+
+</span>
+</footer>
+
+            
+
+<p>In this post we&rsquo;re going to dissect the make up of an AWS VPC.<br />
+VPC&rsquo;s make up the networking component of Amazon Web Services.
+They&rsquo;re composed of several distinct pieces, we&rsquo;ll go over each one independently and talk about their purpose and some of the ins and outs of them.</p>
+
+<ul>
+<li><a href="#vpc">VPC</a></li>
+<li><a href="#subnet">Subnets</a></li>
+<li><a href="#igw">Internet Gateway</a></li>
+<li><a href="#routetable">Route Tables</a></li>
+<li><a href="#nacl">Network Access Control Lists</a></li>
+<li><a href="#sgs">Security Groups</a></li>
+<li><a href="#vpg">Virtual Private Gatway</a></li>
+<li><a href="#endpoints">VPC Endpoints</a></li>
+</ul>
+
+<h2 id="vpc-a-id-vpc-a">VPC <a id="vpc"></a></h2>
+
+<p>VPCs are the heart of AWS networking.<br>
+They enable you to create fully customized, fit to order virtual networks in the AWS cloud.<br>
+While the power of VPCs in AWS is awesome, there are also a lot of pieces that fit together to form a VPC. We&rsquo;ll go over each component separately in this post and try to make sense of all of this VPC talk.<br>
+Bear in mind that a VPC can only live in one AWS Region, but it can span multiple Availability Zones.<br>
+When the rubber meets the road, there are only a few things that a VPC needs in order to be created.<br>
+First, it needs a name. Try to be descriptive here and give your VPC a meaningful, self documenting name.  There&rsquo;s nothing worse than seeing a VPC called <code>vpc-1695</code> or some other garbage.<br>
+Next up it, needs a CIDR block.  CIDR stands for Classless Inter Domain Routing.<br>
+What that means in layman&rsquo;s terms is the VPC needs a range of private IP addresses which it has at it&rsquo;s disposal.  Take notice that I said &ldquo;private&rdquo; IP range.<br>
+Back in the day, the <a href="https://en.wikipedia.org/wiki/Internet_Engineering_Task_Force">Internet Engineering Task Force (IETF)</a> realized that we were going to run out of public IP addresses, so they pulled several IP ranges and marked them as reserved for private networks.  These private ranges fall into the following:</p>
+
+<ul>
+<li>10.0.0.0 - 10.255.255.255</li>
+<li>172.16.0.0 - 172.31.255.255</li>
+<li>192.168.0.0 - 192.168.255.255</li>
+</ul>
+
+<p>This means that if you are on the open internet and try to hit one of these private IP addresses you are pretty much S.O.L. as they are non-routable.<br>
+There are a few limitations when it comes to the ranges you can provide a VPC in AWS.  The netmask must be between <code>/16</code> and <code>/28</code>. Pre CIDR notation used a Classful scheme where there were Class A, B, C, D, and E.  I&rsquo;m not going in to all the details of subnetting here, but we&rsquo;ll cover enough to get our AWS VPC up and running.<br>
+During setup of a VPC you can also choose whether or not to use IPv6, which is the follow up solution our friends at IETF came up with in regards to running out of IP addresses.  We&rsquo;ll have plenty of addresses to work with in our network, and I&rsquo;d certainly rather be using <code>10.0.1.157/32</code> as an IP than <code>2001:db8:85a3:8d3:1319:8a2e:370:7348</code>.<br>
+The final input required for a VPC is the tenancy level.  This is just talking about what kind of hardware you&rsquo;d like your VPC to run your EC2 instances on.  Dedicated Tenancy means running on an isolated server, where you are the only person using that server.  It&rsquo;s pretty expensive to run on Dedicated Tenancy, so we&rsquo;ll stick with Default Tenancy unless we have a good reason not to.<br>
+Default Tenancy means that our applications are not the only applications running on a given EC2 instance - there could be any number of other apps running alongside yours.  Fear not, there is a hypervisor running on the host which handles the virtualization/isolation.<br>
+This setting will override the EC2 Tenancy setting so proceed with caution if you choose Dedicated as all instances launched in your VPC will run in this mode.</p>
+
+<p>Let&rsquo;s go through the console, and choose VPC from the services.<br>
+Then we&rsquo;ll navigate to <code>Your VPCs</code> and choose <code>Create VPC</code>.  That will bring up a modal where we can enter some values.</p>
+
+<p><img src="/img/VPC_create.png" alt="Create VPC" /></p>
+
+<p>We&rsquo;ll choose a name <code>Dev-VPC</code>, a CIDR block <code>10.0.0.0/16</code>, and a tenancy type <code>Default</code> and then click create.  The <code>/16</code> netmask will give our VPC access to over 65,000 private IP addresses, so I&rsquo;d say we&rsquo;re all good there.</p>
+
+<h2 id="subnets-a-id-subnet-a">Subnets <a id="subnet"></a></h2>
+
+<p>Subnets have a long list of uses.<br>
+They are primarily used to break up your VPC&rsquo;s address range into smaller chunks.  Amazon has multiple availability zones within a region and we&rsquo;d like to distribute our servers across AZ&rsquo;s in order to maximize high availability and fault tolerance.  A subnet cannot span AZ&rsquo;s so we&rsquo;re going to need a few.<br>
+In our <code>10.0.0.0/16</code> VPC example, we&rsquo;d want to set up at least 2 subnets, one for each AZ.  The second would get created in a different AZ than the first, let&rsquo;s say <code>us-east-2a</code> and <code>us-east-2b</code> (yay Ohio data center).</p>
+
+<p>When you&rsquo;re create your first subnet, go into the Subnets tab under the VPC service, and click on Create Subnet.  We&rsquo;ll provide a name <code>public-1</code>, the VPC to associate the subnet with <code>Dev-VPC</code>, the AZ to place the subnet, and the IPv4 CIDR block for the subnet.  We&rsquo;ll use a <code>10.0.1.0/24</code> block which will give us 256 addresses to play with from: <code>10.0.1.0</code> up to <code>10.0.1.255</code>, minus the handful held back by AWS.</p>
+
+<p>AWS reserves the following addresses in <strong>each</strong> subnet inside a VPC - in our <code>10.0.1.0/16</code> VPC those will be:</p>
+
+<ul>
+<li><code>10.0.1.0/32</code>   =&gt; <code>Network Address</code></li>
+<li><code>10.0.1.1/32</code>   =&gt; <code>VPC router</code></li>
+<li><code>10.0.1.2/32</code>   =&gt; <code>DNS server</code></li>
+<li><code>10.0.1.3/32</code>   =&gt; <code>Reserved for &quot;future use&quot;</code></li>
+<li><code>10.0.1.255/32</code> =&gt; <code>Network Broadcast Address</code></li>
+</ul>
+
+<p>This is what that looks like.</p>
+
+<p><img src="/img/VPC_subnet.png" alt="Create Subnet" /></p>
+
+<p>Now repeat the same process - except that it&rsquo;s in <code>us-east-2b</code>, the IPv4 CIDR block is <code>10.0.2.0/24</code> and the name is <code>public-2</code>. Nice!</p>
+
+<h2 id="internet-gateways-a-id-igw-a">Internet Gateways <a id="igw"></a></h2>
+
+<p>We created two &ldquo;public&rdquo; subnets, but in reality they are not connected to the internet and are public in name only.<br>
+In order to make our subnets actually public we&rsquo;ll need to create an Internet Gateway.  These are used for all traffic to/from your network and the internet.<br>
+You can only have one IGW attached to a VPC and we have none so let&rsquo;s get to getting.</p>
+
+<p>Go into the <code>Internet Gateways</code> view and select Create Internet Gateway.<br>
+Choose a name - <code>Dev-VPC-IGW</code> and click Yes, Create.</p>
+
+<p><img src="/img/VPC_igw.png" alt="Create Internet Gateway" /></p>
+
+<p>OK, great we have an Internet Gateway now let&rsquo;s get it connected to our VPC.<br>
+Click on the Attach to VPC button and choose our <code>Dev-VPC</code>.</p>
+
+<h2 id="route-tables-a-id-routetable-a">Route Tables <a id="routetable"></a></h2>
+
+<p>Which brings us to Route Tables.  We now have a VPC, a couple subnets, added an Internet Gateway and still we need to give our subnets a route to the internet.<br>
+A Route Table in AWS is pretty much the same as a router in an on premises network.  Only 1 Route Table can be attached to a Subnet, but many subnets can be attached to the same route table.<br>
+When a VPC is created, AWS creates a default Route Table along with it.  Any new Subnets you create will automatically be attached to the default Route Table.<br>
+This default Route Table only has one route defined - our local network (<code>10.0.0.0/16</code>).<br>
+These Route Tables take 2 inputs, the Destination and the Target.  Looking at our existing Default Route Table, we can see that we have a Destination which is the same as our CIDR block for our VPC and a target of local.  No mention here of our Internet Gateway.<br>
+In order to get our Subnets to be actually public, lets get the Internet Gateway attached to a new Route Table.<br>
+Going in to our VPC service and Route Tables section we want to click on Create Route Table.  Once the modal pops up we are going to give a clear name describing what this Route Table is for: <code>Dev-VPC-Public</code> sounds about right.  Make sure you choose to create this new Route Table in the correct VPC in this step.</p>
+
+<p><img src="/img/VPC_route_table.png" alt="Create Route Table" /></p>
+
+<p>We&rsquo;re already half way home.  Now we just need to get a route added to pass non-local traffic off to the Internet Gateway.<br>
+Back in the AWS Console, select your new Route Table, click on the Routes tab in the bottom dock and select Edit and finally Add another Route.<br>
+Our next route is going to cover all non-local traffic.  This is defined with <code>Destination: 0.0.0.0/0</code>, meaning when a computer on our VPC tries to access some IP address that does not reside in our VPC, our network is in the <code>10.0.0.0/16</code> IP address range, the traffic will be routed to the Internet Gateway.<br>
+So now we just need to add the <code>Target: Our IGW</code> - which easily identifiable because of proper naming.</p>
+
+<p><img src="/img/VPC_public_route.png" alt="Create Public Route" /></p>
+
+<p>Don&rsquo;t forget to click the Save buton, and we can move on.  We finally have proper public subnets.</p>
+
+<h2 id="network-access-control-lists-nacls-a-id-nacl-a">Network Access Control Lists (NACLs) <a id="nacl"></a></h2>
+
+<p>Ruh roh, now that our public Subnets are actually connected to the internet we&rsquo;re going to have to start to think about locking them down so that we don&rsquo;t expose ourselves to malicious attacks.<br>
+AWS has multiple layers of securing your network/data, the first layer we&rsquo;ll talk about is the Network Access Control List.<br>
+NACLs control traffic at the Subnet level.<br>
+A Subnet can only have one NACL attached to it at any given time, but once again, you can re-use NACLs on multiple Subnets.<br>
+NACLs are stateless, meaning that if you have an explicit Inbound ALLOW rule, <strong>you must</strong> also have a corresponding explicit Outbound ALLOW rule in your configuration.<br>
+These Rules are executed in ascending order, lower numbers are evaluated first, and once a Rule is hit no other Rules are evaluated.<br>
+As per usual, AWS has been kind enough to create a default NACL for our VPC which has an ALL Traffic, ALL Protocol, ALL Port, allow Inbound and Outbound rule in place for traffic to/from all IPs.<br>
+This is good for some folks, but we care about security so we&rsquo;ll be creating a new custom NACL.<br>
+Back in the AWS Console, in the VPC section, under the Security section we&rsquo;ll choose Network ACLs.<br>
+Once inside, we&rsquo;ll choose Create Network ACL.  Again we want to choose a meaningful name and make sure that we pick the correct VPC.</p>
+
+<p><img src="/img/VPC_NACL.png" alt="Create Network ACL" /></p>
+
+<p>With the easy part out of the way, we can drill in to the Inbound/Outbound rules.  First make sure you&rsquo;ve selected our newly created NACL, then select Inbound Rules.<br>
+It&rsquo;s important to notice here that we have an explicit DENY ALL rule currently.  We are going to have to specify exactly what traffic we want to allow into our public subnets.<br>
+Select Edit, and Add another rule.  Remember I said these rules are executed in ascending order?  We need to give the rule a priority - let&rsquo;s start at 100, Type - SSH (port 22 here), Protocol TCP, and Source - we&rsquo;ll want to use our public IP to allow SSH access to our yet to be created instances.</p>
+
+<p>Protip: if you have curl installed you can use <code>curl ipinfo.io</code> to pull your public IP, otherwise <a href="https://whatsmyip.com/">Whats my ip</a>.</p>
+
+<p>Our NACL wants your IP in CIDR notation, meaning that we need to toss a <code>/32</code> on the end of our IP address to clarify that we only want to use our specific IP, not a range of IPs.<br>
+While we&rsquo;re at it let&rsquo;s add Rule 110 to open up port 80 to the world.</p>
+
+<p><img src="/img/VPC_NACL_inbound.png" alt="Network ACL Inbound" /></p>
+
+<p>Since NACLs are stateless, let&rsquo;s remember to update the outbound rules to allow the outbound traffic.</p>
+
+<p><img src="/img/VPC_NACL_outbound.png" alt="Network ACL Outbound" /></p>
+
+<p>Finally, we just need to associate this new NACL with our public Subnets to complete the process.<br>
+On the Subnet Associations tab, click edit and select both of our public subnets, then save.</p>
+
+<p>Congratulations, we&rsquo;ve just allowed SSH traffic from our own IP and HTTP traffic from anyone.</p>
+
+<h2 id="security-groups-sgs-a-id-sgs-a">Security Groups (SGs) <a id="sgs"></a></h2>
+
+<p>Next up in our layered approach to VPC security are Security Groups.<br>
+SGs are applied at the NIC (network interface card) level.<br>
+It&rsquo;s important to note that Security Groups are stateful, meaning that if you have add an inbound rule the corresponding outbound traffic will automatically be allowed.<br>
+Let&rsquo;s create a SG for the instances we plan to launch in our public Subnets.<br>
+Again, from the AWS Console we navigate to the Security section, then Security Groups and click Create Security Group.<br>
+Here we&rsquo;re prompted for a name, group name, description and the target VPC.<br>
+<code>Dev-VPC-public-SG</code> should clearly identify what we&rsquo;re creating, so we&rsquo;ll use that for Name and Group name.<br>
+Give a brief description: <code>Public Security Group</code>, and choose our Dev-VPC.</p>
+
+<p><img src="/img/VPC_Security_Group.png" alt="Security Group" /></p>
+
+<p>Next we&rsquo;ll add a couple Inbound Rules.</p>
+
+<p><img src="/img/VPC_SG_Inbound.png" alt="Security Group Inbound" /></p>
+
+<p>And we&rsquo;re all set, now we just need to spin up some instances to use this Security Group and we should have traffic flowing just as we&rsquo;d like.<br>
+<strong>Remember that best practice is to only allow traffic that is required!</strong></p>
+
+<h2 id="virtual-private-gateway-a-id-vpg-a">Virtual Private Gateway <a id="vpg"></a></h2>
+
+<p>If you have a local on premises network then you&rsquo;re going to want to get a Site to Site IPsec VPN tunnel set up between your local network and you AWS VPC.<br>
+We are not going to configure this here, but you should at least be aware of the moving parts involved.<br>
+These parts are:</p>
+
+<ul>
+<li>Customer Gateway</li>
+<li>VPN Connection</li>
+<li>Virtual Private Gateway</li>
+</ul>
+
+<p>In order to configure a Site to Site VPN connectivity we&rsquo;ll need to add a Customer Gateway which is the configuration of your local on prem network.  This gets configured in your AWS VPC under the VPN Connections section of our VPC service in the AWS Console.<br>
+We&rsquo;ll also need to set up a Virtual Private Gateway, which is similar-ish to the Internet Gateway as it acts as the connector on the VPC side of the VPN connection.<br>
+This is a bit hard to work through since most of us probably don&rsquo;t have a networking lab setup at home.<br>
+Although I&rsquo;m thinking of doing a follow up post in the future on connecting an Azure VNET to an AWS VPC.</p>
+
+<h2 id="vpc-endpoints-a-id-endpoints-a">VPC Endpoints <a id="endpoints"></a></h2>
+
+<p>VPC Endpoints&hellip; ? What the heck are these?<br>
+Well, many of the services AWS offers are web based, meaning that in order to hit an S3 bucket we would need to make a request over the open internet.<br>
+What if we had sensitive data that we&rsquo;d prefer to keep <em>inside</em> our network, you ask?<br>
+This is where VPC Endpoints come into play.  VPC Endpoints enable you to keep your requests to any of AWS&rsquo; long list Endpoint supported services internal.<br>
+Some prime examples would be DynamoDB, S3, KMS, Kinesis, and EC2 SSM.<br>
+We&rsquo;ll definitely be going into examples of VPC endpoints in a later post.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>This is by far not an exhaustive list of all the features and capabilities of the AWS VPC, but this post is turning into a full day experience as is and what we&rsquo;ve covered so far should be enough to get a very solid foundation of what VPCs are and what problem they accomplish.</p>
+
+            <ul class="share-buttons">
+    <li>Share this article:</li>
+    <li>
+        <a class="icon-facebook-squared" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_vpc%2f" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook"></a>
+    </li>
+    <li>
+        <a class="icon-twitter" href="https://twitter.com/share?text=AWS%20VPC&amp;url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_vpc%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Tweet this article"></a>
+    </li>
+    <li>
+        <a class="icon-gplus" href="https://plus.google.com/share?url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_vpc%2f" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google&#43;"></a>
+    </li>
+    <li>
+        <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fcolin.detwiller.me%2fpost%2faws_vpc%2f&title=AWS%20VPC" onclick="window.open(this.href, 'linkedin-share', 'width=600,height=494');return false;" title="Share on Linkedin"></a>
+    </li>
+</ul>
+
+        </article>
+        
+        <div class="comments">
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "colin-detwiller-me" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        
+    </main>
+    <aside class="author">
+  <img class="profile-image" src="http://colin.detwiller.me/img/profile-image.png" alt="" />
+  <p class="name">Colin Detwiller 
+  <strong></strong></p>
+  <p class="address">Cleveland, OH</p>
+  <p class="link"></p>
+  <ul class="social">
+    
+<li><a href="//twitter.com/colinsr1187" class="icon-twitter" target="_blank" title="Twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//github.com/colinsr" class="icon-github" target="_blank" title="Github"></a></li>
+
+
+
+
+<li><a href="http://colin.detwiller.me/post/index.xml" class="icon-rss" target="_blank" title="RSS"></a></li>
+
+  </ul>
+  <br><br>
+</aside>
+
+</div>
+
+<footer class="main-footer">
+  <div class="container clearfix">
+        <a class="icon-rss" href="http://colin.detwiller.me/post/index.xml" title="RSS"></a>
+        <p>&copy; 2018 &middot; Powered by <a href="http://gohugo.io">Hugo</a>.</p>
+  </div>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script>window.jQuery || document.write('<script src="http:\/\/colin.detwiller.me\/js\/vendor\/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="http://colin.detwiller.me/js/plugins.js"></script>
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-70072280-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Sat, 17 Mar 2018 07:49:12 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 19 Mar 2018 06:55:51 -0400</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWS VPC</title>
+      <link>http://colin.detwiller.me/post/aws_vpc/</link>
+      <pubDate>Mon, 19 Mar 2018 06:55:51 -0400</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/aws_vpc/</guid>
+      <description>In this post we&amp;rsquo;re going to dissect the make up of an AWS VPC.
+VPC&amp;rsquo;s make up the networking component of Amazon Web Services. They&amp;rsquo;re composed of several distinct pieces, we&amp;rsquo;ll go over each one independently and talk about their purpose and some of the ins and outs of them.
+ VPC Subnets Internet Gateway Route Tables Network Access Control Lists Security Groups Virtual Private Gatway VPC Endpoints  VPC  VPCs are the heart of AWS networking.</description>
+    </item>
     
     <item>
       <title>AWS Identity &amp; Access Management</title>
