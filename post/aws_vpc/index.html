@@ -192,11 +192,11 @@ Select Edit, and Add another rule.  Remember I said these rules are executed in 
 <p>Protip: if you have curl installed you can use <code>curl ipinfo.io</code> to pull your public IP, otherwise <a href="https://whatsmyip.com/">Whats my ip</a>.</p>
 
 <p>Our NACL wants your IP in CIDR notation, meaning that we need to toss a <code>/32</code> on the end of our IP address to clarify that we only want to use our specific IP, not a range of IPs.<br>
-While we&rsquo;re at it let&rsquo;s add Rule 110 to open up port 80 to the world.</p>
+While we&rsquo;re at it let&rsquo;s add Rule 110 to open up port 80 to the world, rule 120 to open up HTTPS to the world, and 130 to allow ephemeral traffic back in - this is for installing packages from our instances as the traffic doesn&rsquo;t come back in over port 443.</p>
 
 <p><img src="/img/VPC_NACL_inbound.png" alt="Network ACL Inbound" /></p>
 
-<p>Since NACLs are stateless, let&rsquo;s remember to update the outbound rules to allow the outbound traffic.</p>
+<p>Since NACLs are stateless, let&rsquo;s remember to update the outbound rules to allow the outbound traffic.  Also, keep in mind that outbound traffic doesn&rsquo;t always travel over the same port as inbound, it will also travel over ephemeral ports from 1024-65525.</p>
 
 <p><img src="/img/VPC_NACL_outbound.png" alt="Network ACL Outbound" /></p>
 
