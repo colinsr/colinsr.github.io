@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Mon, 19 Mar 2018 06:55:51 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 22 Mar 2018 06:58:44 -0400</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/tags/amazon-web-services/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWS EC2</title>
+      <link>http://colin.detwiller.me/post/aws_ec2/</link>
+      <pubDate>Thu, 22 Mar 2018 06:58:44 -0400</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/aws_ec2/</guid>
+      <description>In this post we&amp;rsquo;re going to walk through setting an AWS EC2 (elastic compute cloud) instance. During the course of this post we&amp;rsquo;ll talk through some of the different options available and why they&amp;rsquo;re important.
+Up until now we&amp;rsquo;ve been going over what some may consider boring. Permissions and Networking are not necessarily at the top of everyone&amp;rsquo;s list of things they have queued up to learn. Well I have good news, we&amp;rsquo;re going to have a pair of web servers running in EC2 by the time you finish reading this post.</description>
+    </item>
     
     <item>
       <title>AWS VPC</title>
