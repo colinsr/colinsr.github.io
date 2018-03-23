@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://colin.detwiller.me/post/aws_elb/</loc>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://colin.detwiller.me/post/aws_ec2/</loc>
     <lastmod>2018-03-22T06:58:44-04:00</lastmod>
   </url>
@@ -84,13 +89,13 @@
   
   <url>
     <loc>http://colin.detwiller.me/tags/amazon-web-services/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/tags/aws/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -114,19 +119,25 @@
   
   <url>
     <loc>http://colin.detwiller.me/categories/cloud/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/tags/ec2/</loc>
     <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://colin.detwiller.me/tags/elb/</loc>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -162,13 +173,13 @@
   
   <url>
     <loc>http://colin.detwiller.me/post/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://colin.detwiller.me/tags/</loc>
-    <lastmod>2018-03-22T06:58:44-04:00</lastmod>
+    <lastmod>2018-03-23T06:28:24-04:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](http://gohugo.io).</copyright>
-    <lastBuildDate>Thu, 22 Mar 2018 06:58:44 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate>
     
 	<atom:link href="http://colin.detwiller.me/categories/cloud/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWS ELB</title>
+      <link>http://colin.detwiller.me/post/aws_elb/</link>
+      <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
+      
+      <guid>http://colin.detwiller.me/post/aws_elb/</guid>
+      <description>In this post we&amp;rsquo;re going to make our currently implemented web server a bit more fault tolerant and highly available using AWS Elastic Load Balancing.
+Hopefully, you&amp;rsquo;ve been following along with my previous posts on IAM Permissions, AWS VPC, and AWS EC2 because we are going to build off of the resources created in those posts.
+In the last post we created a couple of EC2 nginx web server instances that were routable via their public IPs.</description>
+    </item>
     
     <item>
       <title>AWS EC2</title>
