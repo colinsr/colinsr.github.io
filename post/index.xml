@@ -19,7 +19,7 @@
       
       <guid>http://colin.detwiller.me/post/aws_ec2/</guid>
       <description>In this post we&amp;rsquo;re going to walk through setting an AWS EC2 (elastic compute cloud) instance. During the course of this post we&amp;rsquo;ll talk through some of the different options available and why they&amp;rsquo;re important.
-Up until now we&amp;rsquo;ve been going over what some may consider boring. Permissions and Networking are not necessarily at the top of everyone&amp;rsquo;s list of things they have queued up to learn. Well I have good news, we&amp;rsquo;re going to have a pair of web servers running in EC2 by the time you finish reading this post.</description>
+Up until now we&amp;rsquo;ve been going over what some may consider boring. IAM Permissions and VPC Networking are not necessarily at the top of everyone&amp;rsquo;s list of things they have queued up to learn. Well I have good news, we&amp;rsquo;re going to have a pair of web servers running in EC2 by the time you finish reading this post.</description>
     </item>
     
     <item>
@@ -28,7 +28,7 @@ Up until now we&amp;rsquo;ve been going over what some may consider boring. Perm
       <pubDate>Mon, 19 Mar 2018 06:55:51 -0400</pubDate>
       
       <guid>http://colin.detwiller.me/post/aws_vpc/</guid>
-      <description>In this post we&amp;rsquo;re going to dissect the make up of an AWS VPC.
+      <description>In this post we&amp;rsquo;re going to dissect the make up of an AWS Virtual Private Cloud.
 VPC&amp;rsquo;s make up the networking component of Amazon Web Services. They&amp;rsquo;re composed of several distinct pieces, we&amp;rsquo;ll go over each one independently and talk about their purpose and some of the ins and outs of them.
  VPC Subnets Internet Gateway Route Tables Network Access Control Lists Security Groups Virtual Private Gatway VPC Endpoints  VPC  VPCs are the heart of AWS networking.</description>
     </item>
