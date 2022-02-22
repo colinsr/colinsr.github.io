@@ -1,0 +1,237 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Azure Application Gateway - Part 1 | Colin's blog</title>
+<meta name=keywords content="load balancing,azure">
+<meta name=description content="This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate (You should be thinking &ldquo;*.foobar.com&rdquo;).
+The Background I&rsquo;ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment.">
+<meta name=author content="Colin Detwiller">
+<link rel=canonical href=https://colin.detwiller.me/posts/azureapplicationgatwaypart1/>
+<meta name=google-site-verification content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.1e44d58192cbf6d7a4eb649bc43dbc3d4cc432677e5d8adc69b08c34cbe461ac.css integrity="sha256-HkTVgZLL9tek62SbxD28PUzEMmd+XYrcabCMNMvkYaw=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://colin.detwiller.me/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://colin.detwiller.me/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://colin.detwiller.me/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://colin.detwiller.me/apple-touch-icon.png>
+<link rel=mask-icon href=https://colin.detwiller.me/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.1">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-70072280-3','auto'),ga('send','pageview'))</script><meta property="og:title" content="Azure Application Gateway - Part 1">
+<meta property="og:description" content="This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate (You should be thinking &ldquo;*.foobar.com&rdquo;).
+The Background I&rsquo;ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin.detwiller.me/posts/azureapplicationgatwaypart1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2018-01-29T10:43:38-05:00">
+<meta property="article:modified_time" content="2018-01-29T10:43:38-05:00"><meta property="og:site_name" content="Colin's blog">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Azure Application Gateway - Part 1">
+<meta name=twitter:description content="This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate (You should be thinking &ldquo;*.foobar.com&rdquo;).
+The Background I&rsquo;ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment.">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://colin.detwiller.me/posts/"},{"@type":"ListItem","position":2,"name":"Azure Application Gateway - Part 1","item":"https://colin.detwiller.me/posts/azureapplicationgatwaypart1/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Azure Application Gateway - Part 1","name":"Azure Application Gateway - Part 1","description":"This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate (You should be thinking \u0026ldquo;*.foobar.com\u0026rdquo;).\nThe Background I\u0026rsquo;ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment.","keywords":["load balancing","azure"],"articleBody":"This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate (You should be thinking “*.foobar.com”).\nThe Background I’ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment. Some of the Application Gateway settings are not available in the portal, so we’ll use Powershell for this particular implementation - let’s get started with the configuration required to get this AppGW working properly.\nApp GW Basics In this tutorial I’ll walk through the process of deploying an Azure Resource Group, with two Azure Web Apps running on custom subdomains, both using a wild card SSL Certificate and an Azure Application Gateway to be our security guard/traffic director. You can use this pattern to host up to 20 websites hosted in Azure Web Apps, to host them on IaaS there are some tweaks that will need to happen.\nWe’ll break this up into two parts to break up some of the monotony of the configuration. Part one will be getting our self signed wildcard certificate, VNET and Azure Web Apps configiured, then in part two we’ll go over the AppGW configuration in detail.\nFirst things first, we need to login to our Azure subscription. If you haven’t already setup a profile for your Azure account, now would be a good time to do so to avoid the process of logging in manually every time you want to use Azure Powershell.\nLogin-AzureRmAccount Save-AzureRmContext -Path C:\\MyProfile.json With that out of the way, in the future all you have to do to login is import your Azure context like so:\nImport-AzureRmContext -Path 'C:\\MyProfile.json' | Out-Null And now select the target Subscription.\nGet-AzureRmSubscription | Select Name,SubscriptionId | Out-Gridview -Title \"Choose your Azure Subscription\" -OutputMode Single | Select-AzureRmSubscription Now that we’ve selected the target Azure subscription we can get down to business. We can set the Azure region we’d like to deploy our resources to, and create the resource group to hold all our stuff.\n$location = 'West US' $rgName = 'appgateway-rg' $resourceGroup = New-AzureRmResourceGroup -Name $rgName -Location $location Let’s get the SSL certificate out of the way now. You have two options here, self-signed and signed. For demo purposes we’ll go with the free self signed wildcard cert - in a production environment you’ll definitely want to us a signed cert.\n# Use signed certificate like so: # $pfxPath= 'C:\\...\\foobarWildCard.pfx' # $pfxPassString = 'P@ssw0rd5!' # $pfxPassSecure = ConvertTo-SecureString -String $pfxPassString -Force -AsPlainText # Or create a self signed cert for testing $cert = New-SelfSignedCertificate -certstorelocation cert:\\localmachine\\my -dnsname *.ohioazure.com $passString = 'P@ssw0rd5!' $passSecure = ConvertTo-SecureString -String $passString -Force -AsPlainText $pfxPath = 'c:\\wildcard.pfx' $path = 'cert:\\localMachine\\my\\' + $cert.thumbprint Export-PfxCertificate -cert $path -FilePath $pfxPath -Password $passSecure Next up, we’ll create an Azure App Service Plan to run our Web Apps. Make sure to set the Tier at least Shared so that we have access to Custom Domains.\n$appServicePlanName = 'ohioazure' New-AzureRmAppServicePlan -Name $appServicePlanName -Location $location ` -ResourceGroupName $rgname -Tier Standard Alright, we’re ready now to create our first Azure Web app.\n$customHostName1 = 'site1.ohioazure.com' $webAppName1 = 'site1-ohio' $defaultHostName1 = \"$webAppName1.azurewebsites.net\" New-AzureRmWebApp -Name $webappname1 -Location $location ` -AppServicePlan $appServicePlanName -ResourceGroupName $rgName I think it’s pretty painless to create a Web App inside - but now let’s have a little fun and start customizing it. We’ll want to bind this Web App to our custom hostname and in order to do so we need to add a CNAME record to our DNS zone. Fortunately, my DNS zone is hosted in Azure so it’s a straight forward process. See the docs for your DNS provider on exactly how to add a CNAME record for your Web App. After that we’ll add the SSL binding with our newly created self signed wildcard certificate.\n#TODO do not proceed until CNAME record is mapped to the Web App's FQDN New-AzureRmDnsRecordSet -Name \"site1\" -RecordType CNAME -ZoneName \"OhioAzure.com\" ` -ResourceGroupName \"OhioAzureDomain\" -Ttl 300 ` -DnsRecords (New-AzureRmDnsRecordConfig -CNAME $defaultHostName1) Set-AzureRmWebApp -Name $webAppName1 -ResourceGroupName $rgName ` -HostNames $customHostName1,$defaultHostName1 New-AzureRmWebAppSSLBinding -WebAppName $webappname1 -ResourceGroupName $rgName -Name $customHostName1 ` -CertificateFilePath $pfxPath -CertificatePassword $passString -SslState SniEnabled Repeat for your second (and any other subsequent Web Apps you may be runing)…\n$customHostName2 = 'site2.ohioazure.com' $webAppName2 = 'site2-ohio' $defaultHostName2 = \"$webAppName2.azurewebsites.net\" New-AzureRmWebApp -Name $webappname2 -Location $location ` -AppServicePlan $appServicePlanName -ResourceGroupName $rgName New-AzureRmDnsRecordSet -Name \"site2\" -RecordType CNAME -ZoneName \"OhioAzure.com\" ` -ResourceGroupName \"OhioAzureDomain\" -Ttl 300 ` -DnsRecords (New-AzureRmDnsRecordConfig -Cname $defaultHostName2) Set-AzureRmWebApp -Name $webAppName2 -ResourceGroupName $rgName ` -HostNames $customHostName2,$defaultHostName2 New-AzureRmWebAppSSLBinding -WebAppName $webappname2 -ResourceGroupName $rgName -Name $customHostName2 ` -CertificateFilePath $pfxPath -CertificatePassword $passString -SslState SniEnabled I think now would be a good time to set the default document for our Web Apps so that we know which one we’re hitting. There are many different ways to go about this step but for ease of use we’ll use FTP.\n$publishProfile1 = [XML](Get-AzureRmWebAppPublishingProfile -Name $webappname2 ` -ResourceGroupName $rgName ` -OutputFile null) $username1 = $publishProfile1.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@userName\").Value $password1 = $publishProfile1.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@userPWD\").Value $ftpUrlSite1 = $publishProfile1.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@publishUrl\").Value $file1 = \"c:\\temp\\site1.html\" $webAppName1 | Out-File $file1 $webclient = New-Object -TypeName System.Net.WebClient $webclient.Credentials = New-Object System.Net.NetworkCredential($username1,$password1) $uri1 = New-Object System.Uri(\"$ftpUrlSite1/index.html\") $webclient.UploadFile($uri1, $file1) $webclient.Dispose() # In our example repeat this process for $webAppName2 While that method is effective at what we’re trying to solve, the code needs to be repeated N times depending on how many Web Apps you’re going to deploy. Do yourself a favor and pull that code out into a function and pass in the moving targets as params - again since this is a demo I’m going with quick and extremely dirty here.\nUrghh, after reading through my script again I had no choice but to slap this in here. If you go this route add this function to the top of your script and replace the duplicated code with a call to this function.\nfunction Set-IndexOnWebApp { Param( [string] $webAppName, [string] $resourceGroupName, [string] $filePath ) $pubProfile = [XML](Get-AzureRmWebAppPublishingProfile -Name $webAppName ` -ResourceGroupName $resourceGroupName ` -OutputFile null) $user = $pubProfile.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@userName\").Value $pass = $pubProfile.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@userPWD\").Value $ftpUrl = $pubProfile.SelectNodes(\"//publishProfile[@publishMethod=`\"FTP`\"]/@publishUrl\").Value $webAppName | Out-File $filePath $client = New-Object -TypeName System.Net.WebClient $client.Credentials = New-Object System.Net.NetworkCredential($user,$pass) $uri = New-Object System.Uri(\"$ftpUrl/index.html\") $client.UploadFile($uri, $filePath) $client.Dispose() } Once that’s loaded up you can update the landing page for the site like so:\nSet-IndexOnWebApp -webAppName $webAppName1 ` -resourceGroupName $rgName ` -filePath $file1 Set-IndexOnWebApp -webAppName $webAppName2 ` -resourceGroupName $rgName ` -filePath $file2 That pretty much wraps up the Web App configuration required to get our AppGW working. We’ll pick up in part two of this series getting our AppGW deployed out to Azure.\nTo continue this tutorial and pick up where we left off go to Azure Application Gateway Part 2.\n","wordCount":"1113","inLanguage":"en","datePublished":"2018-01-29T10:43:38-05:00","dateModified":"2018-01-29T10:43:38-05:00","author":{"@type":"Person","name":"Colin Detwiller"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://colin.detwiller.me/posts/azureapplicationgatwaypart1/"},"publisher":{"@type":"Organization","name":"Colin's blog","logo":{"@type":"ImageObject","url":"https://colin.detwiller.me/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<ul id=menu>
+<li>
+<a href=https://colin.detwiller.me/categories/ title=categories>
+<span>categories</span>
+</a>
+</li>
+<li>
+<a href=https://colin.detwiller.me/tags/ title=tags>
+<span>tags</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=https://colin.detwiller.me/>Home</a>&nbsp;»&nbsp;<a href=https://colin.detwiller.me/posts/>Posts</a></div>
+<h1 class=post-title>
+Azure Application Gateway - Part 1
+</h1>
+<div class=post-meta><span title="2018-01-29 10:43:38 -0500 EST">January 29, 2018</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;Colin Detwiller
+</div>
+</header>
+<div class=post-content><p>This is going to be a chronicling of how to setup an Azure Application Gateway using a custom wildcard certificate
+(You should be thinking &ldquo;*.foobar.com&rdquo;).</p>
+<h2 id=the-background>The Background<a hidden class=anchor aria-hidden=true href=#the-background>#</a></h2>
+<p>I&rsquo;ve gone through some basic tutorials with the Azure Application Gateway (AppGW) in the past, but recently I encountered a scenario where a client needed me to setup an AppGW that could host 4 Azure Web Apps running an an Azure App Service Environment.
+Some of the Application Gateway settings are not available in the portal, so we&rsquo;ll use Powershell for this particular implementation - let&rsquo;s get started with the configuration required to get this AppGW working properly.</p>
+<h3 id=app-gw-basics>App GW Basics<a hidden class=anchor aria-hidden=true href=#app-gw-basics>#</a></h3>
+<p>In this tutorial I&rsquo;ll walk through the process of deploying an Azure Resource Group, with two Azure Web Apps running on custom subdomains, both using a wild card SSL Certificate and an Azure Application Gateway to be our security guard/traffic director.
+You can use this pattern to host up to 20 websites hosted in Azure Web Apps, to host them on IaaS there are some tweaks that will need to happen.</p>
+<p>We&rsquo;ll break this up into two parts to break up some of the monotony of the configuration. Part one will be getting our self signed wildcard certificate, VNET and Azure Web Apps configiured, then in part two we&rsquo;ll go over the AppGW configuration in detail.</p>
+<p>First things first, we need to login to our Azure subscription.
+If you haven&rsquo;t already setup a profile for your Azure account, now would be a good time to do so to avoid the process of logging in manually every time you want to use Azure Powershell.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>Login-AzureRmAccount
+Save-AzureRmContext -Path C:\MyProfile.json
+</code></pre></div><p>With that out of the way, in the future all you have to do to login is import your Azure context like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>Import-AzureRmContext -Path <span style=color:#e6db74>&#39;C:\MyProfile.json&#39;</span> | Out-Null
+</code></pre></div><p>And now select the target Subscription.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>Get-AzureRmSubscription | 
+    Select Name,SubscriptionId | 
+    Out-Gridview -Title <span style=color:#e6db74>&#34;Choose your Azure Subscription&#34;</span> -OutputMode Single | 
+    Select-AzureRmSubscription
+</code></pre></div><p>Now that we&rsquo;ve selected the target Azure subscription we can get down to business.
+We can set the Azure region we&rsquo;d like to deploy our resources to, and create the resource group to hold all our stuff.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>$location = <span style=color:#e6db74>&#39;West US&#39;</span>
+$rgName = <span style=color:#e6db74>&#39;appgateway-rg&#39;</span>
+$resourceGroup = New-AzureRmResourceGroup -Name $rgName -Location $location
+</code></pre></div><p>Let&rsquo;s get the SSL certificate out of the way now. You have two options here, self-signed and signed.
+For demo purposes we&rsquo;ll go with the free self signed wildcard cert - in a production environment you&rsquo;ll definitely want to us a signed cert.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=color:#75715e># Use signed certificate like so:</span>
+<span style=color:#75715e># $pfxPath= &#39;C:\...\foobarWildCard.pfx&#39;</span>
+<span style=color:#75715e># $pfxPassString = &#39;P@ssw0rd5!&#39;</span>
+<span style=color:#75715e># $pfxPassSecure = ConvertTo-SecureString -String $pfxPassString -Force -AsPlainText</span>
+
+<span style=color:#75715e># Or create a self signed cert for testing</span>
+$cert = New-SelfSignedCertificate -certstorelocation cert<span style=color:#960050;background-color:#1e0010>:</span>\localmachine\my -dnsname *.ohioazure.com
+$passString = <span style=color:#e6db74>&#39;P@ssw0rd5!&#39;</span>
+$passSecure = ConvertTo-SecureString -String $passString -Force -AsPlainText
+$pfxPath = <span style=color:#e6db74>&#39;c:\wildcard.pfx&#39;</span>
+$path = <span style=color:#e6db74>&#39;cert:\localMachine\my\&#39;</span> + $cert.thumbprint 
+Export-PfxCertificate -cert $path -FilePath $pfxPath -Password $passSecure
+</code></pre></div><p>Next up, we&rsquo;ll create an Azure App Service Plan to run our Web Apps. Make sure to set the Tier at least Shared so that we have access to Custom Domains.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>$appServicePlanName = <span style=color:#e6db74>&#39;ohioazure&#39;</span>
+
+New-AzureRmAppServicePlan -Name $appServicePlanName -Location $location `
+    -ResourceGroupName $rgname -Tier Standard
+</code></pre></div><p>Alright, we&rsquo;re ready now to create our first Azure Web app.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>$customHostName1 = <span style=color:#e6db74>&#39;site1.ohioazure.com&#39;</span>
+$webAppName1 = <span style=color:#e6db74>&#39;site1-ohio&#39;</span>
+$defaultHostName1 = <span style=color:#e6db74>&#34;$webAppName1.azurewebsites.net&#34;</span>
+
+New-AzureRmWebApp -Name $webappname1 -Location $location `
+     -AppServicePlan $appServicePlanName -ResourceGroupName $rgName
+</code></pre></div><p>I think it&rsquo;s pretty painless to create a Web App inside - but now let&rsquo;s have a little fun and start customizing it. We&rsquo;ll want to bind this Web App to our custom hostname and in order to do so we need to add a CNAME record to our DNS zone. Fortunately, my DNS zone is hosted in Azure so it&rsquo;s a straight forward process. See the docs for your DNS provider on exactly how to add a CNAME record for your Web App.
+After that we&rsquo;ll add the SSL binding with our newly created self signed wildcard certificate.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=color:#75715e>#TODO do not proceed until CNAME record is mapped to the Web App&#39;s FQDN</span>
+New-AzureRmDnsRecordSet -Name <span style=color:#e6db74>&#34;site1&#34;</span> -RecordType CNAME -ZoneName <span style=color:#e6db74>&#34;OhioAzure.com&#34;</span> `
+    -ResourceGroupName <span style=color:#e6db74>&#34;OhioAzureDomain&#34;</span> -Ttl 300 `
+    -DnsRecords (New-AzureRmDnsRecordConfig -CNAME $defaultHostName1)
+
+Set-AzureRmWebApp -Name $webAppName1 -ResourceGroupName $rgName `
+    -HostNames $customHostName1,$defaultHostName1
+New-AzureRmWebAppSSLBinding -WebAppName $webappname1 -ResourceGroupName $rgName -Name $customHostName1 `
+    -CertificateFilePath $pfxPath -CertificatePassword $passString -SslState SniEnabled
+</code></pre></div><p>Repeat for your second (and any other subsequent Web Apps you may be runing)&mldr;</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>$customHostName2 = <span style=color:#e6db74>&#39;site2.ohioazure.com&#39;</span>
+$webAppName2 = <span style=color:#e6db74>&#39;site2-ohio&#39;</span>
+$defaultHostName2 = <span style=color:#e6db74>&#34;$webAppName2.azurewebsites.net&#34;</span>
+
+New-AzureRmWebApp -Name $webappname2 -Location $location `
+     -AppServicePlan $appServicePlanName -ResourceGroupName $rgName
+
+New-AzureRmDnsRecordSet -Name <span style=color:#e6db74>&#34;site2&#34;</span> -RecordType CNAME -ZoneName <span style=color:#e6db74>&#34;OhioAzure.com&#34;</span> `
+    -ResourceGroupName <span style=color:#e6db74>&#34;OhioAzureDomain&#34;</span> -Ttl 300 `
+    -DnsRecords (New-AzureRmDnsRecordConfig -Cname $defaultHostName2)
+
+Set-AzureRmWebApp -Name $webAppName2 -ResourceGroupName $rgName `
+    -HostNames $customHostName2,$defaultHostName2
+
+New-AzureRmWebAppSSLBinding -WebAppName $webappname2 -ResourceGroupName $rgName -Name $customHostName2 `
+    -CertificateFilePath $pfxPath -CertificatePassword $passString -SslState SniEnabled
+</code></pre></div><p>I think now would be a good time to set the default document for our Web Apps so that we know which one we&rsquo;re hitting. There are many different ways to go about this step but for ease of use we&rsquo;ll use FTP.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>$publishProfile1 = <span style=color:#66d9ef>[XML]</span>(Get-AzureRmWebAppPublishingProfile -Name $webappname2 `
+    -ResourceGroupName $rgName `
+    -OutputFile null)
+$username1 = $publishProfile1.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@userName&#34;</span>).Value
+$password1 = $publishProfile1.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@userPWD&#34;</span>).Value
+$ftpUrlSite1 = $publishProfile1.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@publishUrl&#34;</span>).Value
+
+$file1 = <span style=color:#e6db74>&#34;c:\temp\site1.html&#34;</span>
+$webAppName1 | Out-File $file1
+
+$webclient = New-Object -TypeName System.Net.WebClient
+$webclient.Credentials = New-Object System.Net.NetworkCredential($username1,$password1)
+$uri1 = New-Object System.Uri(<span style=color:#e6db74>&#34;$ftpUrlSite1/index.html&#34;</span>)
+$webclient.UploadFile($uri1, $file1)
+$webclient.Dispose()
+
+<span style=color:#75715e># In our example repeat this process for $webAppName2</span>
+</code></pre></div><p>While that method is effective at what we&rsquo;re trying to solve, the code needs to be repeated N times depending on how many Web Apps you&rsquo;re going to deploy. Do yourself a favor and pull that code out into a function and pass in the moving targets as params - again since this is a demo I&rsquo;m going with quick and extremely dirty here.</p>
+<p>Urghh, after reading through my script again I had no choice but to slap this in here. If you go this route add this function to the top of your script and replace the duplicated code with a call to this function.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell><span style=color:#66d9ef>function</span> Set-IndexOnWebApp {
+    <span style=color:#66d9ef>Param</span>(
+        <span style=color:#66d9ef>[string]</span> $webAppName,
+        <span style=color:#66d9ef>[string]</span> $resourceGroupName,
+        <span style=color:#66d9ef>[string]</span> $filePath
+    )
+    $pubProfile = <span style=color:#66d9ef>[XML]</span>(Get-AzureRmWebAppPublishingProfile -Name $webAppName `
+        -ResourceGroupName $resourceGroupName `
+        -OutputFile null)
+    $user = $pubProfile.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@userName&#34;</span>).Value
+    $pass = $pubProfile.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@userPWD&#34;</span>).Value
+    $ftpUrl = $pubProfile.SelectNodes(<span style=color:#e6db74>&#34;//publishProfile[@publishMethod=</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>FTP</span><span style=color:#ae81ff>`&#34;</span><span style=color:#e6db74>]/@publishUrl&#34;</span>).Value
+
+    $webAppName | Out-File $filePath
+
+    $client = New-Object -TypeName System.Net.WebClient
+    $client.Credentials = New-Object System.Net.NetworkCredential($user,$pass)
+    $uri = New-Object System.Uri(<span style=color:#e6db74>&#34;$ftpUrl/index.html&#34;</span>)
+    $client.UploadFile($uri, $filePath)
+    $client.Dispose()
+}
+</code></pre></div><p>Once that&rsquo;s loaded up you can update the landing page for the site like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-powershell data-lang=powershell>Set-IndexOnWebApp -webAppName $webAppName1 `
+                  -resourceGroupName $rgName `
+                  -filePath $file1
+
+Set-IndexOnWebApp -webAppName $webAppName2 `
+                  -resourceGroupName $rgName `
+                  -filePath $file2
+</code></pre></div><p>That pretty much wraps up the Web App configuration required to get our AppGW working. We&rsquo;ll pick up in part two of this series getting our AppGW deployed out to Azure.</p>
+<p>To continue this tutorial and pick up where we left off go to <a href=/post/azureapplicationgatwaypart2>Azure Application Gateway Part 2</a>.</p>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://colin.detwiller.me/tags/load-balancing/>load balancing</a></li>
+<li><a href=https://colin.detwiller.me/tags/azure/>azure</a></li>
+</ul>
+<nav class=paginav>
+<a class=prev href=https://colin.detwiller.me/posts/azureapplicationgatwaypart2/>
+<span class=title>« Prev Page</span>
+<br>
+<span>Azure Application Gateway - Part 2</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share Azure Application Gateway - Part 1 on twitter" href="https://twitter.com/intent/tweet/?text=Azure%20Application%20Gateway%20-%20Part%201&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fazureapplicationgatwaypart1%2f&hashtags=loadbalancing%2cazure"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Azure Application Gateway - Part 1 on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fazureapplicationgatwaypart1%2f&title=Azure%20Application%20Gateway%20-%20Part%201&summary=Azure%20Application%20Gateway%20-%20Part%201&source=https%3a%2f%2fcolin.detwiller.me%2fposts%2fazureapplicationgatwaypart1%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Azure Application Gateway - Part 1 on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fazureapplicationgatwaypart1%2f&title=Azure%20Application%20Gateway%20-%20Part%201"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://colin.detwiller.me/>Colin's blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

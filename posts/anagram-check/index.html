@@ -1,0 +1,244 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Anagram Check | Colin's blog</title>
+<meta name=keywords content="javascript,exercises">
+<meta name=description content="It&rsquo;s time to work through another (easy) exercise in javascript. This time we&rsquo;ll be working through an anagram checker function.
+Just so that we&rsquo;re all on the same page I&rsquo;ve taken the liberty of pulling up an official definition of &ldquo;anagram&rdquo;:
+ a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.
+ Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.">
+<meta name=author content="Colin Detwiller">
+<link rel=canonical href=https://colin.detwiller.me/posts/anagram-check/>
+<meta name=google-site-verification content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.1e44d58192cbf6d7a4eb649bc43dbc3d4cc432677e5d8adc69b08c34cbe461ac.css integrity="sha256-HkTVgZLL9tek62SbxD28PUzEMmd+XYrcabCMNMvkYaw=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://colin.detwiller.me/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://colin.detwiller.me/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://colin.detwiller.me/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://colin.detwiller.me/apple-touch-icon.png>
+<link rel=mask-icon href=https://colin.detwiller.me/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.1">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-70072280-3','auto'),ga('send','pageview'))</script><meta property="og:title" content="Anagram Check">
+<meta property="og:description" content="It&rsquo;s time to work through another (easy) exercise in javascript. This time we&rsquo;ll be working through an anagram checker function.
+Just so that we&rsquo;re all on the same page I&rsquo;ve taken the liberty of pulling up an official definition of &ldquo;anagram&rdquo;:
+ a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.
+ Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin.detwiller.me/posts/anagram-check/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2018-02-20T19:41:08-05:00">
+<meta property="article:modified_time" content="2018-02-20T19:41:08-05:00"><meta property="og:site_name" content="Colin's blog">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Anagram Check">
+<meta name=twitter:description content="It&rsquo;s time to work through another (easy) exercise in javascript. This time we&rsquo;ll be working through an anagram checker function.
+Just so that we&rsquo;re all on the same page I&rsquo;ve taken the liberty of pulling up an official definition of &ldquo;anagram&rdquo;:
+ a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.
+ Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://colin.detwiller.me/posts/"},{"@type":"ListItem","position":2,"name":"Anagram Check","item":"https://colin.detwiller.me/posts/anagram-check/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Anagram Check","name":"Anagram Check","description":"It\u0026rsquo;s time to work through another (easy) exercise in javascript. This time we\u0026rsquo;ll be working through an anagram checker function.\nJust so that we\u0026rsquo;re all on the same page I\u0026rsquo;ve taken the liberty of pulling up an official definition of \u0026ldquo;anagram\u0026rdquo;:\n a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.\n Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.","keywords":["javascript","exercises"],"articleBody":"It’s time to work through another (easy) exercise in javascript. This time we’ll be working through an anagram checker function.\nJust so that we’re all on the same page I’ve taken the liberty of pulling up an official definition of “anagram”:\n a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.\n Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match. We don’t care about punctuation, spacing, or casing.\nWe’ll setup our folder structure by navigating to our exercises/ directory and running:\nmkdir anagram \u0026\u0026 cd anagram \u0026\u0026 touch test.js index.js\nThen we’ll get our test suite set up and running by adding the following to our test.js file:\nconst anagrams = require('./index.js'); test('anagrams function exists', () = { expect(typeof anagrams).toEqual('function'); }); test('\"hello\" is an anagram of \"llohe\"', () = { expect(anagrams('hello', 'llohe')).toBeTruthy(); }); test('\"Whoa! Hi!\" is an anagram of \"Hi! Whoa!\"', () = { expect(anagrams('Whoa! Hi!', 'Hi! Whoa!')).toBeTruthy(); }); test('\"One One\" is not an anagram of \"Two two two\"', () = { expect(anagrams('One One', 'Two two two')).toBeFalsy(); }); test('\"One one\" is not an anagram of \"One one c\"', () = { expect(anagrams('One one', 'One one c')).toBeFalsy(); }); test('\"A tree, a life, a bench\" is not an anagram of \"A tree, a fence, a yard\"', () = { expect(anagrams('A tree, a life, a bench', 'A tree, a fence, a yard')).toBeFalsy(); }); We’ll run jest test.js --watch to get our tests running in watch mode.\nThen we can get our first test passing by adding our function to our module.exports:\nconst anagrams = (stringA, stringB) = { } module.exports = anagrams; Now we have a couple tests passing - what gives? Well, our tests are checking for truthy/falsy-ness and our tests are inadvertantly passing tests are actually checking for falsiness so bear with us as we work through this function.\nFirst approach will be to create a character map object that has a letter and the count for each letter in a given string. \"bab\" = {a: 1, b:2 }\nWe can do this by creating a buildCharMap() helper.\nconst buildCharMap = (str) = { const charMap = {}; for (let char of str.replace(/[^\\w][1-9]+/g, '').toLowerCase()) { charMap[char] = charMap[char] + 1 || 1; } return charMap; } Looping through each alphabetic character, after stripping out any special characters, punctuation, or numbers, and if the character already exists in the map incrementing it otherwise adding it with the value of 1.\nThen of course returning the charMap object to the caller.\nOnce we have our character maps to work with, the first thing we can do is make sure that the charMap’s have the same number of keys. I’m a big believer in the “fail fast” mentality.\nconst anagrams = (stringA, stringB) = { const aCharMap = buildCharMap(stringA); const bCharMap = buildCharMap(stringB); if (Object.keys(aCharMap).length !== Object.keys(bCharMap).length) { return false; } return true; } This gets us close to having all passing tests. Now we only have to check to make sure tha values foreach key are the same. In other words, the count for each letter should match.\nconst anagrams = (stringA, stringB) = { const aCharMap = buildCharMap(stringA); const bCharMap = buildCharMap(stringB); if (Object.keys(aCharMap).length !== Object.keys(bCharMap).length) { return false; } for (let char in aCharMap) { if (aCharMap[char] !== bCharMap[char]) { return false; } } return true; } The for loop using the keyword in is looping through the keys in our aCharMap, then we can check the count for each character and if they’re not equal = return false.\nBooya. All of our tests pass, and we have a working solution.\nNext up is a proper implementation.\nStep 1, I decided to reuse the same regex to filter out any non alphabet characters.\nconst anagrams = (stringA, stringB) = { } const cleanString = (str) = { return str.replace(/[^\\w][1-9]+/g, ''); } Not many people I’ve run into are regex fans, but this is fairly straight forward, and simply replaces any non-word character or number with an empty string.\nThis is a slight hack, that prevents us from having to loop through stringA, stringB, and then the keys in our character map.\nconst cleanString = (str) = { return str.replace(/[^\\w][1-9]+/g, '') .toLowerCase() .split('') .sort() .join(''); } Here we are turning our string into an array, and then using the array prototype’s sort method to get our characters in order before turning the array back to a string and returning it.\nFinally, we just have to call cleanString on each of our string inputs and see if they match. Viola:\nconst anagrams = (stringA, stringB) = { return cleanString(stringA) === cleanString(stringB); } const cleanString = (str) = { return str .replace(/[^\\w][1-9]+/g, '') .toLowerCase() .split('') .sort() .join(''); } module.exports = anagrams; As usual, I much prefer option 2. I hope this was useful!\n👍\n","wordCount":"812","inLanguage":"en","datePublished":"2018-02-20T19:41:08-05:00","dateModified":"2018-02-20T19:41:08-05:00","author":{"@type":"Person","name":"Colin Detwiller"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://colin.detwiller.me/posts/anagram-check/"},"publisher":{"@type":"Organization","name":"Colin's blog","logo":{"@type":"ImageObject","url":"https://colin.detwiller.me/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<ul id=menu>
+<li>
+<a href=https://colin.detwiller.me/categories/ title=categories>
+<span>categories</span>
+</a>
+</li>
+<li>
+<a href=https://colin.detwiller.me/tags/ title=tags>
+<span>tags</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=https://colin.detwiller.me/>Home</a>&nbsp;»&nbsp;<a href=https://colin.detwiller.me/posts/>Posts</a></div>
+<h1 class=post-title>
+Anagram Check
+</h1>
+<div class=post-meta><span title="2018-02-20 19:41:08 -0500 EST">February 20, 2018</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Colin Detwiller
+</div>
+</header>
+<div class=post-content><p>It&rsquo;s time to work through another (easy) exercise in javascript.
+This time we&rsquo;ll be working through an anagram checker function.</p>
+<p>Just so that we&rsquo;re all on the same page I&rsquo;ve taken the liberty of pulling up an official definition of &ldquo;anagram&rdquo;:</p>
+<blockquote>
+<p>a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.</p>
+</blockquote>
+<p>Pretty much what we are about to set out to do is see if the letters contained within the two string parameters match.
+We don&rsquo;t care about punctuation, spacing, or casing.</p>
+<p>We&rsquo;ll setup our folder structure by navigating to our <code>exercises/</code> directory and running:</p>
+<p><code>mkdir anagram && cd anagram && touch test.js index.js</code></p>
+<p>Then we&rsquo;ll get our test suite set up and running by adding the following to our <code>test.js</code> file:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;./index.js&#39;</span>);
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;anagrams function exists&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#66d9ef>typeof</span> <span style=color:#a6e22e>anagrams</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;function&#39;</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;&#34;hello&#34; is an anagram of &#34;llohe&#34;&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>anagrams</span>(<span style=color:#e6db74>&#39;hello&#39;</span>, <span style=color:#e6db74>&#39;llohe&#39;</span>)).<span style=color:#a6e22e>toBeTruthy</span>();
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;&#34;Whoa! Hi!&#34; is an anagram of &#34;Hi! Whoa!&#34;&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>anagrams</span>(<span style=color:#e6db74>&#39;Whoa! Hi!&#39;</span>, <span style=color:#e6db74>&#39;Hi! Whoa!&#39;</span>)).<span style=color:#a6e22e>toBeTruthy</span>();
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;&#34;One One&#34; is not an anagram of &#34;Two two two&#34;&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>anagrams</span>(<span style=color:#e6db74>&#39;One One&#39;</span>, <span style=color:#e6db74>&#39;Two two two&#39;</span>)).<span style=color:#a6e22e>toBeFalsy</span>();
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;&#34;One one&#34; is not an anagram of &#34;One one c&#34;&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>anagrams</span>(<span style=color:#e6db74>&#39;One one&#39;</span>, <span style=color:#e6db74>&#39;One one c&#39;</span>)).<span style=color:#a6e22e>toBeFalsy</span>();
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;&#34;A tree, a life, a bench&#34; is not an anagram of &#34;A tree, a fence, a yard&#34;&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>anagrams</span>(<span style=color:#e6db74>&#39;A tree, a life, a bench&#39;</span>, <span style=color:#e6db74>&#39;A tree, a fence, a yard&#39;</span>)).<span style=color:#a6e22e>toBeFalsy</span>();
+});
+</code></pre></div><p>We&rsquo;ll run <code>jest test.js --watch</code> to get our tests running in watch mode.</p>
+<p>Then we can get our first test passing by adding our function to our module.exports:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>stringA</span>, <span style=color:#a6e22e>stringB</span>) =&gt; {
+
+}
+
+<span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>anagrams</span>;
+</code></pre></div><p>Now we have a couple tests passing - what gives?
+Well, our tests are checking for truthy/falsy-ness and our tests are inadvertantly passing tests are actually checking for falsiness so bear with us as we work through this function.</p>
+<p>First approach will be to create a character map object that has a letter and the count for each letter in a given string.
+<code>"bab" => {a: 1, b:2 }</code></p>
+<p>We can do this by creating a <code>buildCharMap()</code> helper.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>buildCharMap</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>str</span>) =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>charMap</span> <span style=color:#f92672>=</span> {};
+
+  <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>of</span> <span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/[^\w][1-9]+/g</span>, <span style=color:#e6db74>&#39;&#39;</span>).<span style=color:#a6e22e>toLowerCase</span>()) {
+    <span style=color:#a6e22e>charMap</span>[<span style=color:#66d9ef>char</span>] <span style=color:#f92672>=</span> <span style=color:#a6e22e>charMap</span>[<span style=color:#66d9ef>char</span>] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>||</span> <span style=color:#ae81ff>1</span>;
+  }
+
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>charMap</span>;
+}
+</code></pre></div><p>Looping through each alphabetic character, after stripping out any special characters, punctuation, or numbers, and if the character already exists in the map incrementing it otherwise adding it with the value of 1.</p>
+<p>Then of course returning the <code>charMap</code> object to the caller.</p>
+<p>Once we have our character maps to work with, the first thing we can do is make sure that the <code>charMap</code>&rsquo;s have the same number of keys.
+I&rsquo;m a big believer in the &ldquo;fail fast&rdquo; mentality.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>stringA</span>, <span style=color:#a6e22e>stringB</span>) =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>aCharMap</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>buildCharMap</span>(<span style=color:#a6e22e>stringA</span>);
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>bCharMap</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>buildCharMap</span>(<span style=color:#a6e22e>stringB</span>);
+
+  <span style=color:#66d9ef>if</span> (Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>aCharMap</span>).<span style=color:#a6e22e>length</span> <span style=color:#f92672>!==</span> Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>bCharMap</span>).<span style=color:#a6e22e>length</span>) {
+      <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+  }
+  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+}
+</code></pre></div><p>This gets us close to having all passing tests. Now we only have to check to make sure tha values foreach key are the same.
+In other words, the count for each letter should match.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>stringA</span>, <span style=color:#a6e22e>stringB</span>) =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>aCharMap</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>buildCharMap</span>(<span style=color:#a6e22e>stringA</span>);
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>bCharMap</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>buildCharMap</span>(<span style=color:#a6e22e>stringB</span>);
+
+  <span style=color:#66d9ef>if</span> (Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>aCharMap</span>).<span style=color:#a6e22e>length</span> <span style=color:#f92672>!==</span> Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>bCharMap</span>).<span style=color:#a6e22e>length</span>) {
+      <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+  }
+
+  <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>in</span> <span style=color:#a6e22e>aCharMap</span>) {
+      <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>aCharMap</span>[<span style=color:#66d9ef>char</span>] <span style=color:#f92672>!==</span> <span style=color:#a6e22e>bCharMap</span>[<span style=color:#66d9ef>char</span>]) {
+          <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+      }
+  }
+  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>;
+}
+</code></pre></div><p>The for loop using the keyword <code>in</code> is looping through the keys in our <code>aCharMap</code>, then we can check the count for each character and if they&rsquo;re not equal => return false.</p>
+<p>Booya. All of our tests pass, and we have a working solution.</p>
+<p>Next up is a proper implementation.</p>
+<p>Step 1, I decided to reuse the same regex to filter out any non alphabet characters.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>stringA</span>, <span style=color:#a6e22e>stringB</span>) =&gt; {
+
+}
+
+<span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cleanString</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>str</span>) =&gt; {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/[^\w][1-9]+/g</span>, <span style=color:#e6db74>&#39;&#39;</span>);
+}
+</code></pre></div><p>Not many people I&rsquo;ve run into are regex fans, but this is fairly straight forward, and simply replaces any non-word character or number with an empty string.</p>
+<p>This is a slight hack, that prevents us from having to loop through <code>stringA</code>, <code>stringB</code>, and then the keys in our character map.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cleanString</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>str</span>) =&gt; {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>str</span>.<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/[^\w][1-9]+/g</span>, <span style=color:#e6db74>&#39;&#39;</span>)
+    .<span style=color:#a6e22e>toLowerCase</span>()
+    .<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#39;&#39;</span>)
+    .<span style=color:#a6e22e>sort</span>()
+    .<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+}
+</code></pre></div><p>Here we are turning our string into an array, and then using the array prototype&rsquo;s sort method to get our characters in order before turning the array back to a string and returning it.</p>
+<p>Finally, we just have to call <code>cleanString</code> on each of our string inputs and see if they match.
+Viola:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>anagrams</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>stringA</span>, <span style=color:#a6e22e>stringB</span>) =&gt; {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>cleanString</span>(<span style=color:#a6e22e>stringA</span>) <span style=color:#f92672>===</span> <span style=color:#a6e22e>cleanString</span>(<span style=color:#a6e22e>stringB</span>);
+}
+
+<span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cleanString</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>str</span>) =&gt; {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>str</span>
+    .<span style=color:#a6e22e>replace</span>(<span style=color:#e6db74>/[^\w][1-9]+/g</span>, <span style=color:#e6db74>&#39;&#39;</span>)
+    .<span style=color:#a6e22e>toLowerCase</span>()
+    .<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#39;&#39;</span>)
+    .<span style=color:#a6e22e>sort</span>()
+    .<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+}
+
+<span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>anagrams</span>;
+</code></pre></div><p>As usual, I much prefer option 2. I hope this was useful!</p>
+<p>👍</p>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://colin.detwiller.me/tags/javascript/>javascript</a></li>
+<li><a href=https://colin.detwiller.me/tags/exercises/>exercises</a></li>
+</ul>
+<nav class=paginav>
+<a class=prev href=https://colin.detwiller.me/posts/capitalizer/>
+<span class=title>« Prev Page</span>
+<br>
+<span>Capitalizer</span>
+</a>
+<a class=next href=https://colin.detwiller.me/posts/array-chunk/>
+<span class=title>Next Page »</span>
+<br>
+<span>Array Chunk</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share Anagram Check on twitter" href="https://twitter.com/intent/tweet/?text=Anagram%20Check&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fanagram-check%2f&hashtags=javascript%2cexercises"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Anagram Check on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fanagram-check%2f&title=Anagram%20Check&summary=Anagram%20Check&source=https%3a%2f%2fcolin.detwiller.me%2fposts%2fanagram-check%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Anagram Check on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fanagram-check%2f&title=Anagram%20Check"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://colin.detwiller.me/>Colin's blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

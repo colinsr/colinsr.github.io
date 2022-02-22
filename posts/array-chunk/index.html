@@ -1,0 +1,222 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Array Chunk | Colin's blog</title>
+<meta name=keywords content="javascript,exercises">
+<meta name=description content="Today we&rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.
+Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It&rsquo;ll probably be easier to understand based on this example:
+chunk([1,2,3,4,5], 2) => [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we&rsquo;ve seen a example.">
+<meta name=author content="Colin Detwiller">
+<link rel=canonical href=https://colin.detwiller.me/posts/array-chunk/>
+<meta name=google-site-verification content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.1e44d58192cbf6d7a4eb649bc43dbc3d4cc432677e5d8adc69b08c34cbe461ac.css integrity="sha256-HkTVgZLL9tek62SbxD28PUzEMmd+XYrcabCMNMvkYaw=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://colin.detwiller.me/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://colin.detwiller.me/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://colin.detwiller.me/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://colin.detwiller.me/apple-touch-icon.png>
+<link rel=mask-icon href=https://colin.detwiller.me/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.1">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-70072280-3','auto'),ga('send','pageview'))</script><meta property="og:title" content="Array Chunk">
+<meta property="og:description" content="Today we&rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.
+Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It&rsquo;ll probably be easier to understand based on this example:
+chunk([1,2,3,4,5], 2) => [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we&rsquo;ve seen a example.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin.detwiller.me/posts/array-chunk/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2018-02-15T08:47:31-05:00">
+<meta property="article:modified_time" content="2018-02-15T08:47:31-05:00"><meta property="og:site_name" content="Colin's blog">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Array Chunk">
+<meta name=twitter:description content="Today we&rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.
+Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It&rsquo;ll probably be easier to understand based on this example:
+chunk([1,2,3,4,5], 2) => [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we&rsquo;ve seen a example.">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://colin.detwiller.me/posts/"},{"@type":"ListItem","position":2,"name":"Array Chunk","item":"https://colin.detwiller.me/posts/array-chunk/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Array Chunk","name":"Array Chunk","description":"Today we\u0026rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.\nBased on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It\u0026rsquo;ll probably be easier to understand based on this example:\nchunk([1,2,3,4,5], 2) =\u0026gt; [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we\u0026rsquo;ve seen a example.","keywords":["javascript","exercises"],"articleBody":"Today we’ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.\nBased on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It’ll probably be easier to understand based on this example:\nchunk([1,2,3,4,5], 2) = [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we’ve seen a example.\nSince the size is even and the array length is odd, we have a leftover element that gets to sit alone in the last array.\nLet’s get this exercise setup with our test and index files. First we’ll make sure we’re in our exercises/ directory and run mkdir chunk \u0026\u0026 cd chunk/ \u0026\u0026 touch index.js tests.js. Then we’ll use our method of choice to get the following content into our tests.js file:\nconst chunk = require('./index'); test('function chunk exists', () = { expect(typeof chunk).toEqual('function'); }); test('chunk divides an array of 8 elements with chunk size 2', () = { const arr = [1, 2, 3, 4, 5, 6, 7, 8]; const chunked = chunk(arr, 2); expect(chunked).toEqual([[1, 2], [3, 4], [5, 6], [7, 8]); }); test('chunk divides an array of 4 elements with chunk size 1', () = { const arr = [1, 2, 3, 4]; const chunked = chunk(arr, 1); expect(chunked).toEqual([[1], [2], [3], [4]]); }); test('chunk divides an array of 5 elements with chunk size 3', () = { const arr = [1, 2, 3, 4, 5, 6, 7, 8]; const chunked = chunk(arr, 3); expect(chunked).toEqual([[1, 2, 3], [4, 5, 6], [7, 8]]); }); test('chunk divides an array of 13 elements with chunk size 5', () = { const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]; const chunked = chunk(arr, 5); expect(chunked).toEqual([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12, 13]]); }); Now we can start running our jest tests in watch mode with jest tests.js --watch, you can expect everything to fail at this point since we still need to stub out our chunk function.\nThen we’ll stub out our index.js like so:\nfunction chunk(array, size) { } module.exports = chunk; With that out of the way after we save our file, jest will report that the first test is passing and we still have four failing tests at the moment. Great, let’s get started implementing this.\nAt first glance this is the approach I think we’ll take to get this sorted out:\nfunction chunk(array, size) { //setup counter and new array objects  //start looping through original array  //shove size number of elements into a new array  //return nested array } While working through this I came up with the following during my first pass:\nfunction chunk(array, size) { const nestedArray = [];//setup counter and new array objects  let i = 0; //start looping through original array  while(i  array.length) { //shove size number of elements into a new array  let arrayChunk = array.slice(i, size); console.log(arrayChunk); i += size; } return nestedArray;//return nested array } This was whack because my array.slice(begin, end) “end” param wasn’t being incremented at all. Some quick debugging came up with one right solution:\nfunction chunk(array, size) { const nestedArray = []; let i = 0; while(i  array.length) { nestedArray.push(array.slice(i, i + size)); i += size; } return nestedArray; } Alright! Passing tests!\nBut we’re not done. I want something more, with no for/while loops. It took me a while to get this working, and I don’t think it’s as readable as the while loop version above - but it’s different, has no loops, and it works.\nHere’s the alternate solution, once you’ve had a chance to take it in we can talk about what is happening:\nfunction chunk(array, size) { const resultArrayLength = Math.ceil(array.length / size); return Array.from({ length: resultArrayLength }, (_, i) = array.slice(i * size, i * size + size) ); } OK, so first up we are finding out how many elements our nested array will contain. For example, if you have the following: Math.ceil([1,2,3,4,5,6,7,8,9].length / 2); you’ll get 5. Math.ceil() rounds up to the nearest integer. We are passing in 9/2 which is 4.5 so you can see now why we get 5 back.\nThe second bit is a little bit less straight forward, we’re using Array.from() again to create a new array. The first argument is an “array-like” object with a length property, as you can see we’re setting the length to the resultArrayLength to give us our outer array. Next we’re passing in a map function to call on the elements of the new array (the new array which has 5 elements). The map function will add a slice from our original array into our new nested array. To get the slice function working we have to do a bit more math, but it makes sense once you actually reason about it.\nElement 1 array.slice(0 * 2, 0 * 2 + 2) = [1,2].\nElement 2 array.slice(1 * 2, 1 * 2 + 2) = [3,4].\nElement 3 array.slice(2 * 2, 2 * 2 + 2) = [5,6].\nElement 4 array.slice(3 * 2, 3 * 2 + 2) = [7,8].\nElement 5 array.slice(4 * 2, 4 * 2 + 2) = [9].\nWe don’t care about the element itself in our map function, so we just call it _ to let people know it’s a throwaway variable.\nAnyways, there are two completely different ways to chunk an array in javascript.\n👍\n","wordCount":"930","inLanguage":"en","datePublished":"2018-02-15T08:47:31-05:00","dateModified":"2018-02-15T08:47:31-05:00","author":{"@type":"Person","name":"Colin Detwiller"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://colin.detwiller.me/posts/array-chunk/"},"publisher":{"@type":"Organization","name":"Colin's blog","logo":{"@type":"ImageObject","url":"https://colin.detwiller.me/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<ul id=menu>
+<li>
+<a href=https://colin.detwiller.me/categories/ title=categories>
+<span>categories</span>
+</a>
+</li>
+<li>
+<a href=https://colin.detwiller.me/tags/ title=tags>
+<span>tags</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=https://colin.detwiller.me/>Home</a>&nbsp;»&nbsp;<a href=https://colin.detwiller.me/posts/>Posts</a></div>
+<h1 class=post-title>
+Array Chunk
+</h1>
+<div class=post-meta><span title="2018-02-15 08:47:31 -0500 EST">February 15, 2018</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Colin Detwiller
+</div>
+</header>
+<div class=post-content><p>Today we&rsquo;ll be working through an exercise where the input is an array <code>[1,2,3,4,5]</code> and a size <code>2</code>.<br>
+Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in.
+It&rsquo;ll probably be easier to understand based on this example:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>chunk</span>([<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>,<span style=color:#ae81ff>5</span>], <span style=color:#ae81ff>2</span>) =&gt; [ [<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>], [<span style=color:#ae81ff>3</span>,<span style=color:#ae81ff>4</span>], [<span style=color:#ae81ff>5</span>]]
+</code></pre></div><p>This problem should be easier to reason about now that we&rsquo;ve seen a example.<br>
+Since the <code>size</code> is even and the array length is odd, we have a leftover element that gets to sit alone in the last array.</p>
+<p>Let&rsquo;s get this exercise setup with our test and index files. First we&rsquo;ll make sure we&rsquo;re in our <code>exercises/</code> directory and run <code>mkdir chunk && cd chunk/ && touch index.js tests.js</code>.
+Then we&rsquo;ll use our method of choice to get the following content into our <code>tests.js</code> file:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>chunk</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;./index&#39;</span>);
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;function chunk exists&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#66d9ef>typeof</span> <span style=color:#a6e22e>chunk</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;function&#39;</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;chunk divides an array of 8 elements with chunk size 2&#39;</span>, () =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>arr</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>];
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>chunked</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>arr</span>, <span style=color:#ae81ff>2</span>);
+
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>chunked</span>).<span style=color:#a6e22e>toEqual</span>([[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>], [<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>], [<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>], [<span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>]);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;chunk divides an array of 4 elements with chunk size 1&#39;</span>, () =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>arr</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>];
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>chunked</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>arr</span>, <span style=color:#ae81ff>1</span>);
+
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>chunked</span>).<span style=color:#a6e22e>toEqual</span>([[<span style=color:#ae81ff>1</span>], [<span style=color:#ae81ff>2</span>], [<span style=color:#ae81ff>3</span>], [<span style=color:#ae81ff>4</span>]]);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;chunk divides an array of 5 elements with chunk size 3&#39;</span>, () =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>arr</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>];
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>chunked</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>arr</span>, <span style=color:#ae81ff>3</span>);
+
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>chunked</span>).<span style=color:#a6e22e>toEqual</span>([[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>], [<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>], [<span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>]]);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;chunk divides an array of 13 elements with chunk size 5&#39;</span>, () =&gt; {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>arr</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>13</span>];
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>chunked</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>arr</span>, <span style=color:#ae81ff>5</span>);
+
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>chunked</span>).<span style=color:#a6e22e>toEqual</span>([[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>], [<span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span>], [<span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>13</span>]]);
+});
+</code></pre></div><p>Now we can start running our jest tests in watch mode with <code>jest tests.js --watch</code>, you can expect everything to fail at this point since we still need to stub out our chunk function.</p>
+<p>Then we&rsquo;ll stub out our <code>index.js</code> like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>array</span>, <span style=color:#a6e22e>size</span>) {
+}
+
+<span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>chunk</span>;
+</code></pre></div><p>With that out of the way after we save our file, jest will report that the first test is passing and we still have four failing tests at the moment. Great, let&rsquo;s get started implementing this.</p>
+<p>At first glance this is the approach I think we&rsquo;ll take to get this sorted out:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>array</span>, <span style=color:#a6e22e>size</span>) {
+  <span style=color:#75715e>//setup counter and new array objects
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//start looping through original array
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//shove size number of elements into a new array
+</span><span style=color:#75715e></span>  
+  <span style=color:#75715e>//return nested array
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>While working through this I came up with the following during my first pass:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>array</span>, <span style=color:#a6e22e>size</span>) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>nestedArray</span> <span style=color:#f92672>=</span> [];<span style=color:#75715e>//setup counter and new array objects
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+  <span style=color:#75715e>//start looping through original array
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>while</span>(<span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>length</span>) {
+    <span style=color:#75715e>//shove size number of elements into a new array
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>arrayChunk</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>slice</span>(<span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>size</span>);
+    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>arrayChunk</span>);
+    <span style=color:#a6e22e>i</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>size</span>;
+  }
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>nestedArray</span>;<span style=color:#75715e>//return nested array
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>This was whack because my <code>array.slice(begin, end)</code> &ldquo;end&rdquo; param wasn&rsquo;t being incremented at all.
+Some quick debugging came up with one right solution:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>array</span>, <span style=color:#a6e22e>size</span>) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>nestedArray</span> <span style=color:#f92672>=</span> [];
+  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+  
+  <span style=color:#66d9ef>while</span>(<span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;</span> <span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>length</span>) {
+    <span style=color:#a6e22e>nestedArray</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>slice</span>(<span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>i</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>size</span>));
+    <span style=color:#a6e22e>i</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>size</span>;
+  }
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>nestedArray</span>;
+}
+</code></pre></div><p>Alright! Passing tests!</p>
+<p>But we&rsquo;re not done. I want something <em>more</em>, with no for/while loops.
+It took me a while to get this working, and I don&rsquo;t think it&rsquo;s as readable as the while loop version above - but it&rsquo;s different, has no loops, and it works.</p>
+<p>Here&rsquo;s the alternate solution, once you&rsquo;ve had a chance to take it in we can talk about what is happening:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>chunk</span>(<span style=color:#a6e22e>array</span>, <span style=color:#a6e22e>size</span>) {
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>resultArrayLength</span> <span style=color:#f92672>=</span> Math.<span style=color:#a6e22e>ceil</span>(<span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>length</span> <span style=color:#f92672>/</span> <span style=color:#a6e22e>size</span>);
+  <span style=color:#66d9ef>return</span> Array.<span style=color:#a6e22e>from</span>({ <span style=color:#a6e22e>length</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>resultArrayLength</span> }, (<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>i</span>) =&gt;
+      <span style=color:#a6e22e>array</span>.<span style=color:#a6e22e>slice</span>(<span style=color:#a6e22e>i</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>size</span>, <span style=color:#a6e22e>i</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>size</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>size</span>)
+  );
+}
+</code></pre></div><p>OK, so first up we are finding out how many elements our nested array will contain.
+For example, if you have the following: <code>Math.ceil([1,2,3,4,5,6,7,8,9].length / 2);</code> you&rsquo;ll get <code>5</code>.
+<code>Math.ceil()</code> rounds up to the nearest integer. We are passing in <code>9/2</code> which is 4.5 so you can see now why we get 5 back.</p>
+<p>The second bit is a little bit less straight forward, we&rsquo;re using <code>Array.from()</code> again to create a new array. The first argument is an &ldquo;array-like&rdquo; object with a length property, as you can see we&rsquo;re setting the length to the <code>resultArrayLength</code> to give us our outer array.
+Next we&rsquo;re passing in a map function to call on the elements of the new array (the new array which has 5 elements). The map function will add a slice from our original array into our new nested array.
+To get the slice function working we have to do a bit more math, but it makes sense once you actually reason about it.</p>
+<p>Element 1 <code>array.slice(0 * 2, 0 * 2 + 2) => [1,2]</code>.</p>
+<p>Element 2 <code>array.slice(1 * 2, 1 * 2 + 2) => [3,4]</code>.</p>
+<p>Element 3 <code>array.slice(2 * 2, 2 * 2 + 2) => [5,6]</code>.</p>
+<p>Element 4 <code>array.slice(3 * 2, 3 * 2 + 2) => [7,8]</code>.</p>
+<p>Element 5 <code>array.slice(4 * 2, 4 * 2 + 2) => [9]</code>.</p>
+<p>We don&rsquo;t care about the element itself in our map function, so we just call it <code>_</code> to let people know it&rsquo;s a throwaway variable.</p>
+<p>Anyways, there are two completely different ways to chunk an array in javascript.</p>
+<p>👍</p>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://colin.detwiller.me/tags/javascript/>javascript</a></li>
+<li><a href=https://colin.detwiller.me/tags/exercises/>exercises</a></li>
+</ul>
+<nav class=paginav>
+<a class=prev href=https://colin.detwiller.me/posts/anagram-check/>
+<span class=title>« Prev Page</span>
+<br>
+<span>Anagram Check</span>
+</a>
+<a class=next href=https://colin.detwiller.me/posts/fizzbuzz/>
+<span class=title>Next Page »</span>
+<br>
+<span>Fizzbuzz</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share Array Chunk on twitter" href="https://twitter.com/intent/tweet/?text=Array%20Chunk&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2farray-chunk%2f&hashtags=javascript%2cexercises"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Array Chunk on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2farray-chunk%2f&title=Array%20Chunk&summary=Array%20Chunk&source=https%3a%2f%2fcolin.detwiller.me%2fposts%2farray-chunk%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Array Chunk on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fcolin.detwiller.me%2fposts%2farray-chunk%2f&title=Array%20Chunk"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://colin.detwiller.me/>Colin's blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

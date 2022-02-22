@@ -1,0 +1,252 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Javascript Reverse String | Colin's blog</title>
+<meta name=keywords content="javascript,exercises">
+<meta name=description content="In an effort to learn the in&rsquo;s and out&rsquo;s of ES2017 I&rsquo;m going to be working through some exercises.
+The first exercise I&rsquo;d like to work through is a pretty simple one, reversing a string with javascript.
+Basically, given string 'foobar' I&rsquo;d like to return 'raboof' - again, this is pretty simple and I think it would be a great place to start.
+To start with, let&rsquo;s go ahead and create a new directory in our terminal with:">
+<meta name=author content="Colin Detwiller">
+<link rel=canonical href=https://colin.detwiller.me/posts/javascript-reverse-string/>
+<meta name=google-site-verification content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.1e44d58192cbf6d7a4eb649bc43dbc3d4cc432677e5d8adc69b08c34cbe461ac.css integrity="sha256-HkTVgZLL9tek62SbxD28PUzEMmd+XYrcabCMNMvkYaw=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://colin.detwiller.me/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://colin.detwiller.me/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://colin.detwiller.me/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://colin.detwiller.me/apple-touch-icon.png>
+<link rel=mask-icon href=https://colin.detwiller.me/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.1">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-70072280-3','auto'),ga('send','pageview'))</script><meta property="og:title" content="Javascript Reverse String">
+<meta property="og:description" content="In an effort to learn the in&rsquo;s and out&rsquo;s of ES2017 I&rsquo;m going to be working through some exercises.
+The first exercise I&rsquo;d like to work through is a pretty simple one, reversing a string with javascript.
+Basically, given string 'foobar' I&rsquo;d like to return 'raboof' - again, this is pretty simple and I think it would be a great place to start.
+To start with, let&rsquo;s go ahead and create a new directory in our terminal with:">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin.detwiller.me/posts/javascript-reverse-string/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2018-02-03T10:03:12-05:00">
+<meta property="article:modified_time" content="2018-02-03T10:03:12-05:00"><meta property="og:site_name" content="Colin's blog">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Javascript Reverse String">
+<meta name=twitter:description content="In an effort to learn the in&rsquo;s and out&rsquo;s of ES2017 I&rsquo;m going to be working through some exercises.
+The first exercise I&rsquo;d like to work through is a pretty simple one, reversing a string with javascript.
+Basically, given string 'foobar' I&rsquo;d like to return 'raboof' - again, this is pretty simple and I think it would be a great place to start.
+To start with, let&rsquo;s go ahead and create a new directory in our terminal with:">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://colin.detwiller.me/posts/"},{"@type":"ListItem","position":2,"name":"Javascript Reverse String","item":"https://colin.detwiller.me/posts/javascript-reverse-string/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Javascript Reverse String","name":"Javascript Reverse String","description":"In an effort to learn the in\u0026rsquo;s and out\u0026rsquo;s of ES2017 I\u0026rsquo;m going to be working through some exercises.\nThe first exercise I\u0026rsquo;d like to work through is a pretty simple one, reversing a string with javascript.\nBasically, given string 'foobar' I\u0026rsquo;d like to return 'raboof' - again, this is pretty simple and I think it would be a great place to start.\nTo start with, let\u0026rsquo;s go ahead and create a new directory in our terminal with:","keywords":["javascript","exercises"],"articleBody":"In an effort to learn the in’s and out’s of ES2017 I’m going to be working through some exercises.\nThe first exercise I’d like to work through is a pretty simple one, reversing a string with javascript.\nBasically, given string 'foobar' I’d like to return 'raboof' - again, this is pretty simple and I think it would be a great place to start.\nTo start with, let’s go ahead and create a new directory in our terminal with:\ncd ~/ mkdir exercises cd exercises/ mkdir reverseString cd reverseString/ Now we’d like to create two files in this new reverseString directory, one for our code and one for our tests. Yes… tests are required if you consider yourself a professional developer so go ahead and get over it.\nNext we’re going to create an index.js file as well as a test.js file. And we’re going to use the Jest test framework. We’ll get it installed globally by running:\nnpm install -g jest To get Jest setup we just need to add one more file to our reversestring/ directory, the package.json. The contents of the file will be:\n{ \"scripts\": { \"test\": \"jest\" } } We can now go ahead and stub out our reverse function inside our index.js file:\nfunction reverse(string) { } module.exports = reverse; And we can stub out our test class (test.js) with the following:\nconst reverse = require('./index'); test('Reverse function exists', () = { expect(reverse).toBeDefined(); }); This will pull in our index.js file and validate that the reverse function is exported in the module.\nBack in our terminal we can execute the tests by running jest test.js, and we’ll see that our initial test passes.\nNow we can go about tackling the implementation of our test script. We’ll be exploring a few implementation options - starting with a simple solution, cranking it up a bit, and, finally, ending on a more advanced approach. Our final solution will embrace and demonstrate some of the built in functions of javascript arrays.\nWe can start the implementation by writing a couple tests to ensure our code actually works. Appending our test.js file with the following two tests should do the trick:\ntest('Reverse reverses a string', () = { expect(reverse('foobar')).toEqual('raboof'); }); test('Reverse reverses a string with spaces', () = { expect(reverse(' reverse this string! ')).toEqual(' !gnirts siht esrever '); }); It always makes sense to next run our new tests and see them fail before we proceed to make them pass. We can run the tests once by executing jest test.js at our terminal. If everything is configured correctly we should see 2 failed tests and 1 passing test.\nFinally we can get down to business. Since we already know javascript, we know that there is an Array.prototype.reverse() method that will take an array and reverse the order of the elements in the array.\nLet’s add some comments to our reverse function so that we know what we need to do:\nfunction reverse(string){ //convert string to array  //reverse the array  //turn the reversed array into a string  //return the reversed string } Our first order of business will be getting the string converted to a javascript array. We can get this sorted out by calling string.split(''). After we’ve got our string stored in a variable as an array, we can simply call the reverse method, stringArray.reverse(). Then we need to convert the reversed char array to a string - reversedStrArray.join('');. And finally return the reversed string, return reversed.\nfunction reverse(string){ //convert string to array  let stringArray = string.split(''); //reverse the array  let reversedStrArray = stringArray.reverse(); //turn the reversed array into a string  let reversed = reversedStrArray.join(''); //return the reversed string  return reversed; } Rerun the tests with the jest test.js command at the terminal, and we should now have three passing tests.\nThis code is far from great, which means next we’ll enter into our refactoring step. We’re storing all these temporary variables, and in my opinion, it is a total waste of characters. We’ll go ahead and just chain these functions together to accomplish the same results with less code that’s easier to understand.\nWhat that looks like is this:\nfunction reverse(string) { return string .split('') .reverse() .join(''); } Rerun our tests to ensure we haven’t introduced any regressions and we’re good to go.\nWith that out of the way we can implement this without using a built in function. Here, we’re going to be iterating over the chars in the string and prepending each char to the existing reversed string. We’ll start with an empty string for our reversed string, and loop through each letter in the string prepending it to our reversed string one letetr at a time. We could use our go to for(var i = 0;i syntax as our loop construct, but if we did we’d be missing out on some of the newer ES2015 features available to use in the for...of loop. I like the syntax of this looping construct better, it exposes us to less typos/errors in our loop construction. What if we were to use a greater than instead of a less than? Or if we used the wrong variable to grab the length? There will still be some cases where a trusty old for loop will be necessary, but in this instance we can definitely use the newer approach.\nWe’ll nuke the existing implementation (or comment it out so we can compare our three approaches for later) and again add some comments to plan our attack.\nfunction reverse(string){ //declare an emptry string to hold our reversed string  //setup our for...of loop  //inside our loop, we'll shove each character to the front of reversed string variable  //return the reversed string } What this ends up looking like is the following function:\nfunction reverse(string) { let reversed = \"\"; for(let char of string){ reversed = char + reversed; } return reversed; } Run our tests once again to make sure we’re still doing what we set out to do and then we can move on to a more advanced implementation.\nHere we’re going to take advantage of the array.reduce() method. We’ve already gone over how to turn a string into an array using the string.split('') function, so we’ll use the same approach here to get our string into the correct format to take advantage of reduce.\nYou may be thinking to yourself, “wait, what the heck is this reduce thing all about?” and I’m hoping I can help illuminate that for your right now.\nIn layman’s terms, reduce takes an array and “reduces” it into a single value.\nYou pass an array in, and get a single value out. Reduce is one of the cornerstones of functional programming and can be used in a wide variety of situations, but for illustrative purposes what works for me is thinking about taking an array of values and summing them up in one fell swoop. Given the following array const transactions = [1,2,3,4,5,6,7,8,9,10] what is the simplest way to sum them up? A loop? Hells no. We are looking at reduce right here. How does one use reduce to return the sum of these values, you may be asking. Like so:\nconst total = transactions.reduce((total, current) = total + current); Now, just becuase reduce returns a single value does not mean that you can’t return an array from reduce, you could just as easily write a reduce function that will return all the transactions plus 10% interest as an array by writing:\nconst totalWithTax = transactions.reduce((total, current) = { total.push(current * 1.1)); return total; }, []); We’re ready to implement our own reduce function to return the reverse of a given string:\nfunction reverse(string) { return string .split('') .reduce((rvs, char) = char + rvs, \"\"); } The logic should look pretty familiar, with the exception of the call to Array.prototype.reduce(). We just need to run our tests once again to make sure we’re still working as expected and once we confirm, we’re good 2 go.\nIt’s a little more terse and little more functional than our previous attempts. I hope you’ve enjoyed this quick run through reversing a string in javascript. 👍\n","wordCount":"1359","inLanguage":"en","datePublished":"2018-02-03T10:03:12-05:00","dateModified":"2018-02-03T10:03:12-05:00","author":{"@type":"Person","name":"Colin Detwiller"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://colin.detwiller.me/posts/javascript-reverse-string/"},"publisher":{"@type":"Organization","name":"Colin's blog","logo":{"@type":"ImageObject","url":"https://colin.detwiller.me/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<ul id=menu>
+<li>
+<a href=https://colin.detwiller.me/categories/ title=categories>
+<span>categories</span>
+</a>
+</li>
+<li>
+<a href=https://colin.detwiller.me/tags/ title=tags>
+<span>tags</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=https://colin.detwiller.me/>Home</a>&nbsp;»&nbsp;<a href=https://colin.detwiller.me/posts/>Posts</a></div>
+<h1 class=post-title>
+Javascript Reverse String
+</h1>
+<div class=post-meta><span title="2018-02-03 10:03:12 -0500 EST">February 3, 2018</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;Colin Detwiller
+</div>
+</header>
+<div class=post-content><p>In an effort to learn the in&rsquo;s and out&rsquo;s of ES2017 I&rsquo;m going to be working through some exercises.</p>
+<p>The first exercise I&rsquo;d like to work through is a pretty simple one, reversing a string with javascript.</p>
+<p>Basically, given string <code>'foobar'</code> I&rsquo;d like to return <code>'raboof'</code> - again, this is pretty simple and I think it would be a great place to start.</p>
+<p>To start with, let&rsquo;s go ahead and create a new directory in our terminal with:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cd ~/
+mkdir exercises
+cd exercises/
+mkdir reverseString
+cd reverseString/
+</code></pre></div><p>Now we&rsquo;d like to create two files in this new <code>reverseString</code> directory, one for our code and one for our tests. Yes&mldr; tests are required if you consider yourself a professional developer so go ahead and get over it.</p>
+<p>Next we&rsquo;re going to create an <code>index.js</code> file as well as a <code>test.js</code> file.
+And we&rsquo;re going to use the Jest test framework. We&rsquo;ll get it installed globally by running:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install -g jest
+</code></pre></div><p>To get Jest setup we just need to add one more file to our <code>reversestring/</code> directory, the <code>package.json</code>.
+The contents of the file will be:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;scripts&#34;</span>: {
+    <span style=color:#f92672>&#34;test&#34;</span>: <span style=color:#e6db74>&#34;jest&#34;</span>
+  }
+}
+</code></pre></div><p>We can now go ahead and stub out our reverse function inside our <code>index.js</code> file:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>) {
+
+}
+
+<span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>reverse</span>;
+</code></pre></div><p>And we can stub out our test class (<code>test.js</code>) with the following:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>reverse</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;./index&#39;</span>);
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;Reverse function exists&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>reverse</span>).<span style=color:#a6e22e>toBeDefined</span>();
+});
+</code></pre></div><p>This will pull in our <code>index.js</code> file and validate that the <code>reverse</code> function is exported in the module.</p>
+<p>Back in our terminal we can execute the tests by running <code>jest test.js</code>, and we&rsquo;ll see that our initial test passes.</p>
+<p>Now we can go about tackling the implementation of our test script. We&rsquo;ll be exploring a few implementation options - starting with a simple solution, cranking it up a bit, and, finally, ending on a more advanced approach.
+Our final solution will embrace and demonstrate some of the built in functions of javascript arrays.</p>
+<p>We can start the implementation by writing a couple tests to ensure our code actually works.
+Appending our <code>test.js</code> file with the following two tests should do the trick:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;Reverse reverses a string&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>reverse</span>(<span style=color:#e6db74>&#39;foobar&#39;</span>)).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;raboof&#39;</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;Reverse reverses a string with spaces&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>reverse</span>(<span style=color:#e6db74>&#39; reverse this string! &#39;</span>)).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39; !gnirts siht esrever &#39;</span>);
+});
+</code></pre></div><p>It always makes sense to next run our new tests and see them fail before we proceed to make them pass. We can run the tests once by executing <code>jest test.js</code> at our terminal.
+If everything is configured correctly we should see 2 failed tests and 1 passing test.</p>
+<p>Finally we can get down to business.
+Since we already know javascript, we know that there is an Array.prototype.reverse() method that will take an array and reverse the order of the elements in the array.</p>
+<p>Let&rsquo;s add some comments to our reverse function so that we know what we need to do:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>){
+  <span style=color:#75715e>//convert string to array
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//reverse the array
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//turn the reversed array into a string
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//return the reversed string
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>Our first order of business will be getting the string converted to a javascript array.
+We can get this sorted out by calling <code>string.split('')</code>.
+After we&rsquo;ve got our string stored in a variable as an array, we can simply call the reverse method, <code>stringArray.reverse()</code>.
+Then we need to convert the reversed char array to a string - <code>reversedStrArray.join('');</code>.
+And finally return the reversed string, <code>return reversed</code>.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>){
+  <span style=color:#75715e>//convert string to array
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>stringArray</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>string</span>.<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+  <span style=color:#75715e>//reverse the array
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>reversedStrArray</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>stringArray</span>.<span style=color:#a6e22e>reverse</span>();
+  <span style=color:#75715e>//turn the reversed array into a string
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>reversed</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>reversedStrArray</span>.<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+  <span style=color:#75715e>//return the reversed string
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>reversed</span>;
+}
+</code></pre></div><p>Rerun the tests with the <code>jest test.js</code> command at the terminal, and we should now have three passing tests.</p>
+<p>This code is far from great, which means next we&rsquo;ll enter into our refactoring step. We&rsquo;re storing all these temporary variables, and in my opinion, it is a total waste of characters.
+We&rsquo;ll go ahead and just chain these functions together to accomplish the same results with less code that&rsquo;s easier to understand.</p>
+<p>What that looks like is this:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>) {
+     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>string</span>
+       .<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#39;&#39;</span>)
+       .<span style=color:#a6e22e>reverse</span>()
+       .<span style=color:#a6e22e>join</span>(<span style=color:#e6db74>&#39;&#39;</span>);
+}
+</code></pre></div><p>Rerun our tests to ensure we haven&rsquo;t introduced any regressions and we&rsquo;re good to go.</p>
+<p>With that out of the way we can implement this without using a built in function.
+Here, we&rsquo;re going to be iterating over the chars in the string and prepending each char to the existing reversed string.
+We&rsquo;ll start with an empty string for our reversed string, and loop through each letter in the string prepending it to our reversed string one letetr at a time.
+We could use our go to <code>for(var i = 0;i &lt; string.length; i++){ }</code> syntax as our loop construct, but if we did we&rsquo;d be missing out on some of the newer ES2015 features available to use in the <code>for...of</code> loop.
+I like the syntax of this looping construct better, it exposes us to less typos/errors in our loop construction.
+What if we were to use a greater than instead of a less than? Or if we used the wrong variable to grab the length?
+There will still be some cases where a trusty old for loop will be necessary, but in this instance we can definitely use the newer approach.</p>
+<p>We&rsquo;ll nuke the existing implementation (or comment it out so we can compare our three approaches for later) and again add some comments to plan our attack.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>){
+  <span style=color:#75715e>//declare an emptry string to hold our reversed string
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//setup our for...of loop
+</span><span style=color:#75715e></span>  <span style=color:#75715e>//inside our loop, we&#39;ll shove each character to the front of reversed string variable
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>//return the reversed string
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>What this ends up looking like is the following function:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>) {
+  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>reversed</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>;
+  <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>of</span> <span style=color:#a6e22e>string</span>){
+    <span style=color:#a6e22e>reversed</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>reversed</span>;
+  }
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>reversed</span>;
+}
+</code></pre></div><p>Run our tests once again to make sure we&rsquo;re still doing what we set out to do and then we can move on to a more advanced implementation.</p>
+<p>Here we&rsquo;re going to take advantage of the <code>array.reduce()</code> method. We&rsquo;ve already gone over how to turn a string into an array using the <code>string.split('')</code> function, so we&rsquo;ll use the same approach here to get our string into the correct format to take advantage of reduce.</p>
+<p>You may be thinking to yourself, &ldquo;wait, what the heck is this reduce thing all about?&rdquo; and I&rsquo;m hoping I can help illuminate that for your right now.</p>
+<p>In layman&rsquo;s terms, reduce takes an array and &ldquo;reduces&rdquo; it into a single value.<br>
+You pass an array in, and get a single value out.
+Reduce is one of the cornerstones of functional programming and can be used in a wide variety of situations, but for illustrative purposes what works for me is thinking about taking an array of values and summing them up in one fell swoop.
+Given the following array <code>const transactions = [1,2,3,4,5,6,7,8,9,10]</code> what is the simplest way to sum them up?
+A loop? Hells no. We are looking at reduce right here.
+How does one use reduce to return the sum of these values, you may be asking.
+Like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>total</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>transactions</span>.<span style=color:#a6e22e>reduce</span>((<span style=color:#a6e22e>total</span>, <span style=color:#a6e22e>current</span>) =&gt; <span style=color:#a6e22e>total</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>current</span>);
+</code></pre></div><p>Now, just becuase reduce returns a single value does not mean that you can&rsquo;t return an array from reduce, you could just as easily write a reduce function that will return all the transactions plus 10% interest as an array by writing:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>totalWithTax</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>transactions</span>.<span style=color:#a6e22e>reduce</span>((<span style=color:#a6e22e>total</span>, <span style=color:#a6e22e>current</span>) =&gt; {
+  <span style=color:#a6e22e>total</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>current</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>1.1</span>));
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>total</span>;
+}, []);
+</code></pre></div><p>We&rsquo;re ready to implement our own reduce function to return the reverse of a given string:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>reverse</span>(<span style=color:#a6e22e>string</span>) {
+  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>string</span>
+    .<span style=color:#a6e22e>split</span>(<span style=color:#e6db74>&#39;&#39;</span>)
+    .<span style=color:#a6e22e>reduce</span>((<span style=color:#a6e22e>rvs</span>, <span style=color:#66d9ef>char</span>) =&gt;  <span style=color:#66d9ef>char</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>rvs</span>, <span style=color:#e6db74>&#34;&#34;</span>);
+}
+</code></pre></div><p>The logic should look pretty familiar, with the exception of the call to Array.prototype.reduce().
+We just need to run our tests once again to make sure we&rsquo;re still working as expected and once we confirm, we&rsquo;re good 2 go.</p>
+<p>It&rsquo;s a little more terse and little more functional than our previous attempts. I hope you&rsquo;ve enjoyed this quick run through reversing a string in javascript. 👍</p>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://colin.detwiller.me/tags/javascript/>javascript</a></li>
+<li><a href=https://colin.detwiller.me/tags/exercises/>exercises</a></li>
+</ul>
+<nav class=paginav>
+<a class=prev href=https://colin.detwiller.me/posts/javascript-more-string-exercises/>
+<span class=title>« Prev Page</span>
+<br>
+<span>Javascript More String Exercises</span>
+</a>
+<a class=next href=https://colin.detwiller.me/posts/azureapplicationgatwaypart2/>
+<span class=title>Next Page »</span>
+<br>
+<span>Azure Application Gateway - Part 2</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share Javascript Reverse String on twitter" href="https://twitter.com/intent/tweet/?text=Javascript%20Reverse%20String&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fjavascript-reverse-string%2f&hashtags=javascript%2cexercises"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Javascript Reverse String on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fjavascript-reverse-string%2f&title=Javascript%20Reverse%20String&summary=Javascript%20Reverse%20String&source=https%3a%2f%2fcolin.detwiller.me%2fposts%2fjavascript-reverse-string%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Javascript Reverse String on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fjavascript-reverse-string%2f&title=Javascript%20Reverse%20String"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://colin.detwiller.me/>Colin's blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>

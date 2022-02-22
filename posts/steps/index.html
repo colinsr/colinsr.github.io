@@ -1,0 +1,244 @@
+<!doctype html><html lang=en dir=auto>
+<head><meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=robots content="index, follow">
+<title>Steps | Colin's blog</title>
+<meta name=keywords content="javascript,exercises">
+<meta name=description content="Ok, next up on our list of exercises is going to be to create a steps(n) function.
+This function will print out to the console a number of log statements like so:
+steps(3) => '# ' '## ' '###' Meaning the base will print N &ldquo;#&rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.
+Following the same approach, we&rsquo;ll navigate to our exercises/ directory and create a new directory called steps/, then we&rsquo;ll jump into the directory and create our index.">
+<meta name=author content="Colin Detwiller">
+<link rel=canonical href=https://colin.detwiller.me/posts/steps/>
+<meta name=google-site-verification content="XYZabc">
+<link crossorigin=anonymous href=/assets/css/stylesheet.min.1e44d58192cbf6d7a4eb649bc43dbc3d4cc432677e5d8adc69b08c34cbe461ac.css integrity="sha256-HkTVgZLL9tek62SbxD28PUzEMmd+XYrcabCMNMvkYaw=" rel="preload stylesheet" as=style>
+<link rel=icon href=https://colin.detwiller.me/favicon.ico>
+<link rel=icon type=image/png sizes=16x16 href=https://colin.detwiller.me/favicon-16x16.png>
+<link rel=icon type=image/png sizes=32x32 href=https://colin.detwiller.me/favicon-32x32.png>
+<link rel=apple-touch-icon href=https://colin.detwiller.me/apple-touch-icon.png>
+<link rel=mask-icon href=https://colin.detwiller.me/safari-pinned-tab.svg>
+<meta name=theme-color content="#2e2e33">
+<meta name=msapplication-TileColor content="#2e2e33">
+<meta name=generator content="Hugo 0.92.1">
+<noscript>
+<style>#theme-toggle,.top-link{display:none}</style>
+<style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style>
+</noscript>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(a,e,f,g,b,c,d){a.GoogleAnalyticsObject=b,a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)},a[b].l=1*new Date,c=e.createElement(f),d=e.getElementsByTagName(f)[0],c.async=1,c.src=g,d.parentNode.insertBefore(c,d)}(window,document,'script','https://www.google-analytics.com/analytics.js','ga'),ga('create','UA-70072280-3','auto'),ga('send','pageview'))</script><meta property="og:title" content="Steps">
+<meta property="og:description" content="Ok, next up on our list of exercises is going to be to create a steps(n) function.
+This function will print out to the console a number of log statements like so:
+steps(3) => '# ' '## ' '###' Meaning the base will print N &ldquo;#&rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.
+Following the same approach, we&rsquo;ll navigate to our exercises/ directory and create a new directory called steps/, then we&rsquo;ll jump into the directory and create our index.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://colin.detwiller.me/posts/steps/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2018-02-25T17:35:40-05:00">
+<meta property="article:modified_time" content="2018-02-25T17:35:40-05:00"><meta property="og:site_name" content="Colin's blog">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Steps">
+<meta name=twitter:description content="Ok, next up on our list of exercises is going to be to create a steps(n) function.
+This function will print out to the console a number of log statements like so:
+steps(3) => '# ' '## ' '###' Meaning the base will print N &ldquo;#&rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.
+Following the same approach, we&rsquo;ll navigate to our exercises/ directory and create a new directory called steps/, then we&rsquo;ll jump into the directory and create our index.">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://colin.detwiller.me/posts/"},{"@type":"ListItem","position":2,"name":"Steps","item":"https://colin.detwiller.me/posts/steps/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Steps","name":"Steps","description":"Ok, next up on our list of exercises is going to be to create a steps(n) function.\nThis function will print out to the console a number of log statements like so:\nsteps(3) =\u0026gt; \u0026#39;# \u0026#39; \u0026#39;## \u0026#39; \u0026#39;###\u0026#39; Meaning the base will print N \u0026ldquo;#\u0026rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.\nFollowing the same approach, we\u0026rsquo;ll navigate to our exercises/ directory and create a new directory called steps/, then we\u0026rsquo;ll jump into the directory and create our index.","keywords":["javascript","exercises"],"articleBody":"Ok, next up on our list of exercises is going to be to create a steps(n) function.\nThis function will print out to the console a number of log statements like so:\nsteps(3) = '# ' '## ' '###' Meaning the base will print N “#” signs, and any steps above will have a single space to the right for each step up when given a positive number.\nFollowing the same approach, we’ll navigate to our exercises/ directory and create a new directory called steps/, then we’ll jump into the directory and create our index.js and our test.js files.\nAfter that we can get our tests running in watch mode, here is the test suite we’ll be working with:\nconst steps = require('./index'); beforeEach(() = { jest.spyOn(console, 'log'); }); afterEach(() = { console.log.mockRestore(); }); test('steps function exists', () = { expect(typeof steps).toEqual('function'); }); test('steps called with n = 1', () = { steps(1); expect(console.log.mock.calls[0][0]).toEqual('#'); expect(console.log.mock.calls.length).toEqual(1); }); test('steps called with n = 2', () = { steps(2); expect(console.log.mock.calls[0][0]).toEqual('# '); expect(console.log.mock.calls[1][0]).toEqual('##'); expect(console.log.mock.calls.length).toEqual(2); }); test('steps called with n = 5', () = { steps(4); expect(console.log.mock.calls[0][0]).toEqual('# '); expect(console.log.mock.calls[1][0]).toEqual('## '); expect(console.log.mock.calls[2][0]).toEqual('### '); expect(console.log.mock.calls[3][0]).toEqual('#### '); expect(console.log.mock.calls[4][0]).toEqual('#####'); expect(console.log.mock.calls.length).toEqual(5); }); Making sure to execute jest test.js --watch to get the tests rolling.\nThen we can add our function declaration to our index.js and export it to get our first green test.\nconst steps = n = { } module.exports = steps; I know that most people will look at this function and think about the return values as a sort of matrix. In this view each line that gets logged out to the console would be N char long, and we would have N rows to print out. What I came up with were two alternatives to that approach - a map function and a recursive function.\nI’ll cover the map version first since the recursive function takes a bit more effort to explain clearly.\nWe have this number, N, that’s getting passed into our steps(n) function. The way I wanted to solve this exercise was to build up an array from 1 to N, and then call map on the array - printing out to the console during each execution within the map.\nconst steps = n = { //build array from 1..N  //map through the array and print out to the console, doing some math to calculate # vs spaces } Sounds pretty easy and straightforward in my opinion, so let’s get started.\nWe’ve already gone through a couple handy ways to create arrays from a number.\n[...Array(n).keys()] // return array from 0 to N-1 //and Array.from(Array(n).keys(), x = x+1) // return an array from 1 to N I’m going to go with option B. here as I’d rather be working with the actual number instead of having to add one to each element of the array before calculating my ‘#’ and spaces.\nThat’s brings our index.js to look roughly like:\nconst steps = n = { //build array from 1..N  Array.from(Array(n).keys(), x = x + 1) // we have an array of 1..N  //use map to print out to the console, doing some math to calculate # vs spaces } Now we just need to come up with the logic of how many hashtags/spaces to print out in each console.log() statement. The way I came up with this is that if we wanted to print 10 steps, our top step would consist of 1 hashtag followed by 9 spaces. Second step would be 2 hashtags and 8 spaces. The math starts staring you in the face if you work through a few of these steps before just hacking away.\nconst steps = n = { Array.from(Array(n).keys(), x = x + 1) // we have an array of 1..N  //execute this console.log on each element of the array, doing some math to calculate #'s vs spaces  .map(num = console.log(`${'#'.repeat(num)}${' '.repeat(n - num)}`)); } Bam, check our jest output and we get… WTH.. we still have a test failing. See if you can track down the issue.\nOnce you’ve had a chance to correct the issue with my bad test we can move on to the recursive approach.\nWith a recursive function the first thing we should do is identify the “done” condition. In this case we want to complete the function when we’ve printed N lines, so first we’ll add our escape hatch. In order to know when it’s safe to bail out we’ll need to keep track of how many lines we’ve printed out already, so we’ll add a second parameter to our function definition with a default of 0. Here is what that’ll look like:\nconst steps = (n, linesPrinted = 0) = { if (linesPrinted === n) return; // this will fire off once we've printed N lines } Alright, so now we’re ready to start actually implementing this recursive function. In order to do so we’re going to need a way to pass the state from one call to the next - this is known as an accumulator. To get this working we’re going to have to add another parameter to our function…\nconst steps = (n, linesPrinted = 0, currentLine = \"\") = { if (linesPrinted === n) return; // this will fire off once we've printed N lines } We’ll initialize currentLine to an empty string and then we’ll use that to build up our output for the current iteration. We can also use the length of the currentLine variable to see when it’s time for us to log out to the console and jump to our next iteration.\nconst steps = (n, linesPrinted = 0, currentLine = \"\") = { if (linesPrinted === n) return; // this will fire off once we've printed N lines  if (currentLine.length === n) { // we've added our N characters to the currentLine  console.log(currentLine); // take care of business here  return steps(n, linesPrinted + 1); // increment linesPrinted and call steps() again!  } } Score, we now have a way to print out the content of currentLine, all that’s left to do is populate it. We are basically adding one char per execution of our function, so we’ll use linesPrinted along with the length of currentLine to figure out which character to add to currentLine.\nconst steps = (n, linesPrinted = 0, currentLine = \"\") = { if (linesPrinted === n) return; // this will fire off once we've printed N lines  if (currentLine.length === n) { // we've added our N characters to the currentLine  console.log(currentLine); // take care of business here  return steps(n, linesPrinted + 1); // increment linesPrinted and call steps() again!  } const currentChar = currentLine.length  linesPrinted ? '#' : ' '; // if currentLine.length is 3 and we've printed 4 lines use a '#'  // if currentLine.length is 3 and we've printed 2 lines use a ' '  return steps(n, linesPrinted, currentLine += currentChar); // make our recursive call, passing in the original N value  // the same number of lines printed - we didn't do a console.log if we made it here  // and add the current character to our currentLine before passing it through } You may want to step through this with the debugger if it doesn’t make sense. Recursion is hard. Getting in the recursive mindset is hard.\nI think in this particular case, I choose option A. The array.map function once again proves to be easier to read in my opinion.\nAnyhow, if you made it through all the way - great job! Keep it up!! 👍\n","wordCount":"1255","inLanguage":"en","datePublished":"2018-02-25T17:35:40-05:00","dateModified":"2018-02-25T17:35:40-05:00","author":{"@type":"Person","name":"Colin Detwiller"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://colin.detwiller.me/posts/steps/"},"publisher":{"@type":"Organization","name":"Colin's blog","logo":{"@type":"ImageObject","url":"https://colin.detwiller.me/favicon.ico"}}}</script>
+</head>
+<body id=top>
+<script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add('dark'):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove('dark'):window.matchMedia('(prefers-color-scheme: dark)').matches&&document.body.classList.add('dark')</script>
+<header class=header>
+<nav class=nav>
+<ul id=menu>
+<li>
+<a href=https://colin.detwiller.me/categories/ title=categories>
+<span>categories</span>
+</a>
+</li>
+<li>
+<a href=https://colin.detwiller.me/tags/ title=tags>
+<span>tags</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+<main class=main>
+<article class=post-single>
+<header class=post-header>
+<div class=breadcrumbs><a href=https://colin.detwiller.me/>Home</a>&nbsp;»&nbsp;<a href=https://colin.detwiller.me/posts/>Posts</a></div>
+<h1 class=post-title>
+Steps
+</h1>
+<div class=post-meta><span title="2018-02-25 17:35:40 -0500 EST">February 25, 2018</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;Colin Detwiller
+</div>
+</header>
+<div class=post-content><p>Ok, next up on our list of exercises is going to be to create a <code>steps(n)</code> function.</p>
+<p>This function will print out to the console a number of log statements like so:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#a6e22e>steps</span>(<span style=color:#ae81ff>3</span>) =&gt; 
+<span style=color:#e6db74>&#39;#  &#39;</span>
+<span style=color:#e6db74>&#39;## &#39;</span>
+<span style=color:#e6db74>&#39;###&#39;</span>
+</code></pre></div><p>Meaning the base will print N &ldquo;#&rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.</p>
+<p>Following the same approach, we&rsquo;ll navigate to our <code>exercises/</code> directory and create a new directory called <code>steps/</code>, then we&rsquo;ll jump into the directory and create our <code>index.js</code> and our <code>test.js</code> files.</p>
+<p>After that we can get our tests running in watch mode, here is the test suite we&rsquo;ll be working with:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;./index&#39;</span>);
+
+<span style=color:#a6e22e>beforeEach</span>(() =&gt; {
+  <span style=color:#a6e22e>jest</span>.<span style=color:#a6e22e>spyOn</span>(<span style=color:#a6e22e>console</span>, <span style=color:#e6db74>&#39;log&#39;</span>);
+});
+
+<span style=color:#a6e22e>afterEach</span>(() =&gt; {
+  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mockRestore</span>();
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;steps function exists&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>expect</span>(<span style=color:#66d9ef>typeof</span> <span style=color:#a6e22e>steps</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;function&#39;</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;steps called with n = 1&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>steps</span>(<span style=color:#ae81ff>1</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>0</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;#&#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>.<span style=color:#a6e22e>length</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#ae81ff>1</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;steps called with n = 2&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>steps</span>(<span style=color:#ae81ff>2</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>0</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;# &#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>1</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;##&#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>.<span style=color:#a6e22e>length</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#ae81ff>2</span>);
+});
+
+<span style=color:#a6e22e>test</span>(<span style=color:#e6db74>&#39;steps called with n = 5&#39;</span>, () =&gt; {
+  <span style=color:#a6e22e>steps</span>(<span style=color:#ae81ff>4</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>0</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;#    &#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>1</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;##   &#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>2</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;###  &#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>3</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;#### &#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>[<span style=color:#ae81ff>4</span>][<span style=color:#ae81ff>0</span>]).<span style=color:#a6e22e>toEqual</span>(<span style=color:#e6db74>&#39;#####&#39;</span>);
+  <span style=color:#a6e22e>expect</span>(<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>mock</span>.<span style=color:#a6e22e>calls</span>.<span style=color:#a6e22e>length</span>).<span style=color:#a6e22e>toEqual</span>(<span style=color:#ae81ff>5</span>);
+});
+</code></pre></div><p>Making sure to execute <code>jest test.js --watch</code> to get the tests rolling.</p>
+<p>Then we can add our function declaration to our <code>index.js</code> and export it to get our first green test.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>n</span> =&gt; {
+
+}
+
+<span style=color:#a6e22e>module</span>.<span style=color:#a6e22e>exports</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>steps</span>;
+</code></pre></div><p>I know that most people will look at this function and think about the return values as a sort of matrix.
+In this view each line that gets logged out to the console would be N char long, and we would have N rows to print out.
+What I came up with were two alternatives to that approach - a map function and a recursive function.</p>
+<p>I&rsquo;ll cover the map version first since the recursive function takes a bit more effort to explain clearly.</p>
+<p>We have this number, N, that&rsquo;s getting passed into our <code>steps(n)</code> function. The way I wanted to solve this exercise was to build up an array from 1 to N, and then call map on the array - printing out to the console during each execution within the map.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>n</span> =&gt; {
+  <span style=color:#75715e>//build array from 1..N
+</span><span style=color:#75715e></span>  <span style=color:#75715e>//map through the array and print out to the console, doing some math to calculate # vs spaces
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>Sounds pretty easy and straightforward in my opinion, so let&rsquo;s get started.</p>
+<p>We&rsquo;ve already gone through a couple handy ways to create arrays from a number.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript>[...Array(<span style=color:#a6e22e>n</span>).<span style=color:#a6e22e>keys</span>()]  <span style=color:#75715e>// return array from 0 to N-1
+</span><span style=color:#75715e>//and
+</span><span style=color:#75715e></span>Array.<span style=color:#a6e22e>from</span>(Array(<span style=color:#a6e22e>n</span>).<span style=color:#a6e22e>keys</span>(), <span style=color:#a6e22e>x</span> =&gt; <span style=color:#a6e22e>x</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>)  <span style=color:#75715e>// return an array from 1 to N
+</span></code></pre></div><p>I&rsquo;m going to go with option B. here as I&rsquo;d rather be working with the actual number instead of having to add one to each element of the array before calculating my &lsquo;#&rsquo; and spaces.</p>
+<p>That&rsquo;s brings our <code>index.js</code> to look roughly like:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>n</span> =&gt; {
+  <span style=color:#75715e>//build array from 1..N
+</span><span style=color:#75715e></span>  Array.<span style=color:#a6e22e>from</span>(Array(<span style=color:#a6e22e>n</span>).<span style=color:#a6e22e>keys</span>(), <span style=color:#a6e22e>x</span> =&gt; <span style=color:#a6e22e>x</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)  <span style=color:#75715e>// we have an array of 1..N
+</span><span style=color:#75715e></span>  <span style=color:#75715e>//use map to print out to the console, doing some math to calculate # vs spaces
+</span><span style=color:#75715e></span>}
+</code></pre></div><p>Now we just need to come up with the logic of how many hashtags/spaces to print out in each <code>console.log()</code> statement.
+The way I came up with this is that if we wanted to print 10 steps, our top step would consist of 1 hashtag followed by 9 spaces.
+Second step would be 2 hashtags and 8 spaces. The math starts staring you in the face if you work through a few of these steps before just hacking away.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>n</span> =&gt; {
+  
+  Array.<span style=color:#a6e22e>from</span>(Array(<span style=color:#a6e22e>n</span>).<span style=color:#a6e22e>keys</span>(), <span style=color:#a6e22e>x</span> =&gt; <span style=color:#a6e22e>x</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>)  <span style=color:#75715e>// we have an array of 1..N
+</span><span style=color:#75715e></span>    <span style=color:#75715e>//execute this console.log on each element of the array, doing some math to calculate #&#39;s vs spaces
+</span><span style=color:#75715e></span>    .<span style=color:#a6e22e>map</span>(<span style=color:#a6e22e>num</span> =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`</span><span style=color:#e6db74>${</span><span style=color:#e6db74>&#39;#&#39;</span>.<span style=color:#a6e22e>repeat</span>(<span style=color:#a6e22e>num</span>)<span style=color:#e6db74>}${</span><span style=color:#e6db74>&#39; &#39;</span>.<span style=color:#a6e22e>repeat</span>(<span style=color:#a6e22e>n</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>num</span>)<span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>));
+}
+</code></pre></div><p>Bam, check our jest output and we get&mldr; WTH.. we still have a test failing. See if you can track down the issue.</p>
+<p>Once you&rsquo;ve had a chance to correct the issue with my bad test we can move on to the recursive approach.</p>
+<p>With a recursive function the first thing we should do is identify the &ldquo;done&rdquo; condition. In this case we want to complete the function when we&rsquo;ve printed N lines, so first we&rsquo;ll add our escape hatch. In order to know when it&rsquo;s safe to bail out we&rsquo;ll need to keep track of how many lines we&rsquo;ve printed out already, so we&rsquo;ll add a second parameter to our function definition with a default of 0. Here is what that&rsquo;ll look like:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>) =&gt; {
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) <span style=color:#66d9ef>return</span>; <span style=color:#75715e>// this will fire off once we&#39;ve printed N lines
+</span><span style=color:#75715e></span>} 
+</code></pre></div><p>Alright, so now we&rsquo;re ready to start actually implementing this recursive function.
+In order to do so we&rsquo;re going to need a way to pass the state from one call to the next - this is known as an accumulator.
+To get this working we&rsquo;re going to have to add <em>another</em> parameter to our function&mldr;</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>currentLine</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>) =&gt; {
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) <span style=color:#66d9ef>return</span>; <span style=color:#75715e>// this will fire off once we&#39;ve printed N lines
+</span><span style=color:#75715e></span>} 
+</code></pre></div><p>We&rsquo;ll initialize <code>currentLine</code> to an empty string and then we&rsquo;ll use that to build up our output for the current iteration.
+We can also use the length of the <code>currentLine</code> variable to see when it&rsquo;s time for us to log out to the console and jump to our next iteration.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>currentLine</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>) =&gt; {
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) <span style=color:#66d9ef>return</span>; <span style=color:#75715e>// this will fire off once we&#39;ve printed N lines
+</span><span style=color:#75715e></span>
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>currentLine</span>.<span style=color:#a6e22e>length</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) { <span style=color:#75715e>// we&#39;ve added our N characters to the currentLine
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>currentLine</span>);     <span style=color:#75715e>// take care of business here
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>steps</span>(<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);   <span style=color:#75715e>// increment linesPrinted and call steps() again!
+</span><span style=color:#75715e></span>  }
+} 
+</code></pre></div><p>Score, we now have a way to print out the content of <code>currentLine</code>, all that&rsquo;s left to do is populate it.
+We are basically adding one char per execution of our function, so we&rsquo;ll use <code>linesPrinted</code> along with the length of <code>currentLine</code> to figure out which character to add to <code>currentLine</code>.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>steps</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>currentLine</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>) =&gt; {
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) <span style=color:#66d9ef>return</span>; <span style=color:#75715e>// this will fire off once we&#39;ve printed N lines
+</span><span style=color:#75715e></span>
+  <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>currentLine</span>.<span style=color:#a6e22e>length</span> <span style=color:#f92672>===</span> <span style=color:#a6e22e>n</span>) { <span style=color:#75715e>// we&#39;ve added our N characters to the currentLine
+</span><span style=color:#75715e></span>    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>currentLine</span>);     <span style=color:#75715e>// take care of business here
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>steps</span>(<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);   <span style=color:#75715e>// increment linesPrinted and call steps() again!
+</span><span style=color:#75715e></span>  }
+  <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>currentChar</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>currentLine</span>.<span style=color:#a6e22e>length</span> <span style=color:#f92672>&lt;=</span> <span style=color:#a6e22e>linesPrinted</span> <span style=color:#f92672>?</span> <span style=color:#e6db74>&#39;#&#39;</span> <span style=color:#f92672>:</span> <span style=color:#e6db74>&#39; &#39;</span>;
+  <span style=color:#75715e>// if currentLine.length is 3 and we&#39;ve printed 4 lines use a &#39;#&#39;
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// if currentLine.length is 3 and we&#39;ve printed 2 lines use a &#39; &#39; 
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>steps</span>(<span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>linesPrinted</span>, <span style=color:#a6e22e>currentLine</span> <span style=color:#f92672>+=</span> <span style=color:#a6e22e>currentChar</span>);
+  <span style=color:#75715e>// make our recursive call, passing in the original N value
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// the same number of lines printed - we didn&#39;t do a console.log if we made it here
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// and add the current character to our currentLine before passing it through
+</span><span style=color:#75715e></span>} 
+</code></pre></div><p>You may want to step through this with the debugger if it doesn&rsquo;t make sense. Recursion is hard.
+Getting in the recursive mindset is hard.</p>
+<p>I think in this particular case, I choose option A. The array.map function once again proves to be easier to read in my opinion.</p>
+<p>Anyhow, if you made it through all the way - great job! Keep it up!!
+👍</p>
+</div>
+<footer class=post-footer>
+<ul class=post-tags>
+<li><a href=https://colin.detwiller.me/tags/javascript/>javascript</a></li>
+<li><a href=https://colin.detwiller.me/tags/exercises/>exercises</a></li>
+</ul>
+<nav class=paginav>
+<a class=prev href=https://colin.detwiller.me/posts/pyramid/>
+<span class=title>« Prev Page</span>
+<br>
+<span>Pyramid</span>
+</a>
+<a class=next href=https://colin.detwiller.me/posts/capitalizer/>
+<span class=title>Next Page »</span>
+<br>
+<span>Capitalizer</span>
+</a>
+</nav>
+<div class=share-buttons>
+<a target=_blank rel="noopener noreferrer" aria-label="share Steps on twitter" href="https://twitter.com/intent/tweet/?text=Steps&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fsteps%2f&hashtags=javascript%2cexercises"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Steps on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fsteps%2f&title=Steps&summary=Steps&source=https%3a%2f%2fcolin.detwiller.me%2fposts%2fsteps%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg>
+</a>
+<a target=_blank rel="noopener noreferrer" aria-label="share Steps on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fcolin.detwiller.me%2fposts%2fsteps%2f&title=Steps"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg>
+</a>
+</div>
+</footer>
+</article>
+</main>
+<footer class=footer>
+<span>&copy; 2022 <a href=https://colin.detwiller.me/>Colin's blog</a></span>
+<span>
+Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a>
+</span>
+</footer>
+<a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a>
+<script>let menu=document.getElementById('menu');menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener("click",function(b){b.preventDefault();var a=this.getAttribute("href").substr(1);window.matchMedia('(prefers-reduced-motion: reduce)').matches?document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(a)}']`).scrollIntoView({behavior:"smooth"}),a==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${a}`)})})</script>
+<script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script>
+<script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove('dark'),localStorage.setItem("pref-theme",'light')):(document.body.classList.add('dark'),localStorage.setItem("pref-theme",'dark'))})</script>
+<script>document.querySelectorAll('pre > code').forEach(b=>{const c=b.parentNode.parentNode,a=document.createElement('button');a.classList.add('copy-code'),a.innerText='copy';function d(){a.innerText='copied!',setTimeout(()=>{a.innerText='copy'},2e3)}a.addEventListener('click',e=>{if('clipboard'in navigator){navigator.clipboard.writeText(b.textContent),d();return}const a=document.createRange();a.selectNodeContents(b);const c=window.getSelection();c.removeAllRanges(),c.addRange(a);try{document.execCommand('copy'),d()}catch(a){}c.removeRange(a)}),c.classList.contains("highlight")?c.appendChild(a):c.parentNode.firstChild==c||(b.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?b.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(a):b.parentNode.appendChild(a))})</script>
+</body>
+</html>
