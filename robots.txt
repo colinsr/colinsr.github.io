@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://colin.detwiller.me/sitemap.xml
+Sitemap: https://talkdevopsto.me/sitemap.xml

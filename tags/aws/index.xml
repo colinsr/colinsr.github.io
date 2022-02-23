@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>aws on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/aws/</link>
+    <link>https://talkdevopsto.me/tags/aws/</link>
     <description>Recent content in aws on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS ELB</title>
-      <link>https://colin.detwiller.me/posts/aws_elb/</link>
+      <link>https://talkdevopsto.me/posts/aws_elb/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_elb/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_elb/</guid>
       <description>In this post we&amp;rsquo;re going to make our currently implemented web server a bit more fault tolerant and highly available using AWS Elastic Load Balancing.
 Hopefully, you&amp;rsquo;ve been following along with my previous posts on IAM Permissions, AWS VPC, and AWS EC2 because we are going to build off of the resources created in those posts.
 In the last post we created a couple of EC2 nginx web server instances that were routable via their public IPs.</description>
@@ -20,20 +20,20 @@ In the last post we created a couple of EC2 nginx web server instances that were
     
     <item>
       <title>AWS EC2</title>
-      <link>https://colin.detwiller.me/posts/aws_ec2/</link>
+      <link>https://talkdevopsto.me/posts/aws_ec2/</link>
       <pubDate>Thu, 22 Mar 2018 06:58:44 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_ec2/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_ec2/</guid>
       <description>In this post we&amp;rsquo;re going to walk through setting an AWS EC2 (elastic compute cloud) instance. During the course of this post we&amp;rsquo;ll talk through some of the different options available and why they&amp;rsquo;re important.
 Up until now we&amp;rsquo;ve been going over what some may consider boring. IAM Permissions and VPC Networking are not necessarily at the top of everyone&amp;rsquo;s list of things they have queued up to learn. Well I have good news, we&amp;rsquo;re going to have a pair of web servers running in EC2 by the time you finish reading this post.</description>
     </item>
     
     <item>
       <title>AWS VPC</title>
-      <link>https://colin.detwiller.me/posts/aws_vpc/</link>
+      <link>https://talkdevopsto.me/posts/aws_vpc/</link>
       <pubDate>Mon, 19 Mar 2018 06:55:51 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_vpc/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_vpc/</guid>
       <description>In this post we&amp;rsquo;re going to dissect the make up of an AWS Virtual Private Cloud.
 VPC&amp;rsquo;s make up the networking component of Amazon Web Services. They&amp;rsquo;re composed of several distinct pieces, we&amp;rsquo;ll go over each one independently and talk about their purpose and some of the ins and outs of them.
  VPC Subnets Internet Gateway Route Tables Network Access Control Lists Security Groups Virtual Private Gatway VPC Endpoints  VPC  VPCs are the heart of AWS networking.</description>
@@ -41,10 +41,10 @@ VPC&amp;rsquo;s make up the networking component of Amazon Web Services. They&am
     
     <item>
       <title>AWS Identity &amp; Access Management</title>
-      <link>https://colin.detwiller.me/posts/aws_iam/</link>
+      <link>https://talkdevopsto.me/posts/aws_iam/</link>
       <pubDate>Sat, 17 Mar 2018 07:49:12 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_iam/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_iam/</guid>
       <description>What is IAM?  IAM is AWS&#39; way of tracking permissions across all the resources assiciated with a given AWS cloud subscription. IAM controls access at the user, group or role level - and also handles federation to give temporary permission to external users. Inside IAM you are able to customize the login URL for the specific AWS account. You can configure console password policies, enforce MFA across all accounts. You&amp;rsquo;re able to manage users, groups and roles as well as their associated permissions.</description>
     </item>
     

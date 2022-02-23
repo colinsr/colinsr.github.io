@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>ELB on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/elb/</link>
+    <link>https://talkdevopsto.me/tags/elb/</link>
     <description>Recent content in ELB on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/elb/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/elb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS ELB</title>
-      <link>https://colin.detwiller.me/posts/aws_elb/</link>
+      <link>https://talkdevopsto.me/posts/aws_elb/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_elb/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_elb/</guid>
       <description>In this post we&amp;rsquo;re going to make our currently implemented web server a bit more fault tolerant and highly available using AWS Elastic Load Balancing.
 Hopefully, you&amp;rsquo;ve been following along with my previous posts on IAM Permissions, AWS VPC, and AWS EC2 because we are going to build off of the resources created in those posts.
 In the last post we created a couple of EC2 nginx web server instances that were routable via their public IPs.</description>

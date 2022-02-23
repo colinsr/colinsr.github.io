@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>EC2 on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/ec2/</link>
+    <link>https://talkdevopsto.me/tags/ec2/</link>
     <description>Recent content in EC2 on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Mar 2018 06:58:44 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Mar 2018 06:58:44 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS EC2</title>
-      <link>https://colin.detwiller.me/posts/aws_ec2/</link>
+      <link>https://talkdevopsto.me/posts/aws_ec2/</link>
       <pubDate>Thu, 22 Mar 2018 06:58:44 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_ec2/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_ec2/</guid>
       <description>In this post we&amp;rsquo;re going to walk through setting an AWS EC2 (elastic compute cloud) instance. During the course of this post we&amp;rsquo;ll talk through some of the different options available and why they&amp;rsquo;re important.
 Up until now we&amp;rsquo;ve been going over what some may consider boring. IAM Permissions and VPC Networking are not necessarily at the top of everyone&amp;rsquo;s list of things they have queued up to learn. Well I have good news, we&amp;rsquo;re going to have a pair of web servers running in EC2 by the time you finish reading this post.</description>
     </item>

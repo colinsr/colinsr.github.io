@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>IAM on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/iam/</link>
+    <link>https://talkdevopsto.me/tags/iam/</link>
     <description>Recent content in IAM on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Mar 2018 07:49:12 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/iam/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Mar 2018 07:49:12 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/iam/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS Identity &amp; Access Management</title>
-      <link>https://colin.detwiller.me/posts/aws_iam/</link>
+      <link>https://talkdevopsto.me/posts/aws_iam/</link>
       <pubDate>Sat, 17 Mar 2018 07:49:12 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/aws_iam/</guid>
+      <guid>https://talkdevopsto.me/posts/aws_iam/</guid>
       <description>What is IAM?  IAM is AWS&#39; way of tracking permissions across all the resources assiciated with a given AWS cloud subscription. IAM controls access at the user, group or role level - and also handles federation to give temporary permission to external users. Inside IAM you are able to customize the login URL for the specific AWS account. You can configure console password policies, enforce MFA across all accounts. You&amp;rsquo;re able to manage users, groups and roles as well as their associated permissions.</description>
     </item>
     

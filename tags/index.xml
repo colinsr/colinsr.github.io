@@ -2,98 +2,98 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/</link>
+    <link>https://talkdevopsto.me/tags/</link>
     <description>Recent content in Tags on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>amazon web services</title>
-      <link>https://colin.detwiller.me/tags/amazon-web-services/</link>
+      <link>https://talkdevopsto.me/tags/amazon-web-services/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/amazon-web-services/</guid>
+      <guid>https://talkdevopsto.me/tags/amazon-web-services/</guid>
       <description></description>
     </item>
     
     <item>
       <title>aws</title>
-      <link>https://colin.detwiller.me/tags/aws/</link>
+      <link>https://talkdevopsto.me/tags/aws/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/aws/</guid>
+      <guid>https://talkdevopsto.me/tags/aws/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ELB</title>
-      <link>https://colin.detwiller.me/tags/elb/</link>
+      <link>https://talkdevopsto.me/tags/elb/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/elb/</guid>
+      <guid>https://talkdevopsto.me/tags/elb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>EC2</title>
-      <link>https://colin.detwiller.me/tags/ec2/</link>
+      <link>https://talkdevopsto.me/tags/ec2/</link>
       <pubDate>Thu, 22 Mar 2018 06:58:44 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/ec2/</guid>
+      <guid>https://talkdevopsto.me/tags/ec2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>VPC</title>
-      <link>https://colin.detwiller.me/tags/vpc/</link>
+      <link>https://talkdevopsto.me/tags/vpc/</link>
       <pubDate>Mon, 19 Mar 2018 06:55:51 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/vpc/</guid>
+      <guid>https://talkdevopsto.me/tags/vpc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>IAM</title>
-      <link>https://colin.detwiller.me/tags/iam/</link>
+      <link>https://talkdevopsto.me/tags/iam/</link>
       <pubDate>Sat, 17 Mar 2018 07:49:12 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/iam/</guid>
+      <guid>https://talkdevopsto.me/tags/iam/</guid>
       <description></description>
     </item>
     
     <item>
       <title>exercises</title>
-      <link>https://colin.detwiller.me/tags/exercises/</link>
+      <link>https://talkdevopsto.me/tags/exercises/</link>
       <pubDate>Fri, 02 Mar 2018 16:53:52 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/exercises/</guid>
+      <guid>https://talkdevopsto.me/tags/exercises/</guid>
       <description></description>
     </item>
     
     <item>
       <title>javascript</title>
-      <link>https://colin.detwiller.me/tags/javascript/</link>
+      <link>https://talkdevopsto.me/tags/javascript/</link>
       <pubDate>Fri, 02 Mar 2018 16:53:52 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/javascript/</guid>
+      <guid>https://talkdevopsto.me/tags/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>azure</title>
-      <link>https://colin.detwiller.me/tags/azure/</link>
+      <link>https://talkdevopsto.me/tags/azure/</link>
       <pubDate>Mon, 29 Jan 2018 10:43:42 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/azure/</guid>
+      <guid>https://talkdevopsto.me/tags/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>load balancing</title>
-      <link>https://colin.detwiller.me/tags/load-balancing/</link>
+      <link>https://talkdevopsto.me/tags/load-balancing/</link>
       <pubDate>Mon, 29 Jan 2018 10:43:42 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/tags/load-balancing/</guid>
+      <guid>https://talkdevopsto.me/tags/load-balancing/</guid>
       <description></description>
     </item>
     

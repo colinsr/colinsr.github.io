@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/categories/</link>
+    <link>https://talkdevopsto.me/categories/</link>
     <description>Recent content in Categories on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://colin.detwiller.me/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Mar 2018 06:28:24 -0400</lastBuildDate><atom:link href="https://talkdevopsto.me/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cloud</title>
-      <link>https://colin.detwiller.me/categories/cloud/</link>
+      <link>https://talkdevopsto.me/categories/cloud/</link>
       <pubDate>Fri, 23 Mar 2018 06:28:24 -0400</pubDate>
       
-      <guid>https://colin.detwiller.me/categories/cloud/</guid>
+      <guid>https://talkdevopsto.me/categories/cloud/</guid>
       <description></description>
     </item>
     
     <item>
       <title>javascript</title>
-      <link>https://colin.detwiller.me/categories/javascript/</link>
+      <link>https://talkdevopsto.me/categories/javascript/</link>
       <pubDate>Fri, 02 Mar 2018 16:53:52 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/categories/javascript/</guid>
+      <guid>https://talkdevopsto.me/categories/javascript/</guid>
       <description></description>
     </item>
     
     <item>
       <title>azure</title>
-      <link>https://colin.detwiller.me/categories/azure/</link>
+      <link>https://talkdevopsto.me/categories/azure/</link>
       <pubDate>Mon, 29 Jan 2018 10:43:42 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/categories/azure/</guid>
+      <guid>https://talkdevopsto.me/categories/azure/</guid>
       <description></description>
     </item>
     

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>javascript on Colin&#39;s blog</title>
-    <link>https://colin.detwiller.me/tags/javascript/</link>
+    <link>https://talkdevopsto.me/tags/javascript/</link>
     <description>Recent content in javascript on Colin&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Mar 2018 16:53:52 -0500</lastBuildDate><atom:link href="https://colin.detwiller.me/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Mar 2018 16:53:52 -0500</lastBuildDate><atom:link href="https://talkdevopsto.me/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vowels</title>
-      <link>https://colin.detwiller.me/posts/vowels/</link>
+      <link>https://talkdevopsto.me/posts/vowels/</link>
       <pubDate>Fri, 02 Mar 2018 16:53:52 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/vowels/</guid>
+      <guid>https://talkdevopsto.me/posts/vowels/</guid>
       <description>This exercise will be a walk in the park. We need to do a case insensitive count of vowel characters in a given string.
 In this exercise we&amp;rsquo;ll try to use map(), filter(), and reduce().
 This is going to be a fun one. Starting like we always do, go to our exercises/ directory and create our new directory, vowels/ and create two files index.js and test.js.
@@ -21,20 +21,20 @@ We&amp;rsquo;ll add some prebaked tests into the test.</description>
     
     <item>
       <title>Pyramid</title>
-      <link>https://colin.detwiller.me/posts/pyramid/</link>
+      <link>https://talkdevopsto.me/posts/pyramid/</link>
       <pubDate>Wed, 28 Feb 2018 08:21:12 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/pyramid/</guid>
+      <guid>https://talkdevopsto.me/posts/pyramid/</guid>
       <description>Building on our last exercise this time we&amp;rsquo;re going to be building a pyramid. Given a positive number print that number of lines printing out a pyramid shape:
 pyramid(3) =&amp;gt; &amp;#39; # &amp;#39; &amp;#39; ### &amp;#39; &amp;#39;#####&amp;#39; You should be able to see the similarities in the output - but the program will have to do a little more work to figure out if it needs to print a space or hashtag.</description>
     </item>
     
     <item>
       <title>Steps</title>
-      <link>https://colin.detwiller.me/posts/steps/</link>
+      <link>https://talkdevopsto.me/posts/steps/</link>
       <pubDate>Sun, 25 Feb 2018 17:35:40 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/steps/</guid>
+      <guid>https://talkdevopsto.me/posts/steps/</guid>
       <description>Ok, next up on our list of exercises is going to be to create a steps(n) function.
 This function will print out to the console a number of log statements like so:
 steps(3) =&amp;gt; &amp;#39;# &amp;#39; &amp;#39;## &amp;#39; &amp;#39;###&amp;#39; Meaning the base will print N &amp;ldquo;#&amp;rdquo; signs, and any steps above will have a single space to the right for each step up when given a positive number.
@@ -43,10 +43,10 @@ Following the same approach, we&amp;rsquo;ll navigate to our exercises/ director
     
     <item>
       <title>Capitalizer</title>
-      <link>https://colin.detwiller.me/posts/capitalizer/</link>
+      <link>https://talkdevopsto.me/posts/capitalizer/</link>
       <pubDate>Fri, 23 Feb 2018 07:29:30 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/capitalizer/</guid>
+      <guid>https://talkdevopsto.me/posts/capitalizer/</guid>
       <description>This particular exercise should be a breeze after some of the exercises that we&amp;rsquo;ve already gone through.
 Given a string, capitalize the first letter of each word in that string.
 Once again, we have some setup to take care of - creating our directory and files.
@@ -57,10 +57,10 @@ const capitalize = require(&amp;#39;./index&amp;#39;); test(&amp;#39;Capitalize 
     
     <item>
       <title>Anagram Check</title>
-      <link>https://colin.detwiller.me/posts/anagram-check/</link>
+      <link>https://talkdevopsto.me/posts/anagram-check/</link>
       <pubDate>Tue, 20 Feb 2018 19:41:08 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/anagram-check/</guid>
+      <guid>https://talkdevopsto.me/posts/anagram-check/</guid>
       <description>It&amp;rsquo;s time to work through another (easy) exercise in javascript. This time we&amp;rsquo;ll be working through an anagram checker function.
 Just so that we&amp;rsquo;re all on the same page I&amp;rsquo;ve taken the liberty of pulling up an official definition of &amp;ldquo;anagram&amp;rdquo;:
  a word, phrase, or sentence formed from another by rearranging its letters: “Angel” is an anagram of “glean.”.
@@ -69,10 +69,10 @@ Just so that we&amp;rsquo;re all on the same page I&amp;rsquo;ve taken the liber
     
     <item>
       <title>Array Chunk</title>
-      <link>https://colin.detwiller.me/posts/array-chunk/</link>
+      <link>https://talkdevopsto.me/posts/array-chunk/</link>
       <pubDate>Thu, 15 Feb 2018 08:47:31 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/array-chunk/</guid>
+      <guid>https://talkdevopsto.me/posts/array-chunk/</guid>
       <description>Today we&amp;rsquo;ll be working through an exercise where the input is an array [1,2,3,4,5] and a size 2.
 Based on that input our goal is to write a function that will take the original array and return a new multidimensional (nested) array with the elements each of the size param that was passed in. It&amp;rsquo;ll probably be easier to understand based on this example:
 chunk([1,2,3,4,5], 2) =&amp;gt; [ [1,2], [3,4], [5]] This problem should be easier to reason about now that we&amp;rsquo;ve seen a example.</description>
@@ -80,10 +80,10 @@ chunk([1,2,3,4,5], 2) =&amp;gt; [ [1,2], [3,4], [5]] This problem should be easi
     
     <item>
       <title>Fizzbuzz</title>
-      <link>https://colin.detwiller.me/posts/fizzbuzz/</link>
+      <link>https://talkdevopsto.me/posts/fizzbuzz/</link>
       <pubDate>Mon, 12 Feb 2018 08:47:19 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/fizzbuzz/</guid>
+      <guid>https://talkdevopsto.me/posts/fizzbuzz/</guid>
       <description>Our next exercise is going to be Fizzbuzz. This is a pretty common exercise that&amp;rsquo;s pretty simple. Let&amp;rsquo;s get started!
 Same like we always do, we&amp;rsquo;ll create a new directory from inside our exercises directory to hold our tests/code and create a couple files - index.js test.js.
 mkdir fizzbuzz &amp;amp;&amp;amp; cd fizzbuzz/ touch index.js test.js Using your mechanism of choice we&amp;rsquo;ll get the following content into your test.js file:
@@ -92,10 +92,10 @@ const fizzBuzz = require(&amp;#39;.</description>
     
     <item>
       <title>Return Max Char</title>
-      <link>https://colin.detwiller.me/posts/return-max-char/</link>
+      <link>https://talkdevopsto.me/posts/return-max-char/</link>
       <pubDate>Sat, 10 Feb 2018 07:33:48 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/return-max-char/</guid>
+      <guid>https://talkdevopsto.me/posts/return-max-char/</guid>
       <description>Today we&amp;rsquo;re going to be writing a function that will return the most frequent character that appears in a string. Given the string: &amp;ldquo;abcdd&amp;rdquo; we would get back &amp;ldquo;d&amp;rdquo; because that character appears twice whereas the other characters only appear once.
 This function would work the same when working with numbers, which will be coming in as a string anyways.
 We can create our new directory inside of our exercises directory as well as our two files, index.</description>
@@ -103,10 +103,10 @@ We can create our new directory inside of our exercises directory as well as our
     
     <item>
       <title>Javascript More String Exercises</title>
-      <link>https://colin.detwiller.me/posts/javascript-more-string-exercises/</link>
+      <link>https://talkdevopsto.me/posts/javascript-more-string-exercises/</link>
       <pubDate>Wed, 07 Feb 2018 08:58:34 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/javascript-more-string-exercises/</guid>
+      <guid>https://talkdevopsto.me/posts/javascript-more-string-exercises/</guid>
       <description>Next up on our list of exercises is going to be two more simple functions.
 First we&amp;rsquo;ll walk through how to implement a palindrome checker, and then we&amp;rsquo;ll cover reversing integers.
 For the palindrome function, we&amp;rsquo;ll want to return true/false depending on whether or not a given string is a palindrome. For those of you who are not familiar with the term here is the definition:
@@ -115,10 +115,10 @@ a word, phrase, or sequence that reads the same backward as forward</description
     
     <item>
       <title>Javascript Reverse String</title>
-      <link>https://colin.detwiller.me/posts/javascript-reverse-string/</link>
+      <link>https://talkdevopsto.me/posts/javascript-reverse-string/</link>
       <pubDate>Sat, 03 Feb 2018 10:03:12 -0500</pubDate>
       
-      <guid>https://colin.detwiller.me/posts/javascript-reverse-string/</guid>
+      <guid>https://talkdevopsto.me/posts/javascript-reverse-string/</guid>
       <description>In an effort to learn the in&amp;rsquo;s and out&amp;rsquo;s of ES2017 I&amp;rsquo;m going to be working through some exercises.
 The first exercise I&amp;rsquo;d like to work through is a pretty simple one, reversing a string with javascript.
 Basically, given string &#39;foobar&#39; I&amp;rsquo;d like to return &#39;raboof&#39; - again, this is pretty simple and I think it would be a great place to start.
